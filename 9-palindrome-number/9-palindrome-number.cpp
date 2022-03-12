@@ -2,6 +2,7 @@ class Solution {
 public:
     bool isPalindrome(int x) {
         if(x<0)return false;
+        //both the inital solution and this solution is taking same time one for loop balancing the multiplication 
         else if(x==0)
         {
             return true;
