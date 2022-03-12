@@ -8,22 +8,29 @@ public:
         }
         else
         {
-            vector<int> digitVector;
-            while(x!=0)
+            int dupX=x;
+            long reverse=0;
+            //vector<int> digitVector;
+            //***using the reverse number approach****//
+            while(x>0)
             {
-                digitVector.push_back(x%10);
+                reverse=reverse*10+x%10;
+                //digitVector.push_back(x%10);
                 x/=10;
             }
+            if(reverse==dupX)return true;
+            return false;
             //now we have the vector with all the digits
-            int digitVectorSize=digitVector.size();
-            int digitVectorSizeReq=digitVectorSize-1;
-            int half=digitVectorSize/2;
-            for(int i=0;i<half;i++)
-            {
-                if(digitVector[i]!=digitVector[digitVectorSizeReq-i])return false;
-                else continue;          
-            }
-            return true;
+            //instead of using vector we can store in a digit
+            // int digitVectorSize=digitVector.size();
+            // int digitVectorSizeReq=digitVectorSize-1;
+            // int half=digitVectorSize/2;
+            // for(int i=0;i<half;i++)
+            // {
+            //     if(digitVector[i]!=digitVector[digitVectorSizeReq-i])return false;
+            //     else continue;          
+            // }
+            // return true;
         }
     }
 };
