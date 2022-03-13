@@ -3,6 +3,7 @@
 takes extra time for creating a iterator *********/
 /**** third trick of storing the subtracted values too in hash map fails if we store the keys in form of int and hence need to store the keys of subtracted constant in
 form of key typeof string *****/
+/**** we can use [SWITCH CASE] instead of map since map is not fast for small numbers of values use   *****/
 class Solution {
 public:
     int romanToInt(string s) {
