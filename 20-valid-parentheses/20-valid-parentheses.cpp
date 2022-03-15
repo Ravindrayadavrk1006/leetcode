@@ -4,7 +4,6 @@ public:
      //this function used for pair matching it return true if matched else return false
     bool pairMatch(char stackChar,char stringChar)
     {
-        // cout<<"passed element in this function "<<endl<<"stackChar=>"<<stackChar<<"stringChar=>"<<stringChar<<endl;
         if(stackChar=='(' && stringChar==')')return true;
         else if(stackChar=='[' && stringChar==']')return true;
         else if(stackChar=='{' && stringChar=='}')return true;
@@ -21,7 +20,6 @@ public:
 
         while(pos<s.length())
         {
-            // cout<<"pos=> "<<s[pos]<<"stack.top=>"<<st.top()<<endl;
             if(st.empty() || !pairMatch(st.top(),s[pos]))
             {
                 st.push(s[pos]);
@@ -32,7 +30,6 @@ public:
                 st.pop();
                 pos++;
             }
-            // cout<<st.top()<<endl;
         }
         // cout<<"before returning final top"<<st.top()<<endl;
         return st.empty();
