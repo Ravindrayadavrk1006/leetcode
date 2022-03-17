@@ -8,7 +8,7 @@ public:
         //traversing the haystack to find the first position of element same as first position
         //of our needle
         
-        //if substring also not allowed then can use a Forloop for comparing the character once we find the first matching character
+        //if substring also not allowed then can use a Forloop for comparing the entire needle once we find the first matching character
         int i=0;
         while(i<haystack.length())
         {
