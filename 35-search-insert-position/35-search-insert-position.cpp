@@ -1,5 +1,9 @@
 class Solution {
 public:
+    
+    /* 1. important point to note=> in binary search the last index should be length-1 
+       2. till i<=j
+    */
     int binarySearch(vector<int>&nums,int i,int j,int target)
     {
         while(i<=j)
