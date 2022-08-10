@@ -1,0 +1,49 @@
+data types=>
+char => a single char represented by '' whereas string by ""
+internally for char ascii value is stored ,
+int,
+double=2.5
+bool d=true  //will print 1 any number apart from 0 is true
+long int,long long int or long or long long respectively
+ascii  values=> 48 =>0,65=>A, 97=>a
+
+* for taking input doesn't matter if we input using any number of space or 
+by doing on a new line 
+
+**important
+7/2 =>3 since both are integers the ouptut will be interger
+7.0/2 => will give 3.5 
+the value will be ouput in form of higher of the datatypes used
+precedence higher to lower=> double,float,long long int,long int,int char
+
+**calculation is done in the highest precedence type present in the expression   
+
+=============
+EPISODE -2
+
+calculation precedence=> double >float> long long >long int>int >char
+
+
+
+OVERFLOW=>
+
+int range=> 2^-30 to 2^-30 i.e 10^-9 to 10^9
+long int =>10^-12 to 10^12
+long long int=> 10^-18 to 10^18
+
+int maximum=INT_MAX //for getting maximum int value
+
+int a=100000
+int b=100000
+long int c=a*b 
+will give wrong value in c since a,b are int values and hence the calculation takes place in
+the highest precedence type i.e int and hence will give int value which we are trying to store in 
+in a long . A int value we are trying to store in long which will give wrong value
+
+for correct => long int c= a*1LL*b  //we put something which will take the entire solution in 
+double a
+double b
+double c=a*b
+cout<<fixed<<setprecision(0)<<c  //for getting output in normal form instead of scientific base e form 
+//setprecision for no points value
+
