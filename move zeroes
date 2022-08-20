@@ -1,0 +1,88 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        //idea we will traverse the array with a pointer i and when a zero is encountered at position i then we we start a j from i+1 and when j!=0 we swap ith and jth element
+        int vec_size=nums.size();
+        if(vec_size<=1)
+            return;
+        else
+        {
+            //int no_of_zero_till=0;
+            for(int i=0;i<vec_size;i++)
+            {
+                if(nums[i]==0)
+                {
+                    int j=i+1;
+                    while(j<vec_size && nums[j]==0)j++;
+                    if(j<vec_size)
+                    {
+                    //swap the i and j values
+                    nums[i]=nums[j];
+                    nums[j]=0;
+                    //no_of_zero_till+=1;
+                    }
+                }
+            }
+        }
+    }
+};
+//other solutions
+//SOLUTION 1
+    
+/*
+--IDEA = a variable as j and start traversing using a for loop with i variable the moment we find a non zero value then make the jth element as ith element and increment j
+finally since we haven't swaped the values then from the position where is last j we make all elements as zero or instead we can directly swap ith and jth element 
+class Solution {
+public:
+void moveZeroes(vector& nums) {
+int j = 0;
+for(int i = 0; i < nums.size(); i++){
+if(nums[i]){
+nums[j++] = nums[i];
+}
+}
+for(;j<nums.size(); j++){
+nums[j] = 0;
+}
+}
+};
+
+
+### SOLUTION 2
+IDEA---> two pointers left and right both starting from 0 if element at right pos ==0 we increment right else we swap left and right  and this process continues if the right reaches at end or left reaches at end 
+    int left = 0, right = 0;
+    
+    while(left < nums.size() && right < nums.size())
+    {
+        if(nums[right] == 0)
+            right++;
+        
+        else
+        {
+            swap(nums[right], nums[left]);
+            left++;
+            right++;
+        }
+    }
+    
+    #SOLUTION 3
+    IDEA -- start traversing the array and the moment we a zero delete it and push_back a zero at end although not totally feasible since it not inplace
+    class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int l = 0, r = nums.size() - 1;
+        
+        while(l <= r){
+            if(nums[l] != 0){
+                l++;
+            } else {
+                nums.erase(nums.begin() + l);
+                nums.push_back(0);
+                r--;
+            }
+        }
+    }
+};
+    
+
+*/
