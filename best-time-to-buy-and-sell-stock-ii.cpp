@@ -31,3 +31,13 @@ public:
         
     }
 };
+
+/*----------------------------------------OTHER APPROACHES---------------------------
+APPROACH 1 -->>GREEDY APPROACH
+IF WE PLOT THE PRICES ON A GRAPH THEN WE WILL FIND THAT SOME SHAPE OF PRICES. THE RISING SLOP(ASENT) WILL BE PROFIT AND HENCE WE CAN ADD THAT PART TO THE TOTAL PROFIT
+IMPORTANT POINT ->> A RISE WITH POINTS A-B-C-D    THE PROFIT WILL BE D minus A which can be written as B-A + C-B + D-C  
+hence we can say that will be profit when the present point value-previous point value >0 we will add this to the total profit 
+TC- O(N)
+    
+
+*/
