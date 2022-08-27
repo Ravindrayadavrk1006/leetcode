@@ -1,0 +1,61 @@
+/* MY SOLUTION
+IDEA -> SINCE THE UNORDERED MAP STORE THE UNIQUE KEYS , TRYING TO STORE THE KEYS WITH THE COUNT SINCE ALL THE VALUES ARE INT TYPE HENCE BY DEFAULT INITIALIZED TO 0 
+TIME COMPLEXITY: O(2N) 
+SPACE COMPLEXITY: O(2N)
+*/
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        unordered_map<int,int> m;
+        int nums_length=nums.size();
+        for(int i=0;i<nums_length;i++)
+        {
+            m[nums[i]]++;
+            //instead of below for loop can do
+            //if(m[nums[i]]>nums_length/2)return nums[i];
+        }
+        for(auto &it:m)
+        {
+           if(it.second>nums_length/2)return it.first;
+        }
+        return 0;
+    }
+};
+
+/* -------------------- OTHER SOLUTIONS
+SOLUTION 2: 
+      SORT THE ELEMENTS T.C O(NLOGN) which ever is the center element that is the element with count >n/2 since for greater the middle element has to be always
+      that element
+      T.C O(NlogN)
+      S.C O(1)
+
+SOLUTION 3: 
+      //TC O(N) AND SPACE COMPLEXITY O(1)
+      //idea here we will start with the first character and increase it vote if same char occur and decrease if other char occur and if the vote become zero and 
+      next time if nums[i] is different then we change the char too.
+      int nums_length=nums.size();
+      if(nums_length<2)
+      {
+          return nums[0];
+      }
+      int C=nums[0];   //present key whose
+      int V=1;    //present count
+
+      for(int i=1;i<nums_length;i++)
+      {
+          if(nums[i]!=C && V>0)
+          {
+              V--;
+          }
+          else if(nums[i]!=C && V==0)
+          {
+              V=1;
+              C=nums[i];
+          }
+          else
+          {
+              V++;
+          }
+      }
+      return C;
+*/
