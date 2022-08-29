@@ -1,0 +1,31 @@
+class Solution {
+public:
+    /* MY SOLUTION
+    idea-> normal solution using two for loops
+    first for loop for each row and then the inner loop for defining each element of that row 
+    defaulting the first and last element as 1,1 and the intermediate filling using m[j]=final_vec[i-2][j-1]+final_vec[i-2][j];
+    
+    TIME COMPLEXITY -> O(n^2)
+    SPACE COMPLEXITY -> O(1)
+    */
+    vector<vector<int>> generate(int numRows) {
+        if(numRows==1)return {{1}};
+        if(numRows==2)return{{1},{1,1}};
+        else
+        {
+            vector<vector<int>> final_vec={{1},{1,1}};
+            for( int i=3;i<=numRows;i++)
+            {
+                vector<int> m(i);
+                m[0]=1;
+                m[i-1]=1;
+                for(int j=1;j<i-1;j++)
+                {
+                    m[j]=final_vec[i-2][j-1]+final_vec[i-2][j];
+                }
+                final_vec.push_back(m);
+            }
+            return final_vec;
+        }
+    }
+};
