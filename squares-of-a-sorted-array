@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        /*
+            solution-1:
+            idea-> APPROACH: TWO POINTER APPROACH
+            keep two pointer one at start and other at end and then move them such that whichever is bigger 
+            push it and then keep pushing at front
+            or create a vector of size nums and start entering in it from last
+            
+        */
+        int nums_length=nums.size();
+        int i=0;
+        int j=nums_length-1;
+        vector<int> final_vec(nums_length);
+        //int curr_position=nums_length-1;
+        for(int k=nums_length-1;k>=0;k--)
+        {
+            if(abs(nums[i])>abs(nums[j]))
+            {
+                final_vec[k]=nums[i]*nums[i++];
+               // i++;
+            }
+            else
+            {
+                final_vec[k]=nums[j]*nums[j--];
+                //j--;
+            }
+        }
+        return final_vec;
+    }
+};
