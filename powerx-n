@@ -1,0 +1,113 @@
+class Solution {
+public:
+  //recursive function for solution 3
+    double recursive(double x,int n)
+    {
+        //cout<<"n"<<n<<endl;
+        //base condition
+        if(n==1 || n ==-1)return x;
+        //else condition
+        if(n%2==0)
+        {
+            double a=recursive(x, n/2);
+            return a*a;
+        }
+        else 
+        {
+            double a=recursive(x,n/2);
+            return a*a*x;
+        }
+
+    }
+    double myPow(double x, int n) {
+        //SOLUTION 1
+        /*
+          IDEA-> using the c++ inbuild function which is most optimized 
+          T.C-> O(logN)
+          S.C -> O(log N)
+        */
+        //return pow(x,n);
+        
+        
+        //SOLUTION 2
+        /*
+        if(x==-1.00 && n%2!=0)
+        {
+            return -1;
+        }
+        else if(x==-1.00 && n%2==0)
+        {
+            return 1;
+        }
+        else if(x==1.00)
+        {
+            return 1;
+        }
+        else if(x==0.00)
+        {
+            return 0;
+        }
+        double final_value=1.00;
+        if(n>0)
+        {
+        for(int i=0;i<n;i++)
+        {
+            final_value*=x;
+        }
+        }
+        else
+        {
+            long till=-1.00 *n;
+            for(long i=0;i<till;i++)
+            {
+                final_value*=x;
+                if(isinf(final_value))break;
+            }
+            final_value=1/final_value;
+        }
+        cout<<final_value;
+        return final_value;
+        
+        */
+        
+        
+        //-----SOLUTION 3---
+        /*
+        IDEA-> using recursive function and using the concept of (x^n/2) *(x^n/2) = x^n 
+        using the above mentioned concept to recursively calculate all the lower values too 
+        T.C -> O(logN) => since at each level the value of n is being halved
+        S.C -> O(log N) since logN recursive call =no of levels in the recursive tree
+        */
+        if(n==0.00)
+        {
+            return 1;
+        }
+        if(x==-1.00 && n%2!=0)
+        {
+            return -1;
+        }
+        else if(x==-1.00 && n%2==0)
+        {
+            return 1;
+        }
+        else if(x==1.00)
+        {
+            return 1;
+        }
+        else if(x==0.00)
+        {
+            return 0;
+        }
+        else
+        {
+            //cout<<"else of myPow"<<endl;
+            double res=recursive(x,n);
+            if (n<0)return 1/res;
+            return res;
+            
+        }
+        
+        
+        
+    }
+};
