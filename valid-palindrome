@@ -1,0 +1,51 @@
+/*
+IDEA-> using recursion to solve and recursion end when i>n-1-i where n is size of the string 
+T.C -> O(N)   run for n/2 times which is asymtotically reduced to N
+S.C -> O(N)   since stack space of N function call 
+*/
+
+
+class Solution {
+public:
+    string str_global="";
+    int str_global_size=0;
+bool checkP(int i)
+{
+    if(i>str_global_size-1-i)return true;
+    else
+    {
+        
+        if(str_global[i]==str_global[str_global_size-1-i])
+        {
+            //cout<<"i->"<<i<<endl;
+            return checkP(i+1);
+        }
+        else return false;
+    }
+}
+string filterStr(string s)
+{
+    int str_size=s.size();
+    string final_str="";
+    for(int i=0;i<str_size;i++)
+    {
+        int int_val=s[i];
+        if((int_val>47 && int_val<58)|| (int_val>64 && int_val<91) || (int_val>96 && int_val<123))
+        {
+            if(int_val>64 && int_val<91)
+            {
+                final_str.push_back(char(int_val+32));
+            }
+            else final_str.push_back(s[i]);
+        }
+    }
+    return final_str;
+}
+    bool isPalindrome(string s) {
+        string final_str=filterStr(s);
+        str_global=final_str;
+        str_global_size=final_str.size();
+        //cout<<"final string"<<final_str<<"size"<<str_global_size<<endl;
+        return checkP(0);
+    }
+};
