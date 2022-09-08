@@ -1,0 +1,74 @@
+class Solution {
+public:
+    //SOLUTION 2
+    /*
+    IDEA - so normal process of going with the possibilty for each element to either take it or not take it
+    hence the helper function being called recursively once by taking the current element and another time by not taking the element
+    ****further optimization idea is explained in between the helper function with comments [the idea of how to optimize for recurring(repeating) elements ]
+    T.C -> O(2^n)
+    S.C-> O(N)
+    
+    */
+    vector<vector<int>> final_ans_sol2;
+    int nums_size=0;
+    void helper(int pos ,vector<int> &one_set,vector<int> &nums)
+    {
+        if(pos>=nums_size)final_ans_sol2.push_back(one_set);
+        else
+        {
+            one_set.push_back(nums[pos]);
+            helper(pos+1,one_set,nums);
+            one_set.pop_back();
+            //so the idea here is once we have included the element in one particular solution path
+            //in the solution path in which we don't want that element we won't include that element if if comes further in the array too
+            while(pos+1<nums_size && nums[pos]==nums[pos+1])pos++;
+            helper(pos+1,one_set,nums);
+        }
+    }
+    //SOLUTION 1 
+    /*
+    IDEA- o normal process of going with the possibilty for each element to either take it or not take it
+    hence the helper function being called recursively once by taking the current element and another time      by not taking the element
+    idea extension - for removing the duplicate have put the result in form of set and later have just copied the element of set into a vector<vector<int>> since the ouput was expected so
+    
+    T.C -> O(NlogN + N + 2^N)= O(2^N)
+    S.C -> O(N)
+    
+    */
+    /*
+    vector<vector<int>> final_ans;
+    int nums_size=0;
+    void helper(int pos ,vector<int> &one_set,vector<int> &nums)
+    {
+        if(pos>=nums_size)final_ans.push_back(one_set);
+        else
+        {
+            one_set.push_back(nums[pos]);
+            helper(pos+1,one_set,nums);
+            one_set.pop_back();
+            helper(pos+1,one_set,nums);
+        }
+    }
+    */
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        //calling SOLUTION2
+        //sorting to place the similar items close to each other
+        sort(nums.begin(),nums.end());
+        nums_size=nums.size();
+        vector<int> one_set;
+        helper(0,one_set,nums);
+        return final_ans_sol2;
+        
+        //calling SOLUTION1
+        /*
+        //sorting to close similar items close to each to each other so that the set doesn't have the permutations of the set as a result 
+        sort(nums.begin(),nums.end());
+        nums_size=nums.size();
+        vector<int> one_set;
+        helper(0,one_set,nums);
+        set<vector<int>> final_set(final_ans.begin(),final_ans.end());
+        vector<vector<int>> ff_ans(final_set.begin(),final_set.end());
+        return ff_ans;
+        */
+    }
+};
