@@ -1,0 +1,51 @@
+Intuition
+Recrusive approach to select the possible element in the current bucket and similarly keep doing for all the bucket if we have all the required element in the current element
+
+Approach
+complement approach
+Rucursive approach for selecting appropriate(which is not already selected and whose addition to the sum doesn't exceed the required sum) element from current position and keep exploring the current path
+Complexity
+Time complexity:
+O(2^(nums.size()k)) since we need nums.sizek levels
+
+Space complexity:
+O(nums.size()*k)
+
+Code
+class Solution {
+    bool help(int i, int sum, int req_sum, int req_buckets_num, vector<int>& nums, vector<int>& taken)
+    {
+        if(req_buckets_num == 1) return true;
+
+        //important to avoid TLE since we are recrusively calling frmo line number
+        //17 with +1 and will go out of the array too in last calls
+        if(i >= nums.size())return false;
+        if(sum == req_sum)
+        {
+            return help(0, 0, req_sum, req_buckets_num-1, nums, taken);
+        }
+        for(int j=i;j<nums.size();j++)
+        {
+            if(taken[j] || sum+nums[j] > req_sum)continue;
+            taken[j] = 1;
+            if(help(j+1,sum+nums[j],req_sum,req_buckets_num,nums,taken)) return true;
+            taken[j] = 0;
+        }
+        return false;
+    }
+public:
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int total_sum = 0;
+        for(int i : nums)total_sum+=i;
+
+        //small cases
+        if(total_sum % k != 0 || k>nums.size())return false;
+        if(k==1)return true;
+
+        //large cases
+        // //sorting done since 
+        // sort(nums.begin(),nums.end(),greater<int>());
+        vector<int> taken(nums.size(), 0);
+        return help(0, 0, total_sum/k, k, nums, taken);
+    }
+};
