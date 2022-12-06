@@ -1,0 +1,140 @@
+Approach
+solution 3 -> using divide and conquer finding left max , right max and cross sum and then returning whichever is greater at each lever
+T.C -> nlogn
+
+solution 2-> simple approach of dynamic programing
+
+Code
+//approach 3 --> divide and conquer approach
+class Solution {
+public:
+    int cross_sum(vector<int>& nums, int p, int q)
+    {
+        int mid=(p+q)/2;
+        int left_sum=0;
+        int left_best_sum=0; 
+        for(int i=mid;i >= p;i--)
+        {
+            left_sum+=nums[i];
+            if(left_sum > left_best_sum)
+            {
+                left_best_sum=left_sum;
+            }
+        }
+        //right side of cross sum
+        int right_sum=0;
+        int right_best_sum=0;
+        for(int i=mid+1;i<=q;i++)
+        {
+
+                right_sum +=nums[i];
+                if(right_sum > right_best_sum)
+                {
+                    right_best_sum=right_sum;
+                }
+        }
+        return right_best_sum+left_best_sum;
+    }
+    int help(vector<int>& nums, int p, int q)
+    {
+       if(p==q)return nums[p];
+       else
+       {
+           int mid=(p+q)/2;
+           int left_sum=help(nums,p,mid);
+           int right_sum=help(nums,mid+1,q);
+           int cross_sum_result=cross_sum(nums,p,q);
+           return max(left_sum,max(right_sum,cross_sum_result));
+       }
+        
+    }
+    int maxSubArray(vector<int>& nums) {
+        // int temp=0;
+        // int n=nums.size();
+        // return help(n,nums); 
+        //handling negative cases
+        int i=0;
+        while(i<nums.size())
+        {
+            if(nums[i]>=0)break;
+            i++;
+        }
+        if(i == nums.size() )return (*max_element(nums.begin(),nums.end()));
+        else return help(nums,0,nums.size()-1);
+    }
+};
+
+
+
+
+//approach 2
+// class Solution {
+// public:
+//     int help(int n, vector<int>& nums)
+//     {
+//         int max_sum=nums[0];
+//         int curr_sum=nums[0];
+//         // int start_pos=0;
+//         int curr_pos=1;
+//         while(curr_pos<n)
+//         {
+//             // curr_sum+=nums[curr_pos];
+//             if(curr_sum>0)
+//             {
+//                 // start_pos=curr_pos+1;
+//                 curr_sum+=nums[curr_pos];
+//             }
+//             else
+//             {
+//                 curr_sum=nums[curr_pos];
+//             }
+//             if(curr_sum>max_sum)
+//             {
+//                 max_sum=curr_sum;
+//             }
+//             curr_pos++;
+//         }
+//         return max_sum;
+        
+//     }
+//     int maxSubArray(vector<int>& nums) {
+//         int temp=0;
+//         int n=nums.size();
+//         return help(n,nums); 
+//     }
+// };
+//approach 1
+// class Solution {
+// public:
+//     int help(int n, vector<int>& nums)
+//     {
+//         int max_sum=0;
+//         int curr_sum=0;
+//         // int start_pos=0;
+//         int curr_pos=0;
+//         while(curr_pos<n)
+//         {
+//             curr_sum+=nums[curr_pos];
+//             if(curr_sum<=0)
+//             {
+//                 // start_pos=curr_pos+1;
+//                 curr_sum=0;
+//             }
+//             if(curr_sum>max_sum)
+//             {
+//                 max_sum=curr_sum;
+//             }
+//             curr_pos++;
+//         }
+//         return max_sum;
+        
+//     }
+//     int maxSubArray(vector<int>& nums) {
+//         int temp=0;
+//         int n=nums.size();
+//         handling negative values very neive solution
+//         while(temp<n && nums[temp]<0)temp++;
+//         if(temp==n)return *max_element(nums.begin(), nums.end());
+//         return help(n,nums); 
+//     }
+// };
