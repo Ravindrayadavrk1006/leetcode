@@ -1,0 +1,51 @@
+INTUITION
+Idea is using DP and the solution is same as fibonacci series.
+Idea is climbing the staircases is coming down
+hence used the same approach
+
+APPROACH
+stored memo[0]=1 since coming to zero from previous step either by taking one step or two step has just one way.
+Starting from n and taking one and two step in each cases coming down.
+
+*** took bottom up approach
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+public:
+    
+    int help(int n, vector<int>& memo)
+    {
+        //base cases
+        if(n == 0)return 1;
+        if(n < 0)return 0;
+        //OTHER CASES
+        int one_step=0;
+        int two_step=0;
+        //---> 1.taking one step
+        if(n-1 >= 0 && memo[n-1] != -1)
+        {
+            one_step=memo[n-1];
+        }
+        //--> 2.taking two step
+        else one_step= help(n-1, memo);
+        if(n-2 >= 0 &&  memo[n-2] != -1 )
+        {
+            two_step = memo[n-2];
+        }
+        else two_step  = help(n-2, memo);
+        memo[n]=one_step + two_step;
+        return memo[n];
+    }
+    int climbStairs(int n) {
+        vector<int> memo(n+1, -1);
+        memo[0]=1;
+        return help(n, memo);
+    }
+};
