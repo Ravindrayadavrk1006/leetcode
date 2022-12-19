@@ -45,6 +45,7 @@ public:
                 if(i== 0 && j==0)dp[i][j]= 1;
                 else 
                 {
+                    //to prevent the n-1 i.e out of bound condition
                     int left = 0;
                     int up = 0;
                     if(i-1 >= 0 )
