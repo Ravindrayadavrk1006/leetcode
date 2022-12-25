@@ -7,6 +7,12 @@ we have called out help(recursive dp function) for each element of first row and
 //base cases -> if(y < 0 || y > n-1 )return 1000001; since before(that is why this case kept before if(x == n -1 )return matrix[x][y]; base case )reaching the last row we can go out of bound in left and right direction .
 then normally going in all the three possible direction and calculating the min val of all the three directions.
 
+# //solution 2
+since in earlier approach started from 0 and went till n-1 row . Tabulation DP approach is always opposite of what is in recursive case . using the base case condiiton of recursive dp we fill the tabulation base row and on bases of that in opposite direction of recursive dp we calculate and fill the table.
+(Please do a simple dry run of soltion)
+
+# //solution3
+since in tabulation we saw we just require only previous row to calculate the current row. Leveraging this concept in solution3
 Complexity
 Time complexity:
 O(nn) reduced from 3^(nn)
