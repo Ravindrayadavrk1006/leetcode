@@ -38,6 +38,7 @@ public:
         if (curr_req_sum-nums[pos]>= 0)take = help(pos-1, curr_req_sum-nums[pos], nums, dp);
         return dp[pos][curr_req_sum] = not_take || take;
     }
+    //pay special care while writing base cases. look how the base cases from recurisve one are converted here to fit tabulation
     bool tabulation(vector<int>& nums , int req_sum)
     {
         int n = nums.size();
@@ -59,6 +60,9 @@ public:
         }
         return dp[n-1][k];
     }
+    /*
+    the idea comes since in the recrusive or tabulation current-1 row is only being referenced and hence will be space optimizing using same intuition
+    */
     bool space_optimization(vector<int>& nums , int req_sum)
     {
         int n = nums.size();
