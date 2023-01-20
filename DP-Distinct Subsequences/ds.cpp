@@ -25,10 +25,39 @@ public:
         //if the current char doesn't match then just one possibility of trying in the remaining portion to find the char
         return dp[i][j] = help(i-1,j,s,t, dp);
     }
+    //SOLUTION 2
+    int tabulation(string s , string t)
+    {
+        int s_size = s.size();
+        int t_size = t.size();
+        //since even long long  giving out of flow hence storing in form of double and when returing typecasting as int back
+        vector<vector<double>> dp(s_size+1,vector<double>(t_size+1,0));
+        //convert base case into normal cases
+        //saying if j == 0 we make the element as 1
+        for(int i= 0 ;i<=s_size; i++)dp[i][0]=1;
+        for(int i = 1; i<= s_size; i++)
+        {
+            for(int j = 1;j<=t_size; j++)
+            {
+                if(s[i-1] == t[j-1])
+                {
+                    //getting all the sums
+                    dp[i][j] =  dp[i-1][j-1] + dp[i-1][j];
+                }
+                else dp[i][j] = dp[i-1][j];
+            }
+        }
+        return (int)dp[s_size][t_size];
+    }
     int numDistinct(string s, string t) {
+        //solution 1 calling
         int s_size = s.size();
         int t_size = t.size();
         vector<vector<int>> dp(s_size,vector<int>(t_size,-1));
-        return help(s_size-1,t_size-1,s ,t, dp);   
+        return help(s_size-1,t_size-1,s ,t, dp); 
+        
+        //solution 2 tabulation 
+        //CALLING SOLUTION 2;
+        return tabulation(s,t);
     }
 };
