@@ -1,6 +1,7 @@
 
 class Solution {
 public:
+    [*important]
 //also we can't take the approach of finding the lcs only and then substracting the lcs from first and taking the remaining element of first string + second string since the order of subsequence will be disturbed
     string tabulation(string text1, string text2)
     {
