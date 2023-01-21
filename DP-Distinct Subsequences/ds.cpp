@@ -1,5 +1,6 @@
 class Solution {
 public:
+    [important]
     /*simple solution try by taking two string eg. s =  babgag  t= bag 
     lets start to match from (s_index , t_index) = (0,0)  the opposite of this is followed in the question we matched s[s_index] == t[t_index] we could take this b or we can skip this b and later on take b at s_index 2 and one answer we will get from there
     but if the char are not matching that means we have to look for the required char in the remaining s string skipping the current char since it didn't match and hence of no use .
