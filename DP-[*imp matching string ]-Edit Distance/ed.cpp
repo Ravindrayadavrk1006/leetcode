@@ -1,4 +1,18 @@
 //using the concept of string matching 
+# Approach
+in depth approach explained inside the code 
+using the concept of matching strings solved
+if current char matched then we look for remaining chars in the current_word1_index -1 length word1 and the current char doesn't match
+then we have three posibilities 
+1. we can remove the current element and keep looking for the word2 in remaining word1 
+2. we can insert a similar element to the one which we are finding and can look for remaining element in the remaining string
+3. we can replace the current unmatched element with the current required element of word2 
+# Complexity
+- Time complexity:
+O(n*m)
+
+- Space complexity:
+O(n*m + n+m(stack space))
 class Solution {
 private:
     [important]
