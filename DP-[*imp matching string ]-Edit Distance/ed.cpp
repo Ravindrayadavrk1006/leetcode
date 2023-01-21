@@ -1,7 +1,7 @@
 //using the concept of string matching 
 class Solution {
 private:
-
+    [important]
     int help(int pos1,int pos2,string& word1, string& word2,vector<vector<int>>& dp)
     {
         //base cases
