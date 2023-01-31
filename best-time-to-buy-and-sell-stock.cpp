@@ -45,38 +45,82 @@ code each line explained : Similar for C++, Java
                          
   */                       
 
+//SOLUTION 1 IDEA
+        /*
+        idea->  if prices[i]<current buy then curr.buy=prices[i] and also current          sell=prices[i]
+        else if current sell <prices[i] then current sell=prices[i]
+        
+        in simple english if while traversing the array and current price[i] is greater less than the current buy value then we will update both current buy and current sell value
+otherwise if current sell value is less than current price[i] then we will update the current sell value.
+        */
 class Solution {
-public:
-    int maxProfit(vector<int>& prices) {
-        //base case for size zero array
-        if (prices.size()==0 || prices.size()==1) return 0;
-        else 
+    //SOLUTION 2
+private:
+    int concise_sol(vector<int> & prices)
+    {
+        /*
+            approach
+            eg 16 7 1 2 14 0 12 
+            the idea here is if we compare the profit of all the arrays values we will get the best profit 
+            for eg if we sell at 12 then we are supposed to buy at the lowest on the any of the previous day. 12 - 0 = profit = 12
+            if we sell at 14 we have to buy at lowest among the previous days of 14 which is 1 since min (16,7,1,2)
+            using the same concept to maximize the profit
+        */
+        //initially taking min as a[0] and profit as 0 since if we buy and sell at the same day
+        int min_val = prices[0];
+        int profit = 0;
+        int arr_size = prices.size();
+        for(int i=1;i<arr_size; i++)
         {
-            int current_buy=prices[0];
-            int current_sell=prices[0];
-            int latest_buy=prices[0];
-            int latest_sell=prices[0];
-            int vec_length=prices.size();
-            int current_profit=0;
-            for(int i=1;i<vec_length;i++)
-            {
-                if(prices[i]<latest_buy)
-                {
-                    latest_buy=prices[i];
-                    latest_sell=prices[i];
-                }
-                else if(prices[i]>latest_sell)
-                {
-                    latest_sell=prices[i];
-                }
-                if(latest_sell-latest_buy>=current_profit)
-                {
-                    current_profit=latest_sell-latest_buy;
-                    current_sell=latest_sell;
-                    current_buy=latest_buy;
-                }
-            }
-            return current_profit;
+            //comparing the maximum profit we got for current element with the earlier profit to maximize the profit
+            profit = max(prices[i]-min_val, profit);
+            //min will be updated since the current element can be lower the previous min
+            min_val = min(min_val , prices[i]);
         }
+        return profit;
+    }
+public:
+    
+    int maxProfit(vector<int>& prices) {
+
+        //calling solution 2
+        return concise_sol(prices);
+
+
+
+        //SOLUTION 1
+
+
+        //base case for size zero array
+        
+        // if (prices.size()==0 || prices.size()==1) return 0;
+        // else 
+        // {
+        //     int current_buy=prices[0];
+        //     int current_sell=prices[0];
+        //     int latest_buy=prices[0];
+        //     int latest_sell=prices[0];
+        //     int vec_length=prices.size();
+        //     int current_profit=0;
+        //     for(int i=1;i<vec_length;i++)
+        //     {
+        //         if(prices[i]<latest_buy)
+        //         {
+        //             latest_buy=prices[i];
+        //             latest_sell=prices[i];
+        //         }
+        //         else if(prices[i]>latest_sell)
+        //         {
+        //             latest_sell=prices[i];
+        //         }
+        //         if(latest_sell-latest_buy>=current_profit)
+        //         {
+        //             current_profit=latest_sell-latest_buy;
+        //             current_sell=latest_sell;
+        //             current_buy=latest_buy;
+        //         }
+        //     }
+        //     return current_profit;
+        // }
     }
 };
