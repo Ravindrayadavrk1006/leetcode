@@ -156,6 +156,11 @@ private:
     ask -1 since not greater than 6 hence ask binary search and 1 will be replaced with -1
     set_1 ={-1,4,5,6}
     ask 9 since greater will be inserted at last and we get the return as 4 the set is not correct but we get the correct output length
+    
+    
+    
+    T.C ---> n*logn     logn for binary search
+    S.C --> O(n)
     */
     int binary_approach(vector<int> & nums)
     {
