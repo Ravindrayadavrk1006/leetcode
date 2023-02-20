@@ -34,16 +34,6 @@ public:
         }
         return dp[i][j] = min_val;
     }
-    // int tabulation(int n , vector<int>& cuts)
-    // {
-    //     cuts.insert(cuts.begin(),0);
-    //     cuts.push_back(n);
-    //     //imported to make it similart to matrix chain multiplication and we don't have to worry about places of cut when trying different cuts order
-    //     sort(cuts.begin(),cuts.end());
-    //     int cuts_size= cuts.size();
-    //     vector<vector<int>> dp(n,vector<int>(n,-1));
-
-    // }
     int minCost(int n, vector<int>& cuts) {
         cuts.insert(cuts.begin(),0);
         cuts.push_back(n);
