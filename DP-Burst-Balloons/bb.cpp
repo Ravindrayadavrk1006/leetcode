@@ -2,9 +2,10 @@ class Solution {
 public:
 
 /*
-approach of MCM[matrix chain multiplication] since they wan't to calculate all the approaches and if goes out of bound then assume the values to be 1
-for assuming this have added 1 at end of array
-and for 1 at start started i = 0 instead of 1 so that it assumes index 0 and 1 before it and to handle out of bound in this cases have asked 
+approach of MCM[matrix chain multiplication] since they want us to calculate all the approaches and if goes out of bound then assume the values to be 1
+for assuming this , I have added 1 at end of array
+and for 1 at start started i = 0 instead of 1(as normal in Matrix chain multipcliation ) so that it start forming matrix from index 0 and 1 before it and to handle
+out of bound in this cases have asked 
 if(i-1<0)
             {
                 curr_val = values[k]*values[j]+sol(i,k,values,dp)+sol(k+1, j, values,dp); 
