@@ -20,10 +20,36 @@ public:
         }
         return dp[i][j] = min_val;
     }
-    int minScoreTriangulation(vector<int>& values) {
+    int tabulation(vector<int>& values)
+    {
         int n = values.size();
+        int dp[n][n];
+        //1. copy base case 
+        for(int i = 0 ; i<n ; i++)dp[i][i]= 0;
+
+        //other cases
+        //rule 2
+        for(int i= n-1; i>0 ; i--)
+        {
+            for(int j = i+1; j<n; j++)
+            {
+                int min_val = 1e9;
+                for(int k = i; k<j ; k++)
+                {
+                    int curr_val = values[i-1]*values[k]*values[j]+dp[i][k]+dp[k+1][j];
+                    min_val= min(min_val, curr_val); 
+                }
+                dp[i][j] = min_val;
+            }
+        }
+        return dp[1][n-1];
+    }
+    int minScoreTriangulation(vector<int>& values) {
+        // int n = values.size();
         //since on looking at the sol recursion two vars are being used hence we use the two vars and since max i and j can go to n each hence of size n*n
-        vector<vector<int>> dp(n,vector<int>(n,-1));
-        return sol(1,n-1,values,dp);
+        // vector<vector<int>> dp(n,vector<int>(n,-1));
+        // return sol(1,n-1,values,dp);
+
+        return tabulation(values);
     }
 };
