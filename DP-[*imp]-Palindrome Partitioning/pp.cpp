@@ -23,6 +23,10 @@ private:
         }
         return true;
     }
+     /*
+    T.C --> n*n(internal loop)
+    S.C --> O(n + n stack space)
+    */
     int sol(int i,int n ,string & str,vector<int>& dp)
     {
         //since in each case when recursion is called the i values is increasing so keeping a base base if i==n hence no more recursion required
@@ -42,10 +46,47 @@ private:
         } 
         return dp[i] = min_count;
     }
+
+    /*
+        rules for converting a recursive sol to tabulation
+        1.replicate the base case i.e here fill dp[n] = 0;
+        2. reverse the start i.e there i ->0 to n-1 here i->n-1 to 0
+        3.copy the remaining part
+    */
+    /*
+    T.C --> n*n(internal loop)
+    S.C --> O(n) no stack space
+    */
+    int tabulation(string & str)
+    {
+        int n = str.size();
+        vector<int> dp(n+1,0);
+        dp[n] = 0;
+        for(int i = n-1 ; i>=0 ; i--)
+        {
+            int min_count = 1e9;
+            //this variable store the value of current front string
+            string front_str  = "";
+            for(int j = i; j<n ; j++)
+            {
+                //since we are running this loop linearly then the front_str will get the string
+                front_str+=str[j];
+                if(isPalindrome(front_str))min_count = min(min_count,1+dp[j+1]);
+            } 
+            dp[i] = min_count;
+        }
+        return dp[0];
+    }
 public:
     int minCut(string s) {
         //sol function will return the min no of palindrome since we need min no of partition which is equal to no.of palindrome-1
-        vector<int> dp(s.size(),-1);
-        return sol(0,s.size(),s,dp)-1;    
+        // vector<int> dp(s.size(),-1);
+        // return sol(0,s.size(),s,dp)-1;    
+
+
+
+        //calling the tabulation 
+         //tabulation function will return the min no of palindrome since we need min no of partition which is equal to no.of palindrome-1
+        return tabulation(s)-1;
     }
 };
