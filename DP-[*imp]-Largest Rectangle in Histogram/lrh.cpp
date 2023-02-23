@@ -70,8 +70,41 @@ private:
         }
         return max_size_rectangle;
     }
+   //more optimized solution 
+    //please refer to striver video for detailed explanation video topic : largest rectahnge in historgram part-2 
+    //only explain this to the interviewer if he is forcing for it
+    //not very necessary
+    int optimized(vector<int>& heights)
+    {
+
+        int n = heights.size();
+        stack<int> st;
+        int max_area = 0;
+        for(int i = 0; i<=n ; i++)
+        {
+            //removing all the elements from stack which are greater than the current element
+            while(!st.empty() && (i ==n || (heights[st.top()]>= heights[i])))
+            {
+                int prev_hist = heights[st.top()];
+                st.pop();
+                int width ;
+                if(st.empty())width = i;
+                else width = i - st.top()-1;
+                int prev_rec_area = width*prev_hist;
+                max_area= max(max_area,prev_rec_area);
+            }
+            st.push(i);
+        }
+        return max_area;
+    }
+
+
 public:
     int largestRectangleArea(vector<int>& heights) {
-        return sol(heights);
+        // return sol(heights);
+        
+        
+        //calling optimized solution
+        return optimized(heights);
     }
 };
