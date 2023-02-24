@@ -1,5 +1,6 @@
 class Solution {
 private:
+    *important
     //naive soln. tc nlogn +n
     int sort_method(vector<int>& nums)
     {
