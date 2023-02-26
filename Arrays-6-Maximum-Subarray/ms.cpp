@@ -1,13 +1,53 @@
-Approach
-solution 3 -> using divide and conquer finding left max , right max and cross sum and then returning whichever is greater at each lever
-T.C -> nlogn
+/*
+appraoch from striver 1 
+not the one used coded below
+O(n^3 ) complexity 
+we take three loop 
+i -> 0->n-1
+j-> i to n-1
+k runs from i to j to calculate the sum of this subarray
 
-solution 2-> simple approach of dynamic programing
+the idea behind this approach we try to form all the subarray and callculate their sum and compare with a final_sum which is intialized to nums[0];
 
-Code
-//approach 3 --> divide and conquer approach
+appraoch from striver 2:
+    O(n^2)
+    since k is just used to calulate the sum we intialize sum = 0;
+    in ith loop and in jth loop for each run we just do sum+nums[j] and compare it with the final_sum value
+
+appraoch 3 from striver kadanes algorith:
+    O(n)
+    here we keep sum intialized to 0
+    and max_val = nums[0];
+    we start traversing and if the sum value become less than 0 we mkae sum =0 afte comparing it with max_val=max(max_val,sum)
+    we are updating to 0 since if the value is coming negative that won't be usefull in the coming subarray
+    and hence when the sum value becomes <0 then we say we won't be using this subarray le't try to form a new subarray with intial value 0
+
+*/
+
+
+
+
+
+
 class Solution {
+private:
+//appraoch 3 from striver kadanes algorithm:
+    int kadane_algo(vector<int>& nums)
+    {
+        int n = nums.size();
+        int sum = 0;
+        int max_val = nums[0];
+        for(int i = 0 ;i<n ; i++)
+        {
+            sum+=nums[i];
+            max_val = max(max_val,sum);
+            if(sum<0)sum = 0;
+        }
+        return max_val;
+    }
 public:
+
+    //approach 3 --> divide and conquer approach
     int cross_sum(vector<int>& nums, int p, int q)
     {
         int mid=(p+q)/2;
@@ -60,7 +100,10 @@ public:
             i++;
         }
         if(i == nums.size() )return (*max_element(nums.begin(),nums.end()));
-        else return help(nums,0,nums.size()-1);
+        //calling the solution 3 Dviide and Conqueor
+        // else return help(nums,0,nums.size()-1);
+        //calling kadanes algo striver sol 3
+        else return kadane_algo(nums); 
     }
 };
 
