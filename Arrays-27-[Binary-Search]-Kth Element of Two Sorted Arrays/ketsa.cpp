@@ -1,3 +1,5 @@
+problem link ---> CODING NINJA --> https://www.codingninjas.com/codestudio/problems/ninja-and-ladoos_1112629?leftPanelTab=0
+
 #include <bits/stdc++.h>
 using namespace std;
 /*
