@@ -1,6 +1,7 @@
 
 CONCEPT OF MINIMIZE THE MAXIMUM
-
+# Intuition
+Concept of MINIMIZE THE MAXIMUM that is we use binary search to try a certain value of speed if we are able to reach in that much speed then we try to go at lesser speed and check
 class Solution {
     //using the concept of minimize the maximum
     /*
