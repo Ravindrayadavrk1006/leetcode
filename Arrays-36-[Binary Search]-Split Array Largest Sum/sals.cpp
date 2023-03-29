@@ -1,3 +1,5 @@
+nice and important
+
 Intuition
 since the problem is of minimize the maximum hence took the famous approach of BS of minimizing the maximum
 
