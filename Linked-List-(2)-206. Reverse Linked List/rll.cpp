@@ -1,3 +1,4 @@
+basics
 Intuition
 using three pointers well known approach
 
