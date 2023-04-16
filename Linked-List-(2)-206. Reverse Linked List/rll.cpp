@@ -55,4 +55,20 @@ public:
         curr_node->next = prev_node;
         return curr_node;
     }
+    
+    /**** better appraoch***/
+    ListNode* reverse_ll(ListNode* head)
+    {
+        ListNode* prev=NULL;
+        ListNode* next = NULL;
+        while(head != NULL)
+        {
+
+            next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
 };
