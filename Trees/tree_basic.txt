@@ -1,0 +1,33 @@
+1.post_order_traversal(node)
+{
+    if(node == null)return;
+    in_order_traversal(node->left);
+    in_order_traversal(node->right);
+    print(node->value)
+}
+
+2. bfs(root)
+{
+    //for storing the bfs output
+    vector<vector> ans;
+    queue<node*> q;
+    if(root == NULL)return ans;
+    //we will have a queue ds which which will store all the nodes of the current level
+    q.push(root);
+    while(!q.empty())
+    {
+        q_size = q.size();
+        vector<int> curr_level
+        for(int i = 0 ; i<q_size; q++)
+        {
+            node* curr_node = q.front();
+            //remove that node from queue
+            q.pop();
+            if(node->left)q.push(curr_node->left);
+            if(node->right)q.push(curr_node->right);
+            curr_level.push_back(curr_node->val);
+        }
+        ans.push_back(curr_level);
+    }
+    
+}
