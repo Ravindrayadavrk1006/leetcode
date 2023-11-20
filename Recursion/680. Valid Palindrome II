@@ -1,0 +1,99 @@
+simple recursive solution 
+NOTES: try to keep big values as global instead of passing them as parameters or pass by reference 
+using global variables
+
+class Solution {
+string s_global="";
+
+private:
+    bool palindromeHelper(int i ,int j, int skipped )
+    {
+        if (i >= j )return true;
+        if(s_global[i] == s_global[j])return palindromeHelper(i+1, j-1 ,skipped );
+        // s[i] != s[j] conditions
+
+        //already skipped and also s[i] != s[j]
+        if(skipped)return false;
+        
+        //if skiipped was false and also s[i] != s[j]
+        skipped = true;
+        return (palindromeHelper(i+1, j, skipped) || palindromeHelper(i,j-1, skipped));
+    }
+public:
+    bool validPalindrome(string s) {
+        int n = s.length();
+        string s_copy = "";
+        //basic thing 
+        for(int i = n-1 ; i>=0 ; i--)s_copy+=s[i];
+        if(s==s_copy)return true;
+        //going for complex patterns
+        s_global = s;
+        return palindromeHelper(0, n-1, false);
+    }
+};
+
+
+
+
+//passing by reference of string
+
+class Solution {
+//string s_global="";
+
+private:
+    bool palindromeHelper(int i ,int j, string& s,  int skipped )
+    {
+        if (i >= j )return true;
+        if(s[i] == s[j])return palindromeHelper(i+1, j-1 ,s,skipped );
+        // s[i] != s[j] conditions
+
+        //already skipped and also s[i] != s[j]
+        if(skipped)return false;
+        
+        //if skiipped was false and also s[i] != s[j]
+        skipped = true;
+        return (palindromeHelper(i+1, j, s, skipped) || palindromeHelper(i,j-1, s, skipped));
+    }
+public:
+    bool validPalindrome(string s) {
+        int n = s.length();
+        string s_copy = "";
+        //basic thing 
+        for(int i = n-1 ; i>=0 ; i--)s_copy+=s[i];
+        if(s==s_copy)return true;
+        //going for complex patterns
+        return palindromeHelper(0, n-1, s , false);
+    }
+};
+
+
+
+
+//OTHER SOLUTIONS
+
+NON-RECURSIVE:
+  USING TWO POINTERS APPROACH:
+        public class Solution {
+        public bool ValidPalindrome(string s) {
+            int left = 0, right = s.Length - 1;
+    
+            while (left < right){
+                if (s[left] == s[right]){
+                    left++;
+                    right--;
+                }else 
+                    return IsPalindrome(s, left + 1, right) || IsPalindrome(s, left, right - 1);     
+            }
+    
+            return true;
+        }
+        private bool IsPalindrome(string s, int left, int right){
+            while (left < right){
+                if (s[left] != s[right])
+                    return false;
+                left++;
+                right--;
+            }
+            return true;
+        }
+    }
