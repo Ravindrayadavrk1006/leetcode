@@ -1,0 +1,52 @@
+https://www.codingninjas.com/studio/problems/quick-sort_983625?leftPanelTabValue=PROBLEM
+/*
+ quick sort is O(nlogn)T.C inplace sorting algorithm i.e doesn't require additional space. 
+ algorithm --> we can select any element as pivot element and we move all the elements smaller
+ than this pivot element to left of pivot element and all element greater than the pivot element to the right of the
+ pivot element in this way pivot element will be at it's correct place. 
+ when pivot element will be at correct place we do the same thing in the left side of element and to the right side of the elements
+ assuming each side to be a separate array.
+
+ parition_algo--> in this we place the pivot element to the correct place and smaller element to left and larger element to right of the pivot element
+ 
+    working of algo --> we assume first element each time to be pivot element .and place two pointer i at low and j at high
+    we try to find first element which is larger than the pivot element by moving i similarly we try to find fist larger element than pivot from last 
+    and swap them. 
+    after all the elemnts are swapped i.e smaller in left and larger in right we swap the last smaller element 
+    with pivot element and return this new pivot element position
+ 
+*/
+#include <bits/stdc++.h> 
+int partition_algo(vector<int>& arr,int low,int high){
+    //taking first element as pivot
+    int pivot = low;
+    int i = low;
+    int j = high;
+    while(i < j){
+        //finding greater element than pivot
+        while(arr[i]<=arr[pivot] && i<=high+1)i++;
+        while(arr[j]>arr[pivot] && j>=low-1)j--;
+        
+        //swapping the greater and smaller element
+        //checking i < j since j and i decreased inside the while loop which kept a watch on i<j
+        if(i < j)swap(arr[i],arr[j]);
+    }
+    //swap pivot element with the last smallest element
+    swap(arr[pivot],arr[j]);
+    //return j as pivot
+    return j;
+}
+void quick_sort(vector<int>& arr,int low,int high){
+    if(low < high){
+        int partition = partition_algo(arr, low, high);
+        quick_sort(arr,low, partition-1);
+        quick_sort(arr, partition+1, high);
+    }
+}
+vector<int> quickSort(vector<int> arr)
+{
+    // Write your code here.
+
+    quick_sort(arr,0,arr.size()-1);
+    return arr;
+}
