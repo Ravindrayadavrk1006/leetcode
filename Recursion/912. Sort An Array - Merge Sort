@@ -1,0 +1,57 @@
+/*
+    MERGE ARRAY is the concept of divide and conquer where we do divide and merge. 
+    we keep on dividing array till each array has one element and then we try to sort it.
+    we divide from mid 
+*/
+class Solution {
+private:
+    /*
+        in case of merge algo , the left and right array will be already sorted , for combining the sorted arrays in sorted form .
+        we take two pointers one as left placed at start of left array and right placed at start of the right array. we also take a empty array for temporarily placing the sorted elements
+        we compare the left pointer element with right pointer element which is small we push to temp array we keep doing so till any of condition is met left array is finished or right array is finished . then we copy the remaining elements(which will be in either left array or right array)in the temp array.
+        finally we copy the temp array sorted element to the original nums array 
+    */
+    void merge(vector<int>& nums, int low, int mid, int high){
+        //using two pointers to compare the elements
+        int left = low ;
+        int right = mid + 1;
+        vector<int> temp;
+        //comparing elements of left array with the right array since left and right are themself sorted so can be sorted in O(n)
+        while(left <= mid && right <= high){
+            if(nums[left] <= nums[right]){
+                temp.push_back(nums[left]);
+                left++;
+            }
+            else{
+                temp.push_back(nums[right]);
+                right++;
+            }
+        }
+        //if elements left in left array copy all the elements to the temp array
+        while(left <= mid){
+            temp.push_back(nums[left]);
+                left++;
+        }
+        //if elements left in the right array copy all the elements to the temp array
+        while(right<= high){
+            temp.push_back(nums[right]);
+            right++;
+        }
+        //copy temp to nums array 
+        for(int el: temp)nums[low++] = el;
+    }
+    void mergeSort(vector<int>& nums, int low, int high){
+        //base case becomes single element in the array it is already sorted 
+        if(low>= high)return;
+        //normal cases
+        int mid = (low + high)/2;
+        mergeSort(nums, low , mid);
+        mergeSort(nums, mid+1, high);
+        merge(nums, low, mid, high);
+    }
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        mergeSort(nums, 0, nums.size()-1);
+        return nums;
+    }
+};
