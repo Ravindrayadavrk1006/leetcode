@@ -1,0 +1,60 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+
+private:
+    //SOL 1
+    //recursive travesal easy and simple
+    void recursive_preorder_traversal(vector<int>& ans, TreeNode* root){
+        if(root == NULL)return ;
+        ans.push_back(root->val);
+        recursive_preorder_traversal(ans, root->left);
+        recursive_preorder_traversal(ans, root->right);
+    }
+
+    //SOL 2
+    //iterative traversal using a stack to store the elements
+    //explained more in competative notes
+    /*
+        since Stack is LIFO hence what we start by storing the initial root in the stack and when we pop the root we store right and then left in the stack(since left stored after right will come out before right)
+    */
+
+    /*
+        IMPORTANT NOTE-> iterative will always perform better than recursive . since stack space for calling the function will be saved and pushing pop all those time will be saved
+    */
+    vector<int> iterative_preorder_travesal(TreeNode* root){
+        vector<int> ans;
+        if(root == NULL)return ans;
+        stack<TreeNode*> st;
+        st.push(root);
+        while(!st.empty()){
+            root = st.top();
+            st.pop();
+            ans.push_back(root->val);
+            if(root->right != NULL)st.push(root->right);
+            if(root->left != NULL)st.push(root->left);
+        }
+        return ans;
+    }
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        //CALLING recursive traversal
+        /*
+        vector<int> ans;
+        recursive_preorder_traversal(ans, root);
+        return ans;
+        */
+
+        //CALLING iterative travesal
+        return iterative_preorder_travesal(root);
+    }
+};
