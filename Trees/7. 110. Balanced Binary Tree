@@ -1,0 +1,72 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+
+    //for finding the depth of tree
+    int maxDepth_helper(TreeNode* root){
+        if(root == NULL)return 0;
+
+        //find left depth
+        int left_depth =  maxDepth_helper(root->left);
+        //find right depth
+        int right_depth = maxDepth_helper(root->right);
+        return 1 + max(left_depth, right_depth);
+    }
+    /*
+        SOL 1 --->>>>>>> nieve solution 
+        t.c --> O(n^2)  since O(n) for finding the height and O(n) for checking if left and right each balanced .
+        logic --> we find the left_height and right_height and if difference greater than one we return false
+        we similarly check for it's left node and for right node separately and at any place we get false we return it 
+    */
+    bool isBalanced_helper(TreeNode* root){
+        if(root == NULL)return true;
+
+        int left_height = maxDepth_helper(root->left);
+        int right_height = maxDepth_helper(root->right);
+
+        if(abs(left_height-right_height)>1)return false;
+
+        //checking for left node and right node;
+        bool left_check = isBalanced_helper(root->left);
+        bool right_check = isBalanced_helper(root->right);
+        if(left_check && right_check)return true;
+        return false;
+    }
+
+    /*
+        SOL 2
+
+        logic -> idea is when we are standing at node we try to check it's left and right height since it is recursion so first node will be leftmost node where we will be checking the height so we found left and right return 0 hence we return max(0,0)+1 . the position where we find if left_height-right_height is greater than 1 we return -1 ;
+    */
+    int isBalanced_2(TreeNode* root){
+        if (root == NULL)return 0;
+
+        //check for left
+        int left_height = isBalanced_2(root->left);
+        if(left_height == -1 )return -1;
+        int right_height = isBalanced_2(root->right);
+        if(right_height == -1)return -1;
+        if(abs(left_height - right_height) > 1)return -1;
+        return max(left_height, right_height) +1;
+    }
+public:
+    bool isBalanced(TreeNode* root) {
+        //calling sol 1
+        // return isBalanced_helper(root);
+
+
+        //calling sol 2
+        if(isBalanced_2(root) != -1 )return true;
+        else return false;
+    }
+};
