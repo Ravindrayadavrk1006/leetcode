@@ -11,17 +11,46 @@
  */
 class Solution {
 private:
-    void in_order_traversal_helper(TreeNode* node,vector<int>& ans)
-    {
+    //SOL 1
+    void in_order_traversal_helper(TreeNode* node,vector<int>& ans){
         if(node == NULL)return;
         in_order_traversal_helper(node->left,ans);
         ans.push_back(node->val);
         in_order_traversal_helper(node->right,ans);
     }
+    //SOL 2
+    /*
+        in this we keep pushing the left element in the stack till we find null once null is found we pop the top most 
+element add it in the result and then push the top->right in the stack
+    */
+    void  iterative_inorder_traversal(TreeNode* root, vector<int>& ans){
+        if(root == NULL)return;
+        stack<TreeNode*> st;
+        while(true){
+            if(root != NULL)
+            {
+                st.push(root);
+                root= root->left;
+            }
+            else
+            {
+                if(st.empty())break;
+                TreeNode* top  = st.top();
+                st.pop();
+                ans.push_back(top->val);
+                root = top->right;
+            }
+
+        }
+    }
 public:
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ans;
-        in_order_traversal_helper(root,ans);
+        //SOL 1 CALLING
+        // in_order_traversal_helper(root,ans);
+
+        //SOL 2 CALLING 
+        iterative_inorder_traversal(root, ans);
         return ans;
     }
 };
