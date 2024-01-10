@@ -13,11 +13,6 @@ class Solution {
 public:
 
     //for finding the max height of a binary tree 
-
-    /*
-    simple solution of at standing from current position calculating the height of left+right for each node 
-    
-    */
     int max_height_func(TreeNode* root){
         if(root == NULL)return 0;
         int left_height = max_height_func(root->left);
@@ -55,6 +50,25 @@ public:
 
     return max(current_diameter, max(left_diameter, right_diameter));
 }
+
+
+    /*
+        using O(n) time complexity
+
+        here we are writing our solution in the height find function since height is important and we can keep calculating our required solution on top of that.
+        since height calucation start from LEFT MOST NODE AND IS CALCULATED FOR ALL THE NODES AND WE ALSO NEED TO CALCULATE THE DIAMETER AT EACH NODE AND STORE THE LARGEST VALUE , hence doing same 
+    */
+    int max_diam = 0;
+    int sol_2(TreeNode* root){
+        if(root == NULL)return 0;
+
+        //simple calling 
+        int left_height = sol_2(root->left);
+        int right_height = sol_2(root->right);
+        max_diam = max(left_height+right_height, max_diam);
+        return 1+ max(left_height,right_height);
+
+    }
     int diameterOfBinaryTree(TreeNode* root) {
 
         //using global var
@@ -64,6 +78,11 @@ public:
         */
 
         //using local variable
-        return diameter_helper_local_var_2(root);
+        // return diameter_helper_local_var_2(root);
+
+
+        //sol 2
+        sol_2(root);
+        return max_diam;
     }
 };
