@@ -37,6 +37,9 @@ private:
         if(abs(left_height-right_height)>1)return false;
 
         //checking for left node and right node;
+        /*
+            root is checked now since have to check all the nodes hence checking recursively for left and right node 
+        */
         bool left_check = isBalanced_helper(root->left);
         bool right_check = isBalanced_helper(root->right);
         if(left_check && right_check)return true;
@@ -52,10 +55,18 @@ private:
         if (root == NULL)return 0;
 
         //check for left
+
+        /*
+            idea is very simple we are calculating height only finally since calculation start at last node and therefore 
+            at the same time we are performing our required stuff too.
+
+        */
         int left_height = isBalanced_2(root->left);
         if(left_height == -1 )return -1;
         int right_height = isBalanced_2(root->right);
         if(right_height == -1)return -1;
+
+        //on top of height finding we are doing this extra for checking if balanced
         if(abs(left_height - right_height) > 1)return -1;
         return max(left_height, right_height) +1;
     }
