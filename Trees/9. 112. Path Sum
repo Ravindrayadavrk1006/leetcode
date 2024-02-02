@@ -1,0 +1,30 @@
+
+
+
+ /*
+   simple question of traversing from root to leaf and addding the values
+ */
+class Solution {
+private:
+
+    bool helper(TreeNode* root,int curr_sum, int target_sum){
+        if(root == NULL){
+            cout<<" in null node "<<"curr_sum"<<curr_sum<<" target_sum "<<target_sum<<endl;
+            if(curr_sum == target_sum)return true;
+            return false; 
+        }
+        cout<<"curr_sum "<<curr_sum<<"curr_root valu"<<root->val<<endl;
+        //checking if left return the required ans we return from here itself
+        bool left_check = helper(root->left, curr_sum + root->val, target_sum);
+        if(left_check)return true;
+        //if right return the required answer
+        bool right_check = helper(root->right, curr_sum + root-> val, target_sum);
+        if(right_check)return true;
+        return false;
+    }
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if(root == NULL)return false;
+        return helper(root, 0, targetSum);
+    }
+};
