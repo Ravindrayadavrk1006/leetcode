@@ -1,0 +1,31 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+ //using concept of height of binary tree   
+public:
+    int max_i = INT_MIN;
+    int helper(TreeNode* root){
+        if(root == NULL)return 0;
+        //here max(0, left_value)saying if left side coming to be negative we don't take , we have to ignore it 
+        int left_sum = max(0,helper(root->left));
+        int right_sum = max(0,helper(root->right));
+        max_i = max(max_i, left_sum+ right_sum + root->val);
+
+        //for traversal it remains same i.e we need to have root->val and either of left or right coming 
+        //as was in case of height of binary tree
+        return max(left_sum,right_sum)+ root->val;
+    }
+    int maxPathSum(TreeNode* root) {
+        helper(root);
+        return max_i;
+    }
+};
