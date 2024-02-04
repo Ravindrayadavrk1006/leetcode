@@ -1,0 +1,44 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    //doing pre-order traversal of both the trees at the same time and comparing
+    bool helper(TreeNode* r1, TreeNode* r2){
+
+        /*
+            checking if the current root  any of both roots is null,
+            then further after the first condition is satisfied checking if both are null we return true
+            else return false
+        */
+        if(r1== NULL || r2== NULL){
+            //if both are null it means both are equal else it means not equal hence return false in else condition
+            if(r1 == NULL && r2 == NULL)return true;
+            else return false;
+        }
+        //normal condition checks
+        if(r1->val != r2->val)return false;
+        /*
+            if false return from left then we return same false further up
+        */
+        if(!helper(r1->left,r2->left))return false;
+        /*
+            if false return from right then we return same false further up
+        */
+        if(!helper(r1->right,r2->right))return false;
+        return true;
+    }
+public:
+
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        return helper(p,q);
+    }
+};
