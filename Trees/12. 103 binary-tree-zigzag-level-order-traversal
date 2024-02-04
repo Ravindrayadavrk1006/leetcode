@@ -1,0 +1,88 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+/*
+    approach -> we normally try the concept of level order traversal(BFS) , we are marking level = 0 as root level and next level =1
+    and so on . so that for we keep a track that for even level we have to print from left to right and for odd level have to print from right to left
+
+
+    since in normal BFS elements are printed from left to right , so for even level we will normally save in a temp_vec 
+    but in odd level we will insert the current level element in a stack and then from stack to temp_vec 
+
+    directly_push_into_temp_vec in this function we are normally reading the current level from queue and storing in the temp_vec and return temp_vec
+    push_into_stack_then_into_temp_vec in this function we are first storing the current level elements in the stack and then into the temp_vec  and return temp_vec
+
+    the temp_vec is finally saved in the ans vec which is the final ans
+
+*/
+class Solution {
+private:
+    //in this function we are normally reading the current level from queue and storing in the temp_vec and return temp_vec
+    vector<int> directly_push_into_temp_vec(queue<TreeNode*> *q){
+        vector<int> temp_vec ;
+        int q_curr_size = q->size();
+        for(int i = 0; i<q_curr_size; i++){
+            TreeNode* front = q->front();
+            temp_vec.push_back(front->val);
+            q->pop();
+            if(front->left != NULL)q->push(front->left);
+            if(front->right != NULL)q->push(front->right);
+        }
+        return temp_vec;
+    }
+
+    //in this function we are first storing the current level elements in the stack and then into the temp_vec  and return temp_vec
+    vector<int> push_into_stack_then_into_temp_vec(queue<TreeNode*> *q){
+        vector<int> temp_vec;
+        int q_curr_size = q->size();
+        stack<int> st;
+        for(int i = 0; i<q_curr_size; i++){
+            TreeNode* front = q->front();
+            st.push(front->val);
+            q->pop();
+            if(front->left != NULL)q->push(front->left);
+            if(front->right != NULL)q->push(front->right);
+        }
+        while(!st.empty()){
+            temp_vec.push_back(st.top());
+            st.pop();
+        }
+        return temp_vec;
+    }
+
+    //main called function 
+    /*
+        this function conditionally is the normall BFS code where we conditionally call other two function for odd or even level
+    */
+    vector<vector<int>>helper(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(root == NULL)return ans;
+        int level = 0;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            vector<int> temp_vec;
+            if(level %2 == 0){
+                temp_vec = directly_push_into_temp_vec(&q);
+            }
+            else{
+                temp_vec = push_into_stack_then_into_temp_vec(&q);
+            }
+            level++;
+            ans.push_back(temp_vec);
+        }
+        return ans;
+    }
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        return helper(root);
+    }
+};
