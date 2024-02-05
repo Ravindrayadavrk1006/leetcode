@@ -22,6 +22,13 @@
 
     the temp_vec is finally saved in the ans vec which is the final ans
 
+
+
+
+    alternate approach:
+            instead of using the stack structure for reversing what we can do is we can create a vector<int> temp_vec(q_curr_size) and if
+            if it is odd level then we insert element from last in it and for even level insert from start
+
 */
 class Solution {
 private:
