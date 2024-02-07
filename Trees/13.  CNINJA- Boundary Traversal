@@ -1,0 +1,95 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    template <typename T>
+    class TreeNode {
+       public:
+        T val;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T val) {
+            this->val = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+
+************************************************************/
+CODING NINJAS
+QUESTION LINK : https://www.codingninjas.com/studio/problems/boundary-traversal_893063?leftPanelTabValue=SUBMISSION
+
+/*
+  dividing the problem in three parts left part travesal , leaf node traversal and right part travesal
+  from main root , we give root->left to left_traversal,
+  from main root , we give root->right to right_travesal
+  for left part traversal
+            : simply trying to go left if left does not exist then going right. also we are not taking the leaf 
+  node since that will be convered in leaf travesal for leaving out the leaf node we are doing  if(root && root->left == NULL && root->right == NULL){
+        return;
+    }
+  for right_travesal 
+      since we want in reverse order of nodes from root we store them first in a stack and later on copy in the ans vector
+    so like left_traversal we are doing the right_travesal but difference is we are saving in stack to be later copied in the ans
+
+  for leaf_nodes_traversal :
+    we are doing the post order travesal and storing in the ans array when root->left == NULL && root->right == NULL .
+    also we are travesing to left and right side
+  
+*/
+
+void left_nodes_traversal(TreeNode<int>* root, vector<int>& ans){
+    if(root == NULL)return;
+    //do not push the last node since that will be convered in leaf node travesal
+    if(root && root->left == NULL && root->right == NULL){
+        return;
+    }
+    ans.push_back(root->val);
+    if(root->left == NULL)left_nodes_traversal(root->right,ans);
+    else left_nodes_traversal(root->left,ans);
+}
+//postorder traversal and only pushing the leaf node in the ans
+void leaf_nodes_travesal(TreeNode<int> *root,vector<int> &ans){
+    if(root == NULL)return;
+    if(root->left == NULL && root->right == NULL){
+        ans.push_back(root->val);
+        return;
+    }
+    //left_side travesal
+    if(root->left != NULL)leaf_nodes_travesal(root->left, ans);
+    if(root->right != NULL)leaf_nodes_travesal(root->right, ans);
+
+}
+void right_nodes_travesal(TreeNode<int> * root, stack<int> &st){
+    //suppose main root has no left then this condition helpfull
+    if(root == NULL)return;
+    //for not taking the left node 
+    if(root && root->right == NULL && root->left == NULL)return;
+    st.push(root->val);
+    if(root->right == NULL)right_nodes_travesal(root->left, st);
+    else right_nodes_travesal(root->right, st);
+}
+vector<int> helper(TreeNode<int> * root){
+    vector<int> ans;
+    if(root == NULL)return ans;
+    ans.push_back(root->val);
+
+    
+    //if just one node then till here only no need to waste effort  
+    if(root->left == NULL && root->right == NULL)return ans;
+    left_nodes_traversal(root->left, ans);
+    leaf_nodes_travesal(root,ans);
+    stack<int> st;
+    right_nodes_travesal(root->right, st);
+    while(!st.empty()){
+        ans.push_back(st.top());
+        st.pop();
+    }
+    return ans;
+}
+vector<int> boundaryTraversal(TreeNode<int> *root)
+{
+    return helper(root);
+}
