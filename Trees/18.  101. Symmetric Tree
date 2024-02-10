@@ -1,0 +1,38 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+/*
+
+    idea-> simple the way we do normal inorder traversal doing the same just few more condition instead of recursively calling root->right since we want to compare this with root->left hence we pass both 
+    we check if at any position we find false we return false from there itself otherwise return true
+*/
+class Solution {
+private:
+    bool helper(TreeNode* r1, TreeNode* r2){
+
+        //below three lines are base codition 
+        if(r1 == NULL && r2)return false;
+        if(r2 == NULL && r1)return false;
+        if(r1 == NULL && r2 == NULL)return true;
+
+        if(r1->val != r2->val)return false;
+
+        //if got false from any point return false otherwise check for other side as well
+        if(!helper(r1->left,r2->right))return false;
+        if(!helper(r1->right,r2->left))return false;
+        return true;
+    }
+public:
+    bool isSymmetric(TreeNode* root) {
+        if(root == NULL)return true;
+        return helper(root->left, root->right);
+    }
+};
