@@ -1,0 +1,62 @@
+#include <bits/stdc++.h> 
+/*   
+    template <typename T = int>
+	class TreeNode
+	{
+		public:
+		T data;
+		TreeNode<T> *left;
+		TreeNode<T> *right;
+
+		TreeNode(T data)
+		{
+			this->data = data;
+			left = NULL;
+			right = NULL;
+		}
+
+		~TreeNode()
+		{
+			if (left != NULL)
+			{
+		  		delete left;
+			}
+			if (right != NULL)
+			{
+			 	delete right;
+			}
+		}
+	};
+*/
+/*
+	idea---> easy approach of inorder travesal , we are pushing the current root in the ans array and then 
+	checking if the current element is required last node to reach if yes we return true, 
+	and we keep on returning true if we found true from the  below recursions.
+	we go on left and right in normal fashion as in inorder recrusion with a twist of returning the ans if we have got true from any above recursion
+	else when left right both travesed for the current element we are sure we didn't get ans for the current element hence we remove if frmo the ans,
+	
+
+*/
+bool  helper(TreeNode<int> * root, int x, vector<int>& ans){
+	if(root == NULL)return false;
+	ans.push_back(root->data);
+	if(root->data == x){
+		return true;
+	}
+	if(root->left != NULL){
+		if(helper(root->left,x, ans))return true;
+	}
+	if(root->right != NULL){
+		if(helper(root->right,x,ans))return true;
+	}
+	ans.pop_back();
+	return false;
+}
+
+vector<int> pathInATree(TreeNode<int> *root, int x)
+{
+	vector<int> ans;
+	helper(root,x, ans);
+	return ans;
+    // Write your code here.
+}
