@@ -1,0 +1,99 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+ /*
+    explanation -> we are using level order travesal and indexing or giving index to each node , we are using zero based indexing since we just have to calculate the no of elements which will be a substraction.
+    
+    #indexing->
+        for it if a position of element is 'i' it's left child will be 2*i+1 and right 2*i+2 .
+        #below is done for optmization where the height is to big or the tree has many level where condition of overflow will occur
+        also since we just need the difference so making the position increase forever in next level is not good hence we have done optimization . what we are doing is we try to start from zero for the next level for it . 
+        we are taking the minimum index of the current level which is obviously the first element of the current level and then we substract this value from the current index and this becomes the new i i.e newi = i-min_currrent_level
+        and it's child will become now
+        left = newi *2 +1 
+        right = newi*2 +1
+
+ */
+class Solution {
+private:
+    //below is correct solution but indexing gives overflow condition
+    int width_of_binary_tree(TreeNode* root){
+        //level order traversal 
+        int max_width = 0;
+        int current_pos = 0;
+        if(root == NULL)return 0;
+        //root is not null
+        //the int part will contain the position
+        queue<pair<TreeNode*, int>>  q;
+        //using zero based indexing 
+        q.push({root,0});
+
+        //below is correct solution but it gives overflow issue due to ever increasing value of index 
+        while(!q.empty()){
+            int q_curr_size = q.size();
+            //current level min index
+            int min_level =0;
+            int front_pos , last_pos;
+            for(int i=0;i<q_curr_size; i++){
+                TreeNode* front = q.front().first;
+                int pos = q.front().second;
+                //pop the front node
+                q.pop();
+                if(i == 0)front_pos = pos;
+                if(i == q_curr_size-1 )last_pos = pos;
+                if(front->left != NULL)q.push({front->left,pos*2 +1});
+                if(front->right != NULL)q.push({front->right,pos*2 +2});
+            }
+            //updating the maximum
+            max_width = max(max_width, last_pos -front_pos +  1);
+        }  
+        return max_width ;
+    }
+    int width_of_binary_tree_optimize_indexing(TreeNode* root){
+        //level order traversal 
+        long max_width = 0;
+        int current_pos = 0;
+        if(root == NULL)return 0;
+        //root is not null
+        //the int part will contain the position
+        queue<pair<TreeNode*, long>>  q;
+        //using zero based indexing 
+        q.push({root,0});
+
+        //below is correct solution but it gives overflow issue due to ever increasing value of index 
+        while(!q.empty()){
+            int q_curr_size = q.size();
+
+            //current level min index will be the index of first node
+            long min_level = q.front().second;
+            long front_pos , last_pos;
+            for(int i=0;i<q_curr_size; i++){
+                TreeNode* front = q.front().first;
+                //for every node we will reduce the minimum value of current level in their position
+                long pos = q.front().second - min_level;
+                //pop the front node
+                q.pop();
+                if(i == 0)front_pos = pos;
+                if(i == q_curr_size-1 )last_pos = pos;
+                if(front->left != NULL)q.push({front->left,pos*2 +1});
+                if(front->right != NULL)q.push({front->right,pos*2 +2});
+            }
+            //updating the maximum
+            max_width = max(max_width, last_pos -front_pos +  1);
+        }  
+        return max_width ;
+    }
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        //return width_of_binary_tree(root);
+        return width_of_binary_tree_optimize_indexing(root);
+    }
+};
