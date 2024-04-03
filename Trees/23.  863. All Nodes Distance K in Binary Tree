@@ -1,0 +1,104 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+    /*
+        //find_parent IS A HELPER FUNCTION USED IN SOL FUNCTION
+        in find_parent func we are storing a node's immediate parent for ex. 5 immediate parent is 3, 6 immediate is 5 and so on in the given example in the side.
+        we are doing bfs traversal. bfs travesal only because that traversal visit left and right instantly after it's root
+    */
+    //will do BFS to find parents
+    void find_parent(TreeNode* root, unordered_map<TreeNode*,TreeNode*> & immediate_parent){
+        if(root == NULL)return;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int curr_size = q.size();
+            for(int i = 0 ; i<curr_size; i++){
+                TreeNode* front = q.front();
+                q.pop();
+                if(front->left){
+                    immediate_parent[front->left] = front;
+                    q.push(front->left);
+                }
+                if(front->right){
+                    immediate_parent[front->right] = front;
+                    q.push(front->right);
+                }
+            }
+        }
+    }
+    /*
+        once we have the immediate_parent using the above function , it will be like graph from where we can move in any direction even upward too. 
+
+        after this idea will be to find -> the kth nearest al nodes
+        for it we will have a visted hashmap for storing if a node has been visited or not . this will be helpfull . suppose are are at node 2 . we will get 7,4,5 as left , right and parent respectively but since 5 is already visited to avoid this condition of infinite loop and reduce unneccessary complexity . we will store the element in visited hashmap once completed.
+
+        we will use a queue q_visited which will store the elements from the target node .
+
+        ***note here also we are doing BFS traversal with  extra condition of adding parent node as well which we have stored in immediate_parent array
+        now explanation with example.
+        we will start from target since we have to find distance from target
+        convention -> node -> it's left ,right, parent
+        we will start by pushing target node in q_dist and then will run a for loop to process all the node at a distance k
+        we will begin with dist = 0 initally which states 5 is at a distance 0 from target
+        now we will run a for loop for processing all node in q_dist present at a time.
+        5 -> 6,2,3      we will push 6,2,3 in q_dist , pop 5 from q_dist and push it in visited since it is visited next time in next loop we will pop 6,2,3
+        6-> 
+        2-> 7 ,4, (5)  5 won't be inserted since already in visited
+        3-> (5),1  => 5 won't be inserted since already visited
+    */
+    vector<int> sol(TreeNode* root, TreeNode* target, int k){
+        vector<int> ans ;
+        if(root ==NULL )return ans;
+        unordered_map<TreeNode*,TreeNode*>  immediate_parent;
+        //finding the immediate parent of each node using BFS and storing it's parent value in a unordered_map named immediate_parent
+        find_parent(root,immediate_parent);
+        cout<<"size of immediate map"<<immediate_parent.size();
+        //finding the nodes at k distance
+        int dist = 0;
+        unordered_map<TreeNode*, bool> visited;
+        // visited[root] = true;
+        //queue which store the elemnt from the target node in distance fashion
+        queue<TreeNode*> q_dist;
+        q_dist.push(target);
+        while(dist != k && !q_dist.empty()){
+           int curr_size = q_dist.size();
+           for(int i = 0;i<curr_size; i++){
+                TreeNode* front = q_dist.front();
+                q_dist.pop();
+                //if current_node left exist and not visited
+                if(front->left && visited.find(front->left) == visited.end()){
+                    q_dist.push(front->left);
+                }
+                 if(front->right && visited.find(front->right) == visited.end()){
+                    q_dist.push(front->right);
+                }
+                //current ka immediate parent exist and it's also not visited 
+                 if(immediate_parent.find(front) != immediate_parent.end() && visited.find(immediate_parent[front])== visited.end()){
+                    q_dist.push(immediate_parent[front]);
+                }
+                visited[front] = true;
+           }
+           dist +=1;
+        }
+
+        //when the distance is k we will have the elements at distance in q_dist vector hence storing in answer
+        while(!q_dist.empty()){
+            ans.push_back(q_dist.front()->val);
+            q_dist.pop();
+        }
+        return ans;
+    }
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        
+        return sol(root, target, k);
+    }
+};
