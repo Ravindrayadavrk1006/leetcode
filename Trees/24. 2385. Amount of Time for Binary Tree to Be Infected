@@ -1,0 +1,79 @@
+/*
+  exactly same to 23. find all the kth node ,
+  refer to that for further explanation
+
+
+  for start node -> here value is given instead of node address hence used find_start_node function for finding the start node address
+  it added extra O(n) complexity
+
+*/
+class Solution {
+private:
+    /*
+        //find_parent IS A HELPER FUNCTION USED IN SOL FUNCTION
+        in find_parent func we are storing a node's immediate parent for ex. 5 immediate parent is 3, 6 immediate is 5 and so on in the given example in the side.
+        we are doing bfs traversal. bfs travesal only because that traversal visit left and right instantly after it's root
+    */
+    //will do BFS to find parents
+    void find_parent(TreeNode* root, unordered_map<TreeNode*,TreeNode*> & immediate_parent){
+        if(root == NULL)return;
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int curr_size = q.size();
+            for(int i = 0 ; i<curr_size; i++){
+                TreeNode* front = q.front();
+                q.pop();
+                if(front->left){
+                    immediate_parent[front->left] = front;
+                    q.push(front->left);
+                }
+                if(front->right){
+                    immediate_parent[front->right] = front;
+                    q.push(front->right);
+                }
+            }
+        }
+    }
+    //find the start node
+    TreeNode* find_start_node(TreeNode* root, int start){
+        if(root == NULL)return NULL;
+        if(root->val == start)return root;
+        TreeNode* left = find_start_node(root->left, start);
+        if(left)return left;
+        TreeNode* right = find_start_node(root->right, start);
+        if(right)return right;
+        return NULL;
+    }
+    int sol(TreeNode* root , int start){
+        int tot_time = -1;
+        if(root == NULL)return tot_time;
+        unordered_map<TreeNode*, TreeNode*> immediate_parent;
+        find_parent(root, immediate_parent);
+        unordered_map<TreeNode* , bool> visited; 
+        queue<TreeNode*> q;
+        //find the start node and push it in the queue to start the burning
+        //find_start_node -> this function find the start node
+        q.push(find_start_node(root, start));
+        while(!q.empty()){
+            int curr_size = q.size();
+            tot_time +=1;
+            cout<<"q-size "<<curr_size<<" tot_time "<<tot_time<<endl;
+            for(int i = 0; i< curr_size; i++){
+                TreeNode* front = q.front();
+                q.pop();
+                if(front -> left && visited.find(front->left) == visited.end())q.push(front->left);
+                if(front -> right && visited.find(front->right) == visited.end())q.push(front->right);
+                if(immediate_parent.find(front) != immediate_parent.end() && visited.find       (immediate_parent[front]) == visited.end())q.push(immediate_parent[front]);
+
+                visited[front] = true;
+            }
+            // tot_time +=1;
+        }
+        return tot_time;
+    }
+public:
+    int amountOfTime(TreeNode* root, int start) {
+        return sol(root, start);
+    }
+};
