@@ -1,0 +1,58 @@
+
+ /*
+ 
+ approach --> good approach to break a problem and use recursion to solve it.
+ we know for a full binary tree no of nodes is 2^n -1 where n is the height.
+ in example 1 if it was a full tree then no of nodes would be 2^3-1 i.e 7
+ so what are doing we are checking if it's a full tree if it is then returning 2^n-1 , if it is not then we are trying to use recursion to find, for it we will get 1+ nodes_in_left_tree + nodes_in_right tree.
+
+we can know at a node if it is a full tree by checking the left and right height , since all the nodes in a complete tree in last level which may be incomplete level will have all it's last level node towards the left.
+so from a node for finding it's left height we keep going left left ...., for finding right height we keep right right .... .
+ 
+
+
+ //LEARNING WE CAN USE POWER OF RECURSION TO BREAK A  AND FIND THE SOLUTION. IF WE KNOW HOW TO FIND IN A FULL TREE OR IN PARTS.
+ 
+ */
+class Solution {
+private:
+    int count_comp_nodes(TreeNode* root){
+        if(root == NULL)return 0;
+        cout<<"curr root"<<root->val<<endl;
+        int left_height = helper_left_height(root);
+        int right_height = helper_right_height(root);
+        cout<<"left height "<<left_height<<" right_height "<<right_height<<endl;
+        //1<<left_height is 2^left_height
+        if(left_height == right_height){
+            //here left shift is being done to 1  i.e left_height zeros are being added at the end of 1 
+            int val =  (1<<left_height) -1;
+            cout<<"return value"<< val<<endl;
+            return val;
+        }
+        int val = 1+ count_comp_nodes(root->left) + count_comp_nodes(root->right);
+        cout<<"return value"<<val;
+        return val;
+    }
+    int helper_left_height(TreeNode* root){
+        if(root == NULL)return 0;
+        int height = 0;
+        while(root){
+            height++;
+            root = root ->left;
+        }
+        return height;
+    }
+    int helper_right_height(TreeNode* root){
+        if(root == NULL)return 0;
+        int height = 0;
+        while(root){
+            height++;
+            root = root ->right;
+        }
+        return height;
+    }
+public:
+    int countNodes(TreeNode* root) {
+        return count_comp_nodes(root);
+    }
+};
