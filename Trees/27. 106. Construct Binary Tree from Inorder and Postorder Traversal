@@ -1,0 +1,42 @@
+
+/*
+    explanation -> exactly similar to  26.26. 105. Construct Binary Tree from Preorder and Inorder Traversal in the trees in the github,
+    only change here at 
+    int nums_left = position_root - in_start;
+        root->left = helper_build_tree(post,post_start,post_end -nums_right-1,in,in_start,in_start+nums_left-1, hmap);
+        root->right = helper_build_tree(post,post_end -nums_right,post_end-1,in,position_root +1,in_end,hmap);
+        //since instead of now preorder postorder is given where the root is stored at end .
+        the order in postorder is left,right, root and hence above change made to accomodate that
+ 
+*/
+class Solution {
+private:
+
+    TreeNode* helper_build_tree(vector<int>& post, int post_start, int post_end, vector<int>& in,int in_start, int in_end, map<int, int>& hmap){
+        if(post_start>post_end || in_start > in_end )return NULL;
+        //construct a new node 
+        TreeNode* root = new TreeNode(post[post_end]);
+        int position_root = hmap[root->val];
+        int nums_right = in_end - position_root;
+        int nums_left = position_root - in_start;
+        root->left = helper_build_tree(post,post_start,post_end -nums_right-1,in,in_start,in_start+nums_left-1, hmap);
+        root->right = helper_build_tree(post,post_end -nums_right,post_end-1,in,position_root +1,in_end,hmap);
+        return root;
+    }
+    TreeNode* unique_tree(vector<int>& postorder, vector<int>& inorder){
+        if(inorder.size() == 0)return NULL;
+        //hasing all the values of inorder as keys and index as values since given node values are unique and will be required to divide inorder array
+        map<int, int> hmap;
+        int inorder_size = inorder.size();
+        for(int i = 0; i< inorder.size(); i++){
+            //value as key and index a value
+            hmap[inorder[i]] = i;
+        }
+        //size of postoder and inorder array will be same
+        return helper_build_tree(postorder, 0,postorder.size()-1 , inorder,0 , inorder_size-1,hmap);
+    }
+public:
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        return unique_tree(postorder,inorder);
+    }
+};
