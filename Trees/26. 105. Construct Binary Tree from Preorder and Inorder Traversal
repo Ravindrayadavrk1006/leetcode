@@ -1,0 +1,41 @@
+/*
+    easy approach->>
+    of finding the root from pre_order which will be the first element and then finding the same element in inorder. the left of that element in inorder will be part of left of that root and right element will be part of right of that root.
+    
+    we use recursion to recursively solve now left and right part .
+    we return the root element in each case and this way when we call recursion on left part and right part respectively they become left-child and right child.
+
+    ****NOTES AND POINTS***
+    1---->*for breaking arrays i.e for recusively passing the reqiured inorder and preoder will pass the start and end index in each case as well as the arrays and hence we know that for this subproblem how much is the array.
+    2----> see how for finding index where that element is we are doing hashing for efficient access
+    3---> see how recursion is efficiently used for assigning left and right child by returning root at each place
+*/
+class Solution {
+private:
+    TreeNode* helper_build_tree(vector<int>& pre, int pre_start, int pre_end, vector<int>& in,int in_start, int in_end, map<int, int>& hmap){
+        if(pre_start>pre_end || in_start > in_end )return NULL;
+        //construct a new node 
+        TreeNode* root = new TreeNode(pre[pre_start]);
+        int pos_root = hmap[root->val];
+        int nums_left = pos_root - in_start;
+        root->left = helper_build_tree(pre,pre_start+1,pre_start + nums_left,in,in_start,pos_root-1, hmap);
+        root->right = helper_build_tree(pre,pre_start + nums_left+1,pre_end,in,pos_root +1,in_end,hmap);
+        return root;
+    }
+    TreeNode* unique_tree(vector<int>& preorder, vector<int>& inorder){
+        if(inorder.size() == 0)return NULL;
+        //hasing all the values of inorder as keys and index as values since given node values are unique and will be required to divide inorder array
+        map<int, int> hmap;
+        int inorder_size = inorder.size();
+        for(int i = 0; i< inorder.size(); i++){
+            //value as key and index a value
+            hmap[inorder[i]] = i;
+        }
+        //size of preoder and inorder array will be same
+        return helper_build_tree(preorder, 0,preorder.size()-1 , inorder,0 , inorder_size-1,hmap);
+    }
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return unique_tree(preorder,inorder);
+    }
+};
