@@ -1,0 +1,93 @@
+/*
+    BFS traversal used since it alone gives unique tree from a string whereas preorder,postorder have to used in combination of (inorder,postorder) or (inorder,preorder)
+    serialize -> reading  using BFS and here reading i am doing so , that inserting even if the child is null , but when reading from queue , if the front node is null we just #(to avoid any unrequired clash if we store 'null') it to string and don't insert nulls child in the queue . whereas if the front is non-null we insert it's left and right child without checking if the they are null or not.
+
+    deserialize -> we have the string now . now we will split the string using ',' delimiter and if
+    we are using BFS traversal to form tree from string since it has values level by level.
+
+        read the first element and store it in queue and form a tree root node.
+        we run the loop till queue is empty.
+        we read the next element from string if it is not # then we insert in the queue as well as in left of the front .
+        if next string is # we insert null in the current front->left
+        we again read and if string not # then we insert the element in the front_right and also push in the queue 
+            if the next string is # then we just push null in the right of the tree  
+*/
+class Codec {
+public:
+    //use level order traversal to form a tree since level order traversal forms unique tree
+    void helper_serialize(TreeNode* root, string& ans){
+        if(root == NULL){
+            return;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int curr_size = q.size();
+            for(int i = 0 ; i <curr_size;i++){
+                TreeNode* front = q.front();
+                q.pop();
+                if(front == NULL){
+                    ans +="#,";
+                }
+                else
+                {
+                   ans = ans + to_string(front->val)+","; 
+                   q.push(front->left);
+                   q.push(front->right);
+                }
+            }
+            cout<<"---ans--->"<<ans<<endl;
+        }
+    }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string ans = "";
+        helper_serialize(root, ans);
+        cout <<"ans--->"<<ans;
+        return ans;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        cout<<"str"<<data<<endl;
+        if(data.size() == 0)return NULL;
+        //splitting a string using a dilimiter
+        //converting data to a string stream
+        stringstream s(data);
+        //a string to store the output array from stringstream
+        string st;
+        //so it gives the output one by one in the st
+        getline(s,st,',');
+        //queue we are constructing for storing treenode type since at each plaace that will be considered root
+        queue<TreeNode*> q;
+        TreeNode* root = new TreeNode(stoi(st));
+        q.push(root);
+        while(!q.empty()){
+            TreeNode* front = q.front();
+            q.pop();
+            //getting left
+            getline(s,st,',');
+            if(st == "#")front->left = NULL;
+            else{
+                TreeNode* temp = new TreeNode(stoi(st));
+                q.push(temp);
+                front->left = temp;
+            }
+            //for right
+            getline(s,st,',');
+            if(st == "#")front->right = NULL;
+            else{
+                TreeNode* temp = new TreeNode(stoi(st));
+                q.push(temp);
+                front->right = temp;
+            }
+        }
+        return root;
+        
+        return NULL;
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser, deser;
+// TreeNode* ans = deser.deserialize(ser.serialize(root));
