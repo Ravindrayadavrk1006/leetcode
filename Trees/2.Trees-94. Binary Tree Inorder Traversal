@@ -43,6 +43,47 @@ element add it in the result and then push the top->right in the stack
 
         }
     }
+
+
+//SOL 3 MORRIS TRAVERSAL  EXPLANATION IS IN C.P NOTES
+vector<int> morrisTraversal(TreeNode* root){
+        //S.C O(1) T.C O(N)   //so here we are reducing S.C in this algorithm
+        vector<int> inorder;
+        TreeNode *curr = root;
+        while(curr != NULL){
+            //1. if there is no left
+            if(curr->left == NULL){
+                inorder.push_back(curr->val);
+                curr = curr->right;
+            }
+            //left exist
+            else{
+                //going to the rightmost of left subtree 
+                TreeNode* prev = curr->left;
+                //moving to the right most node of left subtree and prev->right != curr to insure if already visited do not fall in infite loop
+                while(prev->right && prev->right != curr){
+                    prev = prev->right;
+                }
+                //if there is no thread created it means visiting for the first time
+                if(prev->right == NULL){
+                    //creating ther thread 
+                    prev->right = curr;
+                    //start traversing the leftsubtree since it has not been traversed
+                    curr = curr->left;
+                }
+                //left has already been visited since the thread is present 
+                else{
+                    //remove the thread
+                    prev->right = NULL;
+                    //push the current element in the ans
+                    inorder.push_back(curr->val);
+                    //move to right since left already traversed
+                    curr = curr->right;
+                }
+            }
+        }
+        return inorder;
+    }
 public:
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ans;
