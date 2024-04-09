@@ -1,0 +1,33 @@
+
+ /*
+    explanation --> so approach is taking inspiration from  the concept of morris traversal which is explained in SOL3 IN INORDER AND PREORDER TRAVESAL QUESTIONS --> 2.Trees-94. Binary Tree Inorder Traversal AND 4. 144. Binary Tree Preorder Traversal
+
+    idea --> since it wan'ts us to do the preorder traversal and shift all the node as the right child's and make left of each node as null.
+    so concept used is morris one,
+        where when are standing at the root we check if root->left exist we find root->left node right most child and connect it to right child of root. we also make the root->right = root->left and make make root->left = and move to root->right .
+        we keep doing this till root becomes null
+        a small difference from morris is  here that we are connecting root->left rightmost node to root->right whereas in case of morris we were connecting root->left rightmost node to root .
+
+    
+ */
+class Solution {
+private:
+    void helper_flattener(TreeNode* root){
+        // if(root == NULL)return;
+        while(root != NULL){
+            if(root ->left == NULL)root = root->right;
+            else{
+                TreeNode* prev = root->left;
+                while(prev->right != NULL)prev = prev->right;
+                prev->right = root->right;
+                root->right = root->left;
+                root->left = NULL;
+                root = root->right;
+            }
+        }
+    }
+public:
+    void flatten(TreeNode* root) {
+        helper_flattener(root);
+    }
+};
