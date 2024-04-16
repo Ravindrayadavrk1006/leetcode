@@ -1,0 +1,22 @@
+/*
+  concepts -> BST or binary search tree has a property that val at L<root<right at each node.
+  hence using that concept only if the answer is at root we return it , if the answer coming from left we return it , if the answer coming from right we return it
+*/
+class Solution {
+private: 
+    TreeNode* sol(TreeNode* root , int val){
+        if(root == NULL)return NULL;
+        if(root->val == val){
+            cout<<"root->val"<<root->val<<endl;
+            return root;
+        }
+        //we are sure that the solution is in right so return it 
+        else if(val > root->val )return sol(root->right, val);
+        //sure the solution would come from left so return it
+        else return sol(root->left,val);
+    }
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        return sol(root, val);
+    }
+};
