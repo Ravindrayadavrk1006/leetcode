@@ -1,0 +1,27 @@
+ /*
+    explanation -> 
+        easy way of doing preorder traversal and for internal nodes we are forming number and once we reach to the leaf node we add the number to answer sum. 
+    once a node and it's left right are visited we pop that node->val from num so that it doesn't affect the other paths , it's natural just think or try with example
+ */
+class Solution {
+    int sum = 0 ;
+    string num = "";
+private:
+    void total_paths(TreeNode* root){
+        if(root == NULL)return;
+        //not null hence adding the root->val to current number
+        num.push_back('0' + root->val);
+        if(root->left == NULL && root->right == NULL){
+            //add to sum;
+            sum+= stoi(num);
+        }
+        if(root->left)total_paths(root->left);
+        if(root->right)total_paths(root->right);
+        num.pop_back();
+    }
+public:
+    int sumNumbers(TreeNode* root) {
+        total_paths(root);
+        return sum;
+    }
+};
