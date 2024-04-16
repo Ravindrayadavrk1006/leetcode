@@ -4,19 +4,34 @@
 */
 class Solution {
 private: 
-    TreeNode* sol(TreeNode* root , int val){
+  //SOLUTION 1
+    TreeNode* using_recursion(TreeNode* root , int val){
         if(root == NULL)return NULL;
         if(root->val == val){
             cout<<"root->val"<<root->val<<endl;
             return root;
         }
         //we are sure that the solution is in right so return it 
-        else if(val > root->val )return sol(root->right, val);
+        else if(val > root->val )return using_recursion(root->right, val);
         //sure the solution would come from left so return it
-        else return sol(root->left,val);
+        else return using_recursion(root->left,val);
     }
+
+// SOLUTION 2
+//using simple for loop
+  TreeNode* using_while_loop(TreeNode* root, int val){
+      while(root){
+          if(root->val == val)return root;
+          else if(root->val < val )root = root->right;
+          else root = root->left;
+      }
+      return NULL;
+  }
 public:
     TreeNode* searchBST(TreeNode* root, int val) {
-        return sol(root, val);
+        //CALLING SOL 1
+        return using_recursion(root, val);
+      //CALLING SOL2
+      return using_while_loop(root, val);
     }
 };
