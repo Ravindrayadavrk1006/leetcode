@@ -1,0 +1,39 @@
+/*
+    explanation: simply finding where that element could be , since told that element 
+    will already not be present hence once we reach and the position we create a node and attach to it.
+    for a root what i am doing is comparing with current root value if given val is less than current root->val it means the element should be in left of current root and if current root left is empty we create a node and attach it to left of current root .
+    similar procedure i am following for if given val is greater than current root and if root->right present we will try to make that as root and follow the procedure again but if not present we will create a new node and attach it as root->right
+*/
+class Solution {
+private:
+    TreeNode* insertinBST(TreeNode* root, int val){
+        //if root is null
+        if(!root){
+            root = new TreeNode(val);
+            return root;
+        }
+        TreeNode* copy_root = root;
+        while(true){
+            if(val < root->val){
+                if(root->left)root= root->left;
+                else{
+                    root->left = new TreeNode(val);
+                    return copy_root;
+                }
+            }
+            else{
+                if(root->right)root= root->right;
+                else{
+                    root->right = new TreeNode(val);
+                    return copy_root;
+                }
+            }
+        }
+        //code will never reach here
+        return copy_root;
+    }
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        return insertinBST(root, val);
+    }
+};
