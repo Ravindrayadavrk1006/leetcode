@@ -1,0 +1,20 @@
+question -> https://www.naukri.com/code360/problems/floor-from-bst_920457?leftPanelTabValue=PROBLEM
+/*
+    same as ciel i.e 32. in trees in github
+    just updating when smaller value 
+*/
+int floorInBST(TreeNode<int> * root, int X)
+{
+    int floor = -1;
+    while(root){
+        if(root->val == X)return X;
+        if( X< root->val){
+            root = root->left;
+        }
+        else{
+            floor = root->val;
+            root = root->right;
+        }
+    }
+    return floor;
+}
