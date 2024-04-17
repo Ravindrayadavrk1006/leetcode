@@ -1,0 +1,71 @@
+/*
+    algorithm used:
+        we reach to the node which is to be deleted if right exist we find curr->node->right leftmost node and to it attach the left of curr node and then attach curr->rigt to parent node of curr , if curr is in right of parent we make par->right = curr->right , if curr is in left of parent we make par->left = curr->right 
+*/
+class Solution {
+private:
+    TreeNode* h_find_leftmost(TreeNode* root){
+        while(true){
+            if(root->left)root=root->left;
+            else{
+                return root;
+            }
+        }
+    }
+    TreeNode* del_node(TreeNode* root, int key){
+        if(root == NULL)return NULL;
+        TreeNode* curr = root;
+        //if root is the key handling is separately for cleanliness of code
+        if(curr->val == key ){
+            //find root->right lefmost element
+            if(curr->right){
+                TreeNode* leftmost = h_find_leftmost(curr->right);
+                leftmost->left = curr->left;
+                curr->left = NULL;
+                curr = curr->right;
+                root->right = NULL;
+                return curr;
+            }
+            else{
+                curr = curr->left;
+                root->left = NULL;
+                return curr; 
+            } 
+        }
+        TreeNode* par = NULL;
+        char pos;
+        while(curr){
+            cout<<"curr-node"<<curr->val<<endl;
+            if(curr->val == key){
+                if(!curr->right){
+                    if(pos == 'l')par->left = curr->left;
+                    else par->right = curr->left;
+                }
+                //curr->right exists
+                else{
+                TreeNode* leftmost = h_find_leftmost(curr->right);
+                leftmost->left = curr->left;
+                curr->left = NULL;
+                if(pos == 'l')par->left = curr->right;
+                else par->right = curr->right;
+                }
+                break;
+            }
+            if(key < curr->val){
+                par = curr;
+                curr = curr->left;
+                pos = 'l';
+            }
+            else{
+                par = curr;
+                curr = curr->right;
+                pos = 'r';
+            }
+        }
+        return root;
+    }
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        return del_node(root, key);
+    }
+};
