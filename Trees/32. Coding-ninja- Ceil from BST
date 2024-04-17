@@ -1,0 +1,28 @@
+question link -> https://www.naukri.com/code360/problems/ceil-from-bst_920464?leftPanelTabValue=PROBLEM
+/*
+    findings--> 
+        1. how to find the next greater value than current
+        2. nature of tree how values increase or decrease
+
+*/
+int findCeil(BinaryTreeNode<int> *node, int x){
+    // Write your code here.
+    int ciel = -1;
+    while(node){
+        //if the same value exist then equal condition satisfies then this is the answer
+        if(node->data == x){
+            ciel = node->data; 
+            return ciel;
+        }
+        // current node value is greater than our x so we will update the ciel since while traversing all the values greater will be lesser than the previous greater value 
+        if(x < node->data){
+            ciel = node->data;
+            node = node->left;
+        }
+        //if current node value is smaller than node then we traverse to the right
+        else{
+            node = node->right;
+        }
+    }
+    return ciel;
+}
