@@ -1,0 +1,24 @@
+ /*
+        explanation : instead of just smaller or greater we are giving range since . initally starting with int_Min int_max and naturally updating  
+
+        **imp-> learning how to create range for entire tree 
+
+
+        solution 2: can do inorder traversal to find the solution since inorder is always sorted in case of bst
+    */
+    //working solution
+    bool if_valid_bst(TreeNode* root,long long min, long long max){
+        if(root == NULL)return true;
+        if(root->val >= max || root->val <= min)return false;
+        //go left
+        if(!(if_valid_bst(root->left,min ,root->val)))return false;
+        if(!(if_valid_bst(root->right,root->val ,max)))return false;
+        return true;
+    }
+public:
+    bool isValidBST(TreeNode* root) {
+        //
+        if(root && !root->left && !root->right)return true;
+        return if_valid_bst(root,LLONG_MIN, LLONG_MAX);
+    }
+};
