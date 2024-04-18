@@ -1,0 +1,26 @@
+/*
+  explanation :: ---> inorder traversal of bst gives sorted traversal of bst
+*/
+class Solution {
+private:
+    void helper_inorder(TreeNode* root, vector<int>& arr){
+        if(root == NULL)return;
+        helper_inorder(root->left, arr);
+        //do work for node
+        arr.push_back(root->val);
+        helper_inorder(root->right,arr);
+    }
+    int kth_small_el(TreeNode* root, int k){
+        vector<int> arr;
+        helper_inorder(root,arr);
+        if(arr.size()>= k){
+            return arr[k-1];
+        }
+        //if no node in the array or less number of node than k;
+        return -1;
+    }
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        return kth_small_el(root, k);
+    }
+};
