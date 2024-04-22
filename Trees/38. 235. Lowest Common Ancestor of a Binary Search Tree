@@ -1,0 +1,30 @@
+/*
+    important point note the constraints->
+        all node->val is unique , p != q and p and q will exist in the bst.
+        also we know the arrangement of node val in the bst so it will become very easy to find it 
+        we are standing at a node  and three cases can be 
+        if current root is either p or q then any one of remaining p or q should lie in the left or right so we check and if it satisifies then we return the root .
+        or p and q can lie in left and right of current root if that condition also satisfies then we return the root.
+        if none of above condition satisfies that means we haven't reached to lca . so we check if both p and q are smaller to current root then we move left else we move right.
+        
+*/
+class Solution {
+private:
+    TreeNode* lca(TreeNode* root, TreeNode* p, TreeNode* q){
+        if(root == NULL)return NULL;
+        if(
+            (root->val == q->val || root->val == p->val) &&
+            (
+                ((p->val < root->val || p->val > root->val) || (q->val > root->val || q->val < root->val))
+            )
+            ||
+            ((p->val > root->val && q->val < root->val)|| (p->val < root->val && q->val > root->val))
+        ) return root;
+        if(p->val < root->val && q->val < root->val )return lca(root->left,p,q);
+        else return lca(root->right,p,q);
+    }
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        return lca(root, p,q);
+    }
+};
