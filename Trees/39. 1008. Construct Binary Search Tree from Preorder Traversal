@@ -1,0 +1,42 @@
+/*
+    approach -> simple approach -> given preorder so we know what will be root, once we have root then the first element which is greater than the root all element including this first greater and all next elements to it will be in right side root. 
+        same approach is being followed at each root.
+        so approach is we create a node for the root , and find the position of first larger element to root suppose first_largest so root->right array elements will become first_largest to j and root->left element will become i+1 to first_largest-1. starting from i+1 since i is already root 
+        we return the root .
+        returning the root for each recursive call will make the connection since for we will call like root->left = func(i,first_largest-1)
+ */
+class Solution {
+private:
+    //finding the position of first larger element to root and if no element larger we return -1;
+    int helper_first_largest(vector<int>& preorder,int i , int j){
+        //first element is root 
+        int root_val = preorder[i];
+        //if larger exist return it's index else return -1
+        for(int k = i+1 ; k<=j;k++ ){
+            if(preorder[k]>root_val){
+                return k;
+            }
+        }
+        return -1;
+    }
+    TreeNode* bst_from_preorder(vector<int>& preorder, int i, int j){
+        //the point when i>j we return NULL
+        if(i>j)return NULL;
+        //making the root since first element of preorder is root
+        TreeNode* root = new TreeNode(preorder[i]);
+        //calculating the indexes till which left and right side of recursion will run
+        //new_j intiallly set to j+1( this +1 do not be confused while creating the indexes for left right it is handeled well) since we will assume that there is no greater element
+        int new_j = j+1;
+        int first_largest = helper_first_largest(preorder,i,j);
+        if(first_largest != -1)new_j = first_largest;
+        //left side will have elemnts from i+1(since i is root) till new_j-1
+        root->left = bst_from_preorder(preorder,i+1,new_j-1);
+        root->right = bst_from_preorder(preorder,new_j,j);
+        //since for each recursive root is returned so easily set as root->left and root->right connection at each recursion
+        return root;
+    }
+public:
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        return bst_from_preorder(preorder,0, preorder.size()-1);
+    }
+};
