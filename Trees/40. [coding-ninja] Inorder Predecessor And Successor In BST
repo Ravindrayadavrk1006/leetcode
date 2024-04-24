@@ -1,0 +1,117 @@
+question link -> https://www.naukri.com/code360/problems/predecessor-and-successor-in-bst_893049
+
+/*** SOL 1 ***/
+/*
+    predecessor finding 
+        here we are trying to minimize the maximum which can be 
+        done once we reach the smaller value then the key and
+         once we have we keep moving in right direction to maximize it.
+
+
+
+*/
+int helper_predecessor(TreeNode* root, int key){
+    int pred = NULL;
+    while(root){
+        //if root is grater than key we move in left direction to find a smaller value than key
+        if(key <= root->data)root = root->left;
+        //we found a smaller value than key we update the pred and move in the right direction to maximize this value since in the right bigger value will lie than this
+        else{
+            pred = root->data;
+            //maximize the answer so we move right
+            root = root->right;
+        }
+    }
+    return pred;
+}
+int helper_successor(TreeNode* root,int key){
+    int successor = NULL;
+    while(root){
+        //here we are saying if key is root is smaller then our answer lies in right side
+        if(key>=root->data)root = root->right;
+        //we found a value i.e is grater than the key so this could be our possible answer 
+        //so we have it in predecessor but we need the smallest greater number than key so we move left to minimize this greater number
+        else{
+            successor = root->data;
+            root = root->left;
+        }
+    }
+    return successor;
+}
+pair<int,int> optimized_sol(TreeNode* root, int key)
+{
+    pair<int,int> ans;
+    ans.first = helper_predecessor(root,key);
+    ans.second = helper_successor(root,key);
+    return ans;
+}
+/*** SOL 1 ** END** /
+
+/*****  SOL 2******/
+/*
+    easy brute force approch of finding the inorder travesal and since we are storing it in a arr at the point where we find that the key is matching some node value we 
+    store the currentsize -1 of array , so that we have the index of key as well
+   //if just predecessor or just suceessor was to be find we can use linear search or binary search(since inorder in bst is sorted) to find just smaller or just larger respectively
+*/
+int pos = -1;
+//doing inorder traversal and saving the inorder in a  array arr
+void helper_inorder_travesal(TreeNode* root, vector<int>& arr, int key){
+    if(root == NULL)return;
+    helper_inorder_travesal(root->left,arr,key);
+    arr.push_back(root->data);
+    //saving the index where key is stored in the array
+    if(root->data == key)pos = arr.size()-1;
+    helper_inorder_travesal(root->right, arr,key);
+}
+// main function of sol1
+pair<int,int> brute_force_sol(TreeNode* root, int key){
+    vector<int> arr;
+    helper_inorder_travesal(root,arr,key);
+    pair<int, int> ans;
+    // for(int i = 0 ; i<arr.size(); i++)cout<<arr[i]<<" ";
+    // cout<<endl;
+    //now we have inorder travesal in the arr
+    if(pos == 0){
+        if(arr.size()<2){
+            ans.first = NULL;
+            ans.second = NULL;
+            return ans;
+        }
+        else{
+            // return {NULL ,arr[1]};
+            ans.first = NULL;
+            ans.second = arr[1];
+            return ans;
+        }
+    }
+    if(pos == arr.size()-1){
+        if(arr.size()<2){
+            // return {NULL,NULL};
+            ans.first = NULL;
+            ans.second = NULL;
+            return ans;
+        }
+        else{
+            ans.first = arr[pos-1];
+            ans.second = NULL;
+            return ans;
+        }
+    }
+    if(pos == -1){
+        // return {NULL,NULL};
+        ans.first = NULL; 
+        ans.second = NULL;
+        return ans;
+    }
+    // return  {arr[pos-1],arr[pos+1]};
+    ans.first = arr[pos-1];
+    ans.second = arr[pos+1];
+    return ans;
+}
+/*** SOL 2 END**/
+pair<int, int> predecessorSuccessor(TreeNode *root, int key)
+{
+    // Write your code here.
+    // return brute_force_sol(root, key);
+    return optimized_sol(root,key);
+}
