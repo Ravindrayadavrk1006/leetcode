@@ -31,3 +31,51 @@ public:
         return false;
     }
 };
+--------------------
+=========================== SOLUTION 2========================
+/*
+    SOL  2
+    explanation: 
+        here we are trying to use the inorder traversal using stack property to eliminate the requirement of using array for storing inorder , and therefore reducing the size to O(h) where h is height of treee
+*/
+class BSTIterator {
+private:
+    stack<TreeNode*> st;
+    TreeNode* curr;
+public:
+    BSTIterator(TreeNode* root) {
+        curr = root;
+        //we are trying to push all the leftmost element till null
+        if(curr != NULL){
+            st.push(curr);
+            //reaching to left-most element
+            helper_left_pusher(curr);
+        }
+    }
+    //a helper function to push the left element of given root excluding the root
+    void helper_left_pusher(TreeNode* root){
+        while(root->left){
+            st.push(root->left);
+            root = root->left;
+        }
+    }
+    int next() {
+        //here we are first getting the top of stack , which will have our current answer and if out top has right we push the right and call our helper_left_pusher to push all the left element to top->right
+        //and we return the top val which was stored at the start of the function
+        TreeNode* top = st.top();
+        cout<<"st top"<<top->val<<endl;
+        st.pop();
+        //if we have right then we push it and ask the helper_left_pusher to push all left element but current we have already have saved current in top so we will return that only
+        if(top->right){
+            st.push(top->right);
+            cout<<"pushing right"<<"top element"<<st.top()->val<<endl;
+            helper_left_pusher(top->right);
+        }
+        return top->val;
+    }
+    //at any point if there is element in the stack it means the travesal is not over
+    bool hasNext() {
+        if(st.empty())return false;
+        return true;
+    }
+};
