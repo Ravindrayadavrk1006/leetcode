@@ -1,0 +1,33 @@
+/*
+    SOL1:
+    explanation:
+        it uses O(n) stackspace , we are doing inorder traversal and storing the answer in a vector called inorder 
+        initally putting the ptr to -1
+        next() incrementing and returning the value at the ptr
+        hasnext() checking if ptr+1 index is present in the array
+*/
+public:
+    int ptr ;
+    int arr_size;
+    vector<int> inorder;
+    BSTIterator(TreeNode* root) {
+        ptr = -1;
+        helper_inorder_traversal(root,inorder);
+        arr_size = inorder.size();
+        cout<<"arr_size"<<arr_size<<endl;
+    }
+    void helper_inorder_traversal(TreeNode* root, vector<int>& inorder){
+        if(root == NULL)return;
+        helper_inorder_traversal(root->left,inorder);
+        inorder.push_back(root->val);
+        helper_inorder_traversal(root->right,inorder);
+    }
+    int next() {
+        return inorder[++ptr];
+    }
+    
+    bool hasNext() {
+        if(ptr+1 < arr_size)return true;
+        return false;
+    }
+};
