@@ -1,0 +1,69 @@
+/*
+    SOL 1
+    approach -->
+        doing inorder travesal since inorder travesal of bst is sorted and store the inorder traversal in  an array called inorder. Once we have inorder we can use two pointer approach for finding the two sum.
+        this solution is taking O(n) inorder travesal + O(n) using two pointer approach
+
+    SOL 2:
+        Do any kind of traversal, and if k - curr->root->val key exist in hashmap then we return true else we store curr->root->val as key
+
+    SOL 3:
+        we can use the concept of 41. 173. Binary Search Tree Iterator i.e iterator which does notthing out of box but inorder travesal using stack .which gives sorted element.
+        it has a function next which gives the next element.
+        we can use the same class to do right root left , this will mean we will have the element in sorted order using a variable reverse = true or false . so when true we are doing descending travesal and when false normal inorder.
+        we will use the same class and same functions just will use the condition of reverse 
+
+        .
+        when calling above class we create two bstiterator object one with reverse true and other with false.
+
+        now we will normally do the two pointer approach since we have both the end of array no of two pointer and as i+j  i.e bstiterator value with reverse true + bstiterator value with reverse false   greater than k we update j with next of reverse true and if equal we return true if lesee we update i with next of bstierator class where reverse false
+
+ */
+class Solution {
+private:
+    // SOL 1 ------------->
+    void helper_inorder_traversal(TreeNode* root, vector<int>& inorder){
+        if(root == NULL)return;
+        helper_inorder_traversal(root->left,inorder);
+        inorder.push_back(root->val);
+        helper_inorder_traversal(root->right, inorder);
+    }
+    bool two_sum(TreeNode* root , int k){
+        //since asked there should exist two number whose sum is k , but there are no two numbers
+        if(root == NULL)return false;
+        vector<int> inorder; //traversal of bst to store stored so that we can perform two pointer approach
+        helper_inorder_traversal(root, inorder);
+        int arr_size = inorder.size();
+
+        //two pointer approach for finding the sum
+        int i =  0;
+        int j = arr_size-1;
+        while(i<j){
+            if(inorder[i] + inorder[j] ==  k ) return true;
+            else if (inorder[i] + inorder[j] < k)i++;
+            else j--;
+        }
+        return false;
+    }
+
+    //----------- end sol 1
+
+    //---> SOL2
+    bool sol_2_two_sum(TreeNode* root, int k,unordered_map<int,bool>& mp){
+        if(root == NULL)return false;
+        if(!(mp.find(k-root->val)== mp.end()))return true;
+        else mp[root->val] = true;
+        if(sol_2_two_sum(root->left, k, mp))return true;
+        if(sol_2_two_sum(root->right, k, mp))return true;
+        return false;
+    }
+public:
+    bool findTarget(TreeNode* root, int k) {
+        // SOL 1 CALLING
+        //return two_sum(root, k);
+
+        /* sol 2 calling*/
+        unordered_map<int,bool> mp;
+        return sol_2_two_sum(root, k, mp);
+    }
+};
