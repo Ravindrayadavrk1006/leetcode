@@ -1,0 +1,123 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+private:
+    /**--------SOLUTION 1(NAIVE APPROACH)------**/
+    /*
+        EXPLANATION:
+            doing inorder travesal and then copying the inorder travesal and sorting the copied inorder travesal.we compare both the array and the first different element are the swapped element.
+        let swapped values be p ,q
+        now we travese the the tree and where we find the root->val  = p we set root->val = q
+        and where we find root->val = q we set root->val = p
+    */
+    /*
+    void helper_inorder_traversal(TreeNode* root, vector<int>& inorder){
+        if(root == NULL)return;
+        helper_inorder_traversal(root->left, inorder);
+        inorder.push_back(root->val);
+        helper_inorder_traversal(root->right, inorder);
+    }
+    void helper_swapper(TreeNode* root, int p, int q, bool swapped_p, bool swapped_q){
+        if(root == NULL)return;
+        //if swapped at any time no need to traverse further tree 
+        if(swapped_p && swapped_q)return;
+
+        if(root->val == p){
+            root->val = q ;
+            swapped_p = true;
+        }
+        //else if condition so that at one particular node one of this swap is peformed 
+        else if(root->val == q){
+            root->val = p ;
+            swapped_q = true ;
+        }
+        helper_swapper(root->left, p, q, swapped_p, swapped_q);
+        helper_swapper(root->right, p, q, swapped_p, swapped_q);
+    }
+    void naive_sol(TreeNode* root){
+        if(root == NULL)return;
+        vector<int> inorder;
+        helper_inorder_traversal(root, inorder);
+        //creating a copy of inorder array for sorting the above
+        vector<int> sorted = inorder;
+        sort(sorted.begin(), sorted.end());
+        for(int i = 0 ; i < inorder.size(); i++)cout<<inorder[i]<<" ";
+        cout<<endl;
+        for(int i = 0 ; i < inorder.size(); i++)cout<<sorted[i]<<" ";
+        
+        int p,q;
+        for(int i = 0 ; i < inorder.size(); i++){
+            if(sorted[i] != inorder[i]){
+                p = inorder[i];
+                q = sorted[i];
+                break;
+            }
+        }
+        //swapping when we find the element we the value
+        cout<<"p "<<p<<" q"<<q<<endl;
+        helper_swapper(root, p, q, false, false);
+    }
+    */
+
+
+    /**--------END------**/
+
+
+    /** ----------------- SOLUTION 2 --------------- **/
+    /*
+        using range i.e concept of valid bst 
+    */
+    int p = -1;
+    int q = -1;
+    void helper_travesar(TreeNode* root, bool finder, int left , int right){
+        if(root == NULL)return;
+        if(finder){
+            if(root->val>right || root->val < left){
+                if(p == -1)p = root->val;
+                else if(q  == -1) q = root->val;
+                //we won't go checking on it's child since they will be in wrong range anyhow
+                return;
+            } 
+        } 
+        else{
+            cout<<"root"<<root;
+            if(root->val == p){
+                cout<<" matching p ";
+                root->val = q;
+                cout<<" p->val"<<p<<" q->val"<<q;
+            }
+            else if(root->val == q){
+                cout<<" matching q ";
+                root->val = p;
+                cout<<" p->val"<<p<<" q->val"<<q;
+            }
+            cout<<"root->val"<<root->val<<endl;
+        }
+        helper_travesar(root->left,finder,left, root->val);
+        helper_travesar(root->right,finder,root->val, right);
+    }
+    void range_sol(TreeNode* root){
+        helper_travesar(root, true, INT_MIN, INT_MAX);
+        if(p == -1)p=root->val;
+        else if(q== -1)q =root->val;
+        cout<<"p "<<p<<" q"<<q<<endl;
+        helper_travesar(root, false, INT_MIN, INT_MAX);
+    }
+public:
+    void recoverTree(TreeNode* root) {
+        //calling sol1
+        //naive_sol(root);
+
+        //CALLING SOL2
+        range_sol(root);
+    }
+};
