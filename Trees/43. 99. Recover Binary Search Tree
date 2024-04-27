@@ -72,45 +72,45 @@ private:
     /**--------END------**/
 
 
-    /** ----------------- SOLUTION 2 --------------- **/
+   
+   /*-------------SOL 2--------------*/
     /*
-        using range i.e concept of valid bst 
-    */
-    int p = -1;
-    int q = -1;
-    void helper_travesar(TreeNode* root, bool finder, int left , int right){
+        concept -> there can two conditions if the adjacent elements are swapped .
+        if non adjacent elements are swapped
+        for comparing element is swapped or not we will do inorder traversal and if current element is not greater than previous element it means it is swapped
+        we will keep three variables if , if third variable value is present if we find out the third value not following the inorder sorted traversal then we swap first with this third disturbance , stating it is non-adjecnt swapped
+
+        if we do not find the third element swapped or disturbed we sort first and second 
+   */
+    TreeNode* first;
+    TreeNode* prev; //for storing the previous element
+    TreeNode* second; 
+    TreeNode* third;
+    void helper_inorder(TreeNode* root){
         if(root == NULL)return;
-        if(finder){
-            if(root->val>right || root->val < left){
-                if(p == -1)p = root->val;
-                else if(q  == -1) q = root->val;
-                //we won't go checking on it's child since they will be in wrong range anyhow
-                return;
-            } 
-        } 
-        else{
-            cout<<"root"<<root;
-            if(root->val == p){
-                cout<<" matching p ";
-                root->val = q;
-                cout<<" p->val"<<p<<" q->val"<<q;
+        helper_inorder(root->left);
+        //main code
+        if(prev!=NULL && prev->val > root->val){
+            //it means no value is saved yet
+            if(first == NULL){
+                first = prev;
+                second = root;
             }
-            else if(root->val == q){
-                cout<<" matching q ";
-                root->val = p;
-                cout<<" p->val"<<p<<" q->val"<<q;
+            else{
+                third = root;
             }
-            cout<<"root->val"<<root->val<<endl;
         }
-        helper_travesar(root->left,finder,left, root->val);
-        helper_travesar(root->right,finder,root->val, right);
+        //current become previous
+        prev = root;
+        helper_inorder(root->right);
     }
-    void range_sol(TreeNode* root){
-        helper_travesar(root, true, INT_MIN, INT_MAX);
-        if(p == -1)p=root->val;
-        else if(q== -1)q =root->val;
-        cout<<"p "<<p<<" q"<<q<<endl;
-        helper_travesar(root, false, INT_MIN, INT_MAX);
+    void optimum_sol(TreeNode* root){
+        first = second = third = NULL;
+        prev = new TreeNode(INT_MIN);
+        helper_inorder(root);
+        //first also checked for root == NULL
+        if(first && third)swap(first->val,third->val);
+        else if(first && second )swap(first->val, second->val);
     }
 public:
     void recoverTree(TreeNode* root) {
@@ -118,6 +118,6 @@ public:
         //naive_sol(root);
 
         //CALLING SOL2
-        range_sol(root);
+        optimum_sol(root);
     }
 };
