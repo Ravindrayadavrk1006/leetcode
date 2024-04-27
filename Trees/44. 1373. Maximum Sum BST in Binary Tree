@@ -1,0 +1,101 @@
+//-----------------------for sol 2 ----------------->>
+class NodeValue{
+    public:
+        //where maxNode is the maximum value at the current node
+        //minNode is the minimum at the current node 
+        //max_sum is the maximum sum at the current node
+        int maxNode, minNode, max_sum;
+        NodeValue(int minNode, int maxNode, int max_sum){
+            this->minNode = minNode;
+            this->maxNode= maxNode;
+            this->max_sum = max_sum;
+        }
+};
+class Solution {
+private:
+/*
+        -------------------- SOL 1 ------------------
+        simple solution of checking if tree valid or not at each node and this checking is done so that if valid return the sum of entire tree and if not then return int_min
+
+        ** fyi: gives TLE
+*/
+/*
+    int  max_val = INT_MIN;
+    int valid_bst(TreeNode* root,int min, int max){
+        if(root == NULL)return 0;
+        if(root->val >= max || root->val <= min)return INT_MIN;
+        //go left
+        if(root->left == NULL && root->right == NULL)return root->val;
+        long left = valid_bst(root->left,min ,root->val);
+        if(left == INT_MIN)return INT_MIN;
+        int  right = valid_bst(root->right,root->val ,max);
+        if(right == INT_MIN)return INT_MIN;
+        return left+right+root->val;
+    }
+    //doing inorder travesal and at each node calling valid bst
+    void brute_force(TreeNode* root){
+        if(root == NULL)return;
+        brute_force(root->left);
+        //at every node perfore valid bst or no
+        max_val = max(max_val, valid_bst(root,INT_MIN, INT_MAX));
+        //cout<<"curr root"<<root->val<<" max_val"<<max_val<<endl;
+        brute_force(root->right);
+    }
+    
+*/
+//------------------------- END SOL 1------------
+
+/*----------- SOL 2 -------*/
+/*
+    ***approach-->
+            here the approach is to calculate the min_value max_value and sum at each node we will start from the left_most end and hence for it using postorder traversal since we will require left and right both to proceed from this point.
+        main concepts:
+            if current node is greater than the largest value from left side and smaller than the smallest value from the right side then it means the tree with current root is a valid bst .
+
+    NodeValue is a kind of data structrue which store threee things current nodes minValue, maxvalue and max_sum 
+
+    it's same as the node range concept but starting from the left most
+
+
+    here we are using max_sum var to find the max_sum at each point and keep saving and comparing with current sum.
+    the reason to use this is because NodeValue will return the entire result of a subtree which will might be correct since our answer can lie at any point. 
+
+*/
+    int max_sum = INT_MIN;
+    NodeValue largest_sum_bst(TreeNode* root){
+        //if it's null we return NodeValue whose min_value is int_max and , max_value is INT_MIN so that all the elements value is greater than this and all node value is smaller than this i.e all node satisfies the null
+        if(!root )return NodeValue(INT_MAX, INT_MIN, 0);
+        auto left = largest_sum_bst(root->left);
+        auto right = largest_sum_bst(root->right);
+        cout<<"curr root"<<root->val;
+        //at current we compare with the largest value from left side and smallest value from right side
+        //if current root val > left_max and smaller than right_min then it is a valid bst
+        if(left.maxNode < root->val && root->val< right.minNode){
+            cout<<"valid bst--> ";
+            cout<<"current max_sum"<<left.max_sum + right.max_sum + root->val<<endl;
+            //for the current valid bst updating the max_sum global var value to keep on updating at each bst
+            max_sum = max(max_sum,left.max_sum + right.max_sum + root->val);
+            return NodeValue(min(root->val,left.minNode),max(root->val,right.maxNode),left.max_sum + right.max_sum + root->val);
+        }
+
+        //not a valid bst
+        cout<<"not valid bst--> ";
+        cout<<"current max_sum"<<max(left.max_sum,right.max_sum)<<endl;
+        max_sum = max(max_sum,max(left.max_sum,right.max_sum));
+        return NodeValue(INT_MIN, INT_MAX, max(left.max_sum,right.max_sum));
+    }
+public:
+    int maxSumBST(TreeNode* root) {
+        //calling brute force solution
+        // brute_force(root);
+        // if(max_val < 0)return 0;
+        // return max_val;
+
+
+        //calling sol 2
+        largest_sum_bst(root);
+        if(max_sum < 0)return 0;
+        return max_sum;
+        
+    }
+};
