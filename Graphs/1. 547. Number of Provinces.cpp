@@ -1,7 +1,7 @@
 /*
 
     bfs and dfs travesal code are in C.P notebook
-    QUESTION -> SEARCH NO OF CONNECTED COMPONENT names as Number of Provinces
+    QUESTION ->  NO OF CONNECTED COMPONENT asked as Number of Provinces
     idea and approach: 
         for doing dfs travesal we keep a visited array and if the graph is fully connected in one travesal all the nodes are visited and entire visited array becomes 1 , but for connected component it might happen that entire graph doesn't get visited in one travesal , so we start from node 0 as the starting point and travese the graph normal way . if some other nodes remains unvisited in the graph , we make it the starting point and traverse the graph once again . since the first traversal will make certain elements in the viisted array 1 and they will remain 1 in the next traversal as 1 so it works simple and great.
 
