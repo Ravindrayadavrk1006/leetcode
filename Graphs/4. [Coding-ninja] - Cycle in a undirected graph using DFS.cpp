@@ -1,6 +1,8 @@
 https://www.naukri.com/code360/problems/cycle-detection-in-undirected-graph_1062670?leftPanelTabValue=SUBMI
 concept of --> cycle in a undirected graph using dfs travesal
 /*
+    **important point--> cycle means start from a position and end on same position or start at some position and end on some already visited position like half roled wool.
+
     simple approach for detecting cycle in graph:
     cycle_using_dfs is the main function which uses dfs travesal for finding a cycle. here cycle is assumed if the node get connected to any node apart from it's parent. we are passing the parent in the child node since from child we can come to parent once again using the same edge in udirected but that won't be  a cycle
     //cycle is present if while travesing some visited node comes and it is not immediate parent for above condition then we consider it a cycle
