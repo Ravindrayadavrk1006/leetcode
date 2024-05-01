@@ -1,8 +1,8 @@
 https://www.naukri.com/code360/problems/cycle-detection-in-undirected-graph_1062670?leftPanelTabValue=SUBMI
-concept of --> cycle in a graph using dfs travesal
+concept of --> cycle in a undirected graph using dfs travesal
 /*
     simple approach for detecting cycle in graph:
-    cycle_using_dfs is the main function which uses dfs travesal for finding a cycle. here cycle is assumed if the node get connected to any node apart from it's parent. apart from it's parent because it is told that parallel is not allowed or given
+    cycle_using_dfs is the main function which uses dfs travesal for finding a cycle. here cycle is assumed if the node get connected to any node apart from it's parent. we are passing the parent in the child node since from child we can come to parent once again using the same edge in udirected but that won't be  a cycle
     //cycle is present if while travesing some visited node comes and it is not immediate parent for above condition then we consider it a cycle
 
     //if a node is not visited yet it means it's a new node , so we will keep traversing using dfs. at any point if we find cycle we return it
