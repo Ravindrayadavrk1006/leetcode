@@ -2,6 +2,8 @@
     explanation:
         it is same problem as rotten tomato problem , where we will insert the elements with 0 value initally in the queue . and start the bfs traversal with assuming these as the initial positions. we try to visit the neear position from the .
     so all the remaining elements will be 1 only and we can easily visualize the solution how it will work since bfs travesal ajecent elements at the same time
+
+    instead of using a for loop to traverse the elements at a distance from current node , we can also keep the distance information along with the position in the same queue itself
 */
 class Solution {
 private:
@@ -16,6 +18,9 @@ private:
         vector<vector<int>>dist_mat(n, vector<int>(m,0));
         vector<vector<int>>visited(n, vector<int>(m,0));
         queue<pair<int,int>> q;
+        //this for loop which is being used to process the elements at a distance k at a time , to avoid this for loop we can keep the distance in the same queue for each node along with it's position
+        //eg. like for initial elements we can keep like  {x,y, pos = 0} => {1,2,0} and when pushing it's neighbours we can keep like {3,8,1} i.e the position is 3,8 and this node is at distance 1
+        
         for(int i = 0;i<n; i++){
             for(int j = 0;j<m; j++){
                 if(mat[i][j]==0)
