@@ -14,6 +14,7 @@
 */
 class Solution {
 private:
+    //*************** SOL 1******************
     bool helper_bfs(int node, vector<vector<int>>& graph, vector<int>& visited){
         //graph is a adjacency list
         //we are storing the node and it's color in the queue to make it easy to mark it's child color 
@@ -42,6 +43,27 @@ private:
         }
         return true;
     }
+
+    //****************** SOL 2
+    /*
+        normal dfs travesal , we are carrying the color of node and when trying to travrese it neigbour we are passing the other color to it's child .
+        once we reach a visited node from the current node and find it's color is same as the currnt node it means it's not a bi-partite .
+        we keep on checking if nowhere we find non bi-partite condition we pass it is a bi-partite
+    
+    */
+    bool helper_dfs(int node, int par_color,vector<vector<int>>& graph, vector<int>& visited){
+        visited[node] = par_color;
+        for(int adjacent:graph[node]){
+            if(visited[adjacent] == -1){
+                if(!helper_dfs(adjacent,!par_color,graph,visited))return false;
+            }
+            //here it will be visited
+            else if(visited[adjacent] == par_color){
+                return false;
+            }
+        }
+        return true;
+    }
 public:
     bool isBipartite(vector<vector<int>>& graph) {
 
@@ -52,7 +74,12 @@ public:
         //this for loop since the graph can be non-connected too
         for(int i = 0; i<n ; i++){
             if(visited[i] == -1){
-                if(!helper_bfs(i,graph,visited))return false;
+
+                //CALLING SOL 1
+                // if(!helper_bfs(i,graph,visited))return false;
+
+                //CALLING SOL 2
+                if(!helper_dfs(i,1,graph,visited))return false;
             }
         }
         return true;
