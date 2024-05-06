@@ -4,12 +4,12 @@ problem-path :: --> https://www.naukri.com/code360/problems/detect-cycle-in-a-di
   reason for it since a node can be viisted in other path but it's not necessary that we can reach to that node in current path. so to overcome this we are keeping a path_visit to only track if visited in the current path
   also we are keeping a normal visit array so that we don't visit already visited node normally
 */
-string cycle_using_dfs(int node, int node_par,vector<int>& visit,vector<vector<int>>& adj_list, vector<int>& path_visit){
+string cycle_using_dfs(int node,vector<int>& visit,vector<vector<int>>& adj_list, vector<int>& path_visit){
     visit[node]  = 1;
     path_visit[node] = 1;
     for(auto el: adj_list[node]){
         //if the node we are trying to visit is already visited and it is not the immediate parent since given no parrell eges
-        if(path_visit[el] == 1 && el != node_par)return "Yes";
+        if(path_visit[el] == 1)return "Yes";
         //if it is not visited yet then visit that node
         else if (visit[el] == 0 && cycle_using_dfs(el,  node,visit,adj_list)=="Yes")return "Yes";
     }
