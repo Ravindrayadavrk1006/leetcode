@@ -1,5 +1,5 @@
 /*
-    application of topological sort, and since it is saying whether you can do find a topological sort or not, so for finding topological sort the graph must be DAG , it is directed since given the prerequeisted array. which is kind of directed nodes.
+    application of topological sort, and since it is saying whether you can do find a topological sort or not, so for finding topological sort the graph must be DAG , it is directed since given the prerequeisted array. which is kind of directed edges.
     now if there exist a cycle then not possible to find topological sort .
     so question boils down to finding cycle in a directed graph
 
