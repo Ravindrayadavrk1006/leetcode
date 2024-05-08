@@ -33,8 +33,8 @@ private:
         path_visited[node]= false;
         return false;
     }
-public:
-    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+// ------------------ SOL 1 ------------------
+    vector<int> kahn_algo_with_naive_cycle_finding(int numCourses, vector<vector<int>>& prerequisites){
         vector<int> indegree(numCourses,0);
         vector<vector<int>> adj_list(numCourses);
         for(auto edge: prerequisites){
@@ -79,5 +79,63 @@ public:
             }
         }
         return topo;
+    }
+// --------------- SOL 2 -----------------
+/*
+    for checking cycle we will be keeping a element counter which will count the element pushed processed in the queue , if all element (no of vertices) are not processed in the queue, then it means at some point , there were elemnet whose indegree didn't become zero and hence cycle.
+    take a sample example and visualize  
+*/   
+    vector<int> kahn_algo_with_cycle_find_using_kahn(int numCourses, vector<vector<int>>& prerequisites){
+        vector<int> indegree(numCourses,0);
+        vector<vector<int>> adj_list(numCourses);
+        queue<int> q;
+        for(auto edge: prerequisites){
+            //forming adj_list
+            adj_list[edge[0]].push_back(edge[1]);
+            //indegree
+            indegree[edge[1]]++;
+        }
+        for(int i = 0; i<numCourses; i++){
+            if(indegree[i] == 0)q.push(i);
+        }
+        vector<int> topo;
+        //since here asked for returning answer in the reverse order of topological sort 
+        //so will use stack to maintain the required reverse order else in general not required since kahn gives required order that element which are depended on other should be done first
+        stack<int> st;
+        int element_processed_in_queue_counter = 0;
+        while(!q.empty()){
+            int front = q.front();
+            q.pop();
+            // topo[--pos] = front;
+            //here pushing in the stack for better management since reverse order required
+            st.push(front);
+            element_processed_in_queue_counter++;
+            //traversing all the adj elements of current front element
+            for(int adj_el: adj_list[front]){
+                //reduce the indegree since the one element(front) linked to is removed
+                indegree[adj_el]--;
+                if(indegree[adj_el] == 0){
+                    q.push(adj_el);
+                }
+            }
+        }
+        //if all vertices are not processed then return empty ans
+        if(element_processed_in_queue_counter < numCourses)return topo;
+        else{
+            while(!st.empty()){
+                topo.push_back(st.top());
+                st.pop();
+            }
+            return topo;
+        }
+        
+}
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        //calling  SOL 1 
+        // return kahn_algo_with_naive_cycle_finding(numCourses, prerequisites);
+
+        //calling SOL 2 
+        return kahn_algo_with_cycle_find_using_kahn(numCourses, prerequisites);
     }
 };
