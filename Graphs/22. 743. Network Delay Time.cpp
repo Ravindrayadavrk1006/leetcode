@@ -1,4 +1,5 @@
 /*
+
     normal use of dijkstra algorithm.
     why use dijkstra--> we have been given source so we find sortest distance to reach to all node using dijkstra algorithm,
     finally saying if some node is not reachable so return -1 so we doing that if(dist[i] == INT_MAX)return -1; after executing dijkstra algo.
