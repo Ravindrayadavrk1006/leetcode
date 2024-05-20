@@ -1,4 +1,13 @@
 https://www.naukri.com/code360/problems/shortest-path-in-an-unweighted-graph_981297?leftPanelTabValue=PROBLEM
+/*
+	explanation : nothing normal dijkstra using normal queue , since it is unweighted graph so normal queue will give same tc as min heap or set
+ 	we are storing the in form of a list , eg {1} , if the current node is 1
+  	{1,4,5} i.e the came from 1 to 4 to 5 and current node is 5 . 
+   	so in this way we store the required node which is last elemnt and since the distance is unit distance so , not required to mention the distance
+    also we are mentioning the distance of each node in dist array
+
+
+*/
 #include <bits/stdc++.h>
 using namespace std;
 vector<int> smallest_path(vector<pair<int,int>>& edges , int n , int m, int s , int t){
