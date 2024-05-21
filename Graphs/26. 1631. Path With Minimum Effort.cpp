@@ -23,7 +23,7 @@ private:
             int row_count = grid.size();
             int col_count = grid[0].size();
              //**important   
-            //instead of using this set and comparater can use priority_queue with no comparator it will work fine
+            //instead of using this set and comparater can use priority_queue with no comparator and min heap can store duplicates as well hence no need to use multiset and delete only once occurance it will work fine
             multiset<pair<int,pair<int,int>>,CompareByFirst> st;
             // <distance, <node row val, node col val>>
             //i.e pair.first is distance
