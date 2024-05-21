@@ -22,6 +22,7 @@ private:
         int sol_min_effort(vector<vector<int>>& grid){
             int row_count = grid.size();
             int col_count = grid[0].size();
+                
             //instead of using this set and comparater can use priority_queue with no comparator it will work fine
             multiset<pair<int,pair<int,int>>,CompareByFirst> st;
             // <distance, <node row val, node col val>>
