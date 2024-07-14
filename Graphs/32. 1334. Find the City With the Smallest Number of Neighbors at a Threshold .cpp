@@ -1,5 +1,8 @@
 class Solution {
-    /*simple and direct application of floyd warshall algorithm*/
+    /*simple and direct application of floyd warshall algorithm
+        see how when floyd warshall is applied for each node i.e ith row , we have the smallest distance from each node to reach at that ith node.
+        i.e 0th row denote , the smallest distance taken from each node to reach 0th node
+    */
 private:
     int sol_find_the_city(int n, vector<vector<int>>& edges, int distanceThreshold){
         //creating adj_matrix 
