@@ -1,3 +1,4 @@
+// QUESTION LINK :-> https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1
 //This is used in finding mst using kruskals algorithm
 //main disjoinset class which uses finding union by rank and finding par explained in the C.P notes -> Disjoint set
 class DisjointSet{
