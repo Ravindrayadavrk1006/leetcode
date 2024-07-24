@@ -1,6 +1,7 @@
 /*
 QUESTION LINK -> https://www.geeksforgeeks.org/problems/union-find/1    
     this is for finding if the nodes are in same group or not , we use the concept of disjoint sets using union by rank to do it
+    in depth explanation of the algorithm is in CP notes 
 */
 class Solution
 {
