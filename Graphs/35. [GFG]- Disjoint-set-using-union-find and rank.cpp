@@ -1,8 +1,72 @@
 /*
 QUESTION LINK -> https://www.geeksforgeeks.org/problems/union-find/1    
+solution class is the solution , DisjointSet is the class of disjoint set it is not part of solution but this is usefull in all the solution and use this only.
+if we want we could write the solution using DisjointSet also in this solution
     this is for finding if the nodes are in same group or not , we use the concept of disjoint sets using union by rank to do it
     in depth explanation of the algorithm is in CP notes 
 */
+
+//important core class to implement the disjoint set union by rank and size
+class DisjointSet{
+    public:
+        // we will neeed them outside where this class object is created and hence kept public
+        vector<int> rank, par, size;
+        DisjointSet(int n){
+            //n+1 since 1 based indexing given
+            rank.resize(n+1,0);
+            //size is usefulll for unionby size
+            size.resize(n+1);
+            par.resize(n+1);
+            for(int i = 0 ; i<=n; i++){
+                par[i]=i;
+                size[i] =1;
+            }
+
+        }
+        int findPar(int node){
+            if (node == par[node])return node;
+            //normal cases
+            return par[node] = findPar(par[node]);
+        }
+        void unionByRank(int u, int v){
+            int ult_u = findPar(u);
+            int ult_v = findPar(v);
+            if(ult_u == ult_v )return ;
+            //normal cases
+            if(rank[ult_v]< rank[ult_u]){
+                par[ult_v] = ult_u;
+            }
+            if(rank[ult_u]< rank[ult_v]){
+                par[ult_u] = ult_v;
+            }
+            if(rank[ult_v] == rank[ult_u]){
+                par[ult_v] = ult_u;
+                rank[ult_u]++ ;
+            }
+        }
+     //since rank get distorted and become useless for us instead of just showing which is greater cluster
+    //we are using size to keep a track of size or number of nodes in each cluster this will be very usefull later on
+        void unionBySize(int u, int v ){
+            int ult_u = findPar(u);
+            int ult_v = findPar(v);
+            if(ult_u == ult_v )return ;
+            if(size[ult_u] < size[ult_v]){
+                par[ult_u] = ult_v;
+                size[ult_v ] += size[ult_u] ;
+
+            }
+            //this will hand both the if else and else since in both cases same will be happeing
+            else{
+                par[ult_v] =ult_u;
+                size[ult_u] += size[ult_v];
+            }
+        }
+};
+
+
+
+
+//below is the solution
 class Solution
 {
     private:
@@ -52,51 +116,3 @@ class Solution
     }
 };
 
-//important core class to implement the disjoint set union by rank and size
-class DisjointSet{
-    vector<int> rank, par;
-    public:
-
-        DisjointSet(int n){
-            //n+1 since 1 based indexing given
-            rank.resize(n+1,0);
-            par.resize(n+1);
-            for(int i = 0 ; i<=n; i++)par[i]=i;
-        }
-        int findPar(int node){
-            if (node == par[node])return node;
-            //normal cases
-            return par[node] = findPar(par[node]);
-        }
-        void unionByRank(int u, int v){
-            int ult_u = findPar(u);
-            int ult_v = findPar(v);
-            if(ult_u == ult_v )return ;
-            //normal cases
-            if(rank[ult_v]< rank[ult_u]){
-                par[ult_v] = ult_u;
-            }
-            if(rank[ult_u]< rank[ult_v]){
-                par[ult_u] = ult_v;
-            }
-            if(rank[ult_v] == rank[ult_u]){
-                par[ult_v] = ult_u;
-                rank[ult_u]++ ;
-            }
-        }
-//since rank get distorted and become useless for us instead of just showing which is greater cluster
-//we are using size to keep a track of size or number of nodes in each cluster this will be very usefull later on
-    void UnionBySize(int u, int v ){
-         int ult_u = findPar(u);
-         int ult_v = findPar(v);
-         if(ult_u == ult_v )return ;
-         if(size[ult_u] < size[ult_v]){
-             par[ult_u] = ult_v;
-             size[ult_v ] += size[ult_u] ;
-        //this will hand both the if else and else since in both cases same will be happeing
-        else{
-            par[ult_v] =ult_u;
-            size[ult_u] += size[ult_v];
-        }
-    }
-};
