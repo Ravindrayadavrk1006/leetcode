@@ -1,4 +1,5 @@
 /*
+
 QUESTION LINK -> https://www.geeksforgeeks.org/problems/union-find/1    
 solution class is the solution , DisjointSet is the class of disjoint set it is not part of solution but this is usefull in all the solution and use this only.
 if we want we could write the solution using DisjointSet also in this solution
