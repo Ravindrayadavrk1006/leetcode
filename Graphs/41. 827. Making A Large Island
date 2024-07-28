@@ -1,135 +1,16 @@
-/* COMMENTED SOLUTION IS WRONG SINCE ONLY HALF OF TEST CASES ARE PASSING */
 
+//SOLUTION 1
 /*
-class DisjointSet{
-    // vector<int> rank, par;
-    public:
-        // DisjointSet(int n){
-        //     //n+1 since 1 based indexing given
-        //     rank.resize(n+1,0);
-        //     par.resize(n+1);
-        //     for(int i = 0 ; i<=n; i++)par[i]=i;
-        // }
 
-        int findPar(int node,vector<int> & rank , vector<int> & par){
-            if (node == par[node])return node;
-            //normal cases
-            return par[node] = findPar(par[node],rank,par);
-        }
-        void unionByRank(int u, int v,vector<int> & rank , vector<int> & par){
-            int ult_u = findPar(u,rank,par);
-            int ult_v = findPar(v,rank, par);
-            if(ult_u == ult_v )return ;
-            //normal cases
-            if(rank[ult_v]< rank[ult_u]){
-                par[ult_v] = ult_u;
-            }
-            if(rank[ult_u]< rank[ult_v]){
-                par[ult_u] = ult_v;
-            }
-            if(rank[ult_v] == rank[ult_u]){
-                par[ult_v] = ult_u;
-                rank[ult_u]++ ;
-            }
-        }
-};
-class Solution {
-public:
-    bool isValid(int adjr,int adjc,int n){
-        return adjr>=0 && adjr<n && adjc >=0 && adjc< n;
-    }
-    int findMaxValue(vector<int> & par, int nodes_in_ds){
-        unordered_map<int,int> mp;
-        for(int i = 0 ; i<nodes_in_ds; i++){
-            if(mp.find(par[i]) == mp.end()){
-                mp[par[i]] = 1;
-            }
-            else{
-                mp[par[i]]++;
-            }
-        }
-        int max_value = INT_MIN;
-        //finding intial max value
-        for(auto it: mp){
-           if(it.second>max_value) max_value = it.second;
-        }
-        return max_value;
-    }
-    int largestIsland(vector<vector<int>>& grid) {
-        int n = grid.size();
-        DisjointSet ds;
-        int nodes_in_ds = n*n;
-        vector<int> rank(nodes_in_ds,0);
-        vector<int>  par(nodes_in_ds);
-        //initailzing the parents
-        //we are defining rank and par here because we require par vector here
-        for(int i = 0 ; i<nodes_in_ds; i++)par[i] = i ;
-        for(int i=0; i< n;i++){
-            for(int j=0;j<n; j++ ){
-                if(grid[i][j] ==1){
-                    int dr[] = {0,1,0,-1};
-                    int dc[] = {1,0,-1,0};
-                    for( int adj = 0; adj<4 ; adj++){
-                        int adjr = i+dr[adj];
-                        int adjc = j+ dc[adj];
-                        if( isValid(adjr,adjc,n)){
-                        if(grid[adjr][adjc] ==1){
-                            int node = i*n + j;
-                            int adjNode = adjr*n + adjc;
-                            if(ds.findPar(node,rank,par) != ds.findPar(adjNode,rank,par)){
-                                ds.unionByRank(node, adjNode,rank, par);
-                            }
-                        }
-                    }
-                    }
-                }
-            }
-        }
+    simple approach -> we are using nomal disjoint set algorithm and then using it for further solution
+    for all the already ones we are using unionby size and joining them , so that we get the size of the union and as well as have joined them as well.
 
-        //storing which parent has how many nodes connected to it
-        int max_value = findMaxValue(par,nodes_in_ds);
-        for(int i = 0 ; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(grid[i][j] == 0){
-                    //make copy of par vector
-                    vector<int> cpy_par(par);
-                    vector<int> cpy_rank(rank);
-
-                    int dr[] = {0,1,0,-1};
-                    int dc[] = {1,0,-1,0};
-                    for( int adj = 0; adj<4 ; adj++){
-                        int adjr = i+dr[adj];
-                        int adjc = j+ dc[adj];
-                        if(isValid(adjr,adjc,n)){
-                        if(grid[adjr][adjc] ==1){
-                            int node = i*n + j;
-                            int adjNode = adjr*n + adjc;
-                            if(ds.findPar(node,cpy_rank,cpy_par) != ds.findPar(adjNode,cpy_rank,cpy_par)){
-                                ds.unionByRank(node, adjNode,cpy_rank, cpy_par);
-                            }
-                        }
-                        }
-                    }
-
-                    int curr_max_value = findMaxValue(cpy_par,nodes_in_ds);
-                    if(curr_max_value > max_value)max_value = curr_max_value;
-                    
-                }
-            }
-        }
-
-        return max_value;
-
-    }
-};
-
+    //further we are assuming to make 0  as 1 and checking in all the four directions which are the cluster it is joining to,
+    the total size of the cluster will be all the cluster in four directions sum and 1 for itself. the size of cluster is found in the size array of DisjointSet by using unionBySize function.
+    
 */
 
-
-
-//SOLUTION 2
 class DisjointSet{
-    
     public:
         // we will neeed them outside where this class object is created and hence kept public
         vector<int> rank, par, size;
@@ -137,9 +18,13 @@ class DisjointSet{
             //n+1 since 1 based indexing given
             rank.resize(n+1,0);
             //size is usefulll for unionby size
-            size.resize(n+1,1);
+            size.resize(n+1);
             par.resize(n+1);
-            for(int i = 0 ; i<=n; i++)par[i]=i;
+            for(int i = 0 ; i<=n; i++){
+                par[i]=i;
+                size[i] =1;
+            }
+
         }
         int findPar(int node){
             if (node == par[node])return node;
@@ -171,6 +56,8 @@ class DisjointSet{
             if(size[ult_u] < size[ult_v]){
                 par[ult_u] = ult_v;
                 size[ult_v ] += size[ult_u] ;
+
+            }
             //this will hand both the if else and else since in both cases same will be happeing
             else{
                 par[ult_v] =ult_u;
@@ -179,74 +66,79 @@ class DisjointSet{
         }
 };
 class Solution {
-    private:
-        bool isValid(int adjr,int adjc,int n){
-            return adjr>=0 && adjr<n && adjc >=0 && adjc< n;
-        }
-    public:
-        int largestIsland(vector<vector<int>>& grid) {
-            int n = grid.size();
-            int nodes_in_ds = n*n;
-            DisjointSet ds(nodes_in_ds);
-            for(int i=0; i< n;i++){
-                for(int j=0;j<n; j++ ){
-                    if(grid[i][j] ==1){
-                        int dr[] = {0,1,0,-1};
-                        int dc  [] = {1,0,-1,0};
-                        for( int ind= 0; ind<4 ; ind++){
-                            int adjr = i+dr[ind];
-                            int adjc = j+ dc[ind];
-                            if( isValid(adjr,adjc,n)){
-                            if(grid[adjr][adjc] ==1){
-                                int node = i*n + j;
-                                int adjNode = adjr*n + adjc;
-                                if(ds.findPar(node) != ds.findPar(adjNode)){
-                                    ds.unionBySize(node, adjNode);
-                                }
+private:
+    bool isValid(int adjr,int adjc,int n){
+        return adjr>=0 && adjr<n && adjc >=0 && adjc< n;
+    }
+public:
+    int largestIsland(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int nodes_in_ds = n*n;
+        DisjointSet ds(nodes_in_ds);
+        for(int i=0; i< n;i++){
+            for(int j=0;j<n; j++ ){
+                if(grid[i][j] ==1){
+                    int dr[] = {0,1,0,-1};
+                    int dc  [] = {1,0,-1,0};
+                    for( int ind= 0; ind<4 ; ind++){
+                        int adjr = i+dr[ind];
+                        int adjc = j+ dc[ind];
+                        if( isValid(adjr,adjc,n)){
+                        if(grid[adjr][adjc] ==1){
+                            int node = i*n + j;
+                            int adjNode = adjr*n + adjc;
+                            if(ds.findPar(node) != ds.findPar(adjNode)){
+                                ds.unionBySize(node, adjNode);
                             }
                         }
-                        }
+                    }
                     }
                 }
             }
+        }
 
-            //brute force 
+        //brute force 
 
-            int max_size = 1 ;
-            //let's initialzie the max_size with the current largest cluster so that we can compare with this one
-            for(int i = 0; i< nodes_in_ds; i++ ){
-                //for each node find it's parent and then the size of the parent and set it to max_size value if it is grater than 1;
-                max_size = max(max_size, ds.size[ds.findPar(i)]);
-            }
-            //let's try to make 0 to 1 and try to connect and know how much size increases and compare the size
-            for(int row = 0 ; row< n; row++){
-                for(int col= 0; col < n ; col++){
-                    if(grid[row][col] == 0){
-                        int dr[] = {0,1,0,-1};
-                        int dc  [] = {1,0,-1,0};
-                        //we are using set data structures to store the parent of adjcent cluster , set specically used since the node can be connected to same cluster on more than one side and hence keeping set which will store the ultimate parent and hence will only store unique parents
-                        set<int> components;
-                        for( int ind= 0; ind<4 ; ind++){
-                            int adjr = i+dr[ind];
-                            int adjc = j+ dc[ind];
-                            if( isValid(adjr,adjc,n)){
+        int max_size = 1 ;
+        //let's initialzie the max_size with the current largest cluster so that we can compare with this one
+        for(int i = 0; i< nodes_in_ds; i++ ){
+            cout<<i <<" "<<ds.size[ds.findPar(i)]<<endl;
+            //for each node find it's parent and then the size of the parent and set it to max_size value if it is grater than 1;
+            max_size = max(max_size, ds.size[ds.findPar(i)]);
+        }
+        cout<<"inital max_size"<<max_size<<endl;
+        //let's try to make 0 to 1 and try to connect and know how much size increases and compare the size
+        for(int row = 0 ; row< n; row++){
+            for(int col= 0; col < n ; col++){
+                if(grid[row][col] == 0){
+                    cout<<"zeroth cell"<<row<<col<<endl;
+                    int dr[] = {0,1,0,-1};
+                    int dc[] = {1,0,-1,0};
+                    //we are using set data structures to store the parent of adjcent cluster , set specically used since the node can be connected to same cluster on more than one side and hence keeping set which will store the ultimate parent and hence will only store unique parents
+                    set<int> components;
+                    for( int ind= 0; ind<4 ; ind++){
+                        int adjr = row+dr[ind];
+                        int adjc = col+ dc[ind];
+                        if( isValid(adjr,adjc,n)){
                             if(grid[adjr][adjc] ==1){
                                 int adjNode = adjr*n + adjc;
                                 int adj_parent = ds.findPar(adjNode);
+                                cout<<"adjNode"<<adjNode<<"adjNodeParent"<<adj_parent<<endl;
                                 components.insert(adj_parent);
-                            }
+                                }
                         }
-                        }
-                        int total_size = 0;
-                        for(auto it: components){
-                            total_size += ds.size[components];
-                        }
-                        int max_size = max(max_size, total_size);
                     }
-
+                    int total_size = 0;
+                    cout<<"all adjcent parents of"<<row<<col<<"  are-->>";
+                    for(auto it: components){
+                        cout<<it<<" "<<endl;
+                        total_size += ds.size[it];
+                    }
+                    max_size = max(max_size, total_size+1);
                 }
-            }
 
-            return max_size;
+            }
         }
+        return max_size;
+    }
 };
