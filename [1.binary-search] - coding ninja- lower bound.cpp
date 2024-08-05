@@ -13,6 +13,13 @@ int lowerBound(vector<int> arr, int n, int x) {
 	int ans = n ;
 	while(low<= high){
 		int mid = (low+high)/2;
+		//if just larger than x asked then we do
+		//this below commented code and commmented the uncommented if condition change will give upper_bound
+		/*if(x< arr[mid] ){
+  			ans = mid ; 
+     			high = mid-1;
+		}
+  		*/
 		if(x <= arr[mid]){
 			/* we have a possibility of ans since either it will be equal to larger, 
 			so we take and try to find if there some larger value than x which is smaller than current ans and also 
