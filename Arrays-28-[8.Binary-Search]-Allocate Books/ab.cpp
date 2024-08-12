@@ -96,3 +96,57 @@ int allocateBooks(vector<int> arr, int n, int m) {
     return BS(arr,n,m);
 }
 
+
+
+
+
+//---------------------------------- in GFG ------------------
+//PROBLEM LINK-> https://www.geeksforgeeks.org/problems/allocate-minimum-number-of-pages0937/1
+
+class Solution {
+  private:
+    bool _can_be_allocated(int n, int arr[], int m, int mid){
+        int pages = 0;
+        int curr_st = 0 ;
+        for(int i = 0 ; i<n ; i++){
+            if(pages + arr[i] > mid ){
+                pages = arr[i];
+                curr_st++;
+                if(arr[i]>mid)return false;
+            }
+            else{
+                pages+=arr[i];
+            }
+        }
+        //since count of students is starting from 0 ,if m number of students can be allocated properly then fine else not
+        if(curr_st < m)return true;
+        return false;
+    }
+  public:
+    // Function to find minimum number of pages.
+    long long findPages(int n, int arr[], int m) {
+        int low = INT_MAX;
+        int high = 0;
+        for(int i = 0 ; i<n; i++){
+            if(arr[i]<low)low = arr[i];
+            high+=arr[i];
+        }
+        if(m>n)return -1;
+        // cout<<"low"<<low<<" high"<<high<<endl;
+        //working on logic 
+        int ans = INT_MAX;
+        while(low<=high){
+            // cout<<"low"<<low<<" high"<<high<<endl;
+            int mid = (low+high)/2;
+            //if this much value can be allocated let's try for lower value
+            if(_can_be_allocated(n,arr, m, mid)){
+                // cout<<"can be allocated"<<mid<<endl;
+                ans = mid;
+                high = mid-1;
+            }
+            else low = mid+1;
+        }
+        // cout<<"mid"<<ans<<" high"<<high<< " low"<<low<<endl;
+        return low;
+    }
+};
