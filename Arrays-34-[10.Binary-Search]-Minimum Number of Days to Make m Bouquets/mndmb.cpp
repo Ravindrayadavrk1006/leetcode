@@ -9,8 +9,13 @@ int check(vector<int>& bloomDay,int mid, int m, int k)
     int count= 0;
     int n = bloomDay.size();
     int i = 0;
+    //we will start counting from i = 0 and since we need k flowers for each boque hence we will do till there
     while(i<=n-k)
     {
+        //this runner variable is to check if from current i till i+k if we have all the consequtive flower which satisfy our need for flour
+        //in the below for loop we are doing same if any flower blooms later than our max expected date i.e mid then we make the runner false saying it we didn't found a boque forming consecutive flowers for current i run 
+        //we set the i value to which flower blooms after our required run so that we can go to while loop and try again
+        //if we pass k elements in the for loop below without any flower blooming after our required max i.e mid then we have a boque formable continuous flowers
         bool runner = true;
         for(int j=i;j<i+k;j++)
         {
