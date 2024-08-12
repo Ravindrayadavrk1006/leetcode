@@ -3,6 +3,8 @@ exactly same as Arrays-30-[Binary-Search]-Minimum Speed to Arrive on Time
 
 class Solution {
 private:
+
+    //finding the time if possible to eat in that much of time
     bool possible_to_reach(vector<int>& arr,int mid, int st)
         {
             double t = 0;
@@ -10,6 +12,7 @@ private:
             int n = arr.size();
             for(int i =0; i<n-1; i++)
             {
+                //since in that hour he will take the entire hour and wait if there is time remaining in that hour
                 t+=ceil(1.0*arr[i]/mid);
                 if(t>max_time)return false;
             }
