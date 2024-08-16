@@ -14,14 +14,14 @@ int sol(vector<int> &row1, vector<int> &row2, int m, int n, int k)
     //few edge cases handling 
     /*
         //suppose k = 3  and m = 5 and n = 2
-        we can take max of 3 elements from left and min of zero
-        hence right = min(m,k)
+        we can take max of 3 elements from left and min of zero,
+        hence right = min(m,k)   //right is the starting of binary search high
 
         //suppose k =6  m = 4 , n = 4
         max element we can take from left = 4 all four of them and 2 from right
         min element we have to take from left we can't take 0 since second array has just 4 element which is less than 6
         hence minimum elemnt we can take  is 2 hence
-        left = max(0,k-n) 
+        left = max(0,k-n)   //left is low of starting binary search
     */
 
     left = max(0,k-n);
