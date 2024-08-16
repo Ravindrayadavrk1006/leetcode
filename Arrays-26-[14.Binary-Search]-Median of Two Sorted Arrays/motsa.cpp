@@ -62,17 +62,24 @@ private:
             //cut in first array
             int cut1 = (left+right)/2;
             //cut in second nums2 array
+            //n1+n2+1/2 is the numbe of element we require in the left side i.e incudling from both first array and second array in total
             int cut2 = (n1+n2+1)/2-cut1;
 
+
+            //if there are no element in left side from any let's set to int_min since int-min will always satisfy the comparison we ar going to have further in if conditions
             int left1 = cut1 ==0 ? INT_MIN : nums1[cut1-1];
             int left2 = cut2 ==0? INT_MIN : nums2[cut2-1];
-            
+            //similary if there are not right elements in the cut array we will set to int_max for the sake of unfailing comparisons
             int right1 = cut1==n1?INT_MAX:nums1[cut1];
             int right2 = cut2 == n2 ? INT_MAX:nums2[cut2];
 
+
+            //if this if conditions satisfies it means we have made correct cuts
             if(left1<=right2 && left2<=right1)
             {
+                //if total elements are odd , it means we return maximum of both the left part
                 if((n1+n2)%2 != 0 )return (double)max(left1,left2);
+                //if n1+n2 is even
                 else
                 {
                     int first = max(left1,left2);
@@ -81,6 +88,9 @@ private:
                 }
 
             }
+
+            //if the cut made is not at right place
+            //if left part has a number greater than the right part it means we have to remove some element from left part and hence we move do that
             else if(left1>right2)
             {
                 right = cut1-1;
