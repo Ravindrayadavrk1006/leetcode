@@ -6,6 +6,10 @@
             3. if inserting at any other position 1 to ...last
                 we normally stand at one postion behind and check if this position is counter = pos-1 if so we insert at that position
 
+
+        **important 
+            also remember if given the value of node to be inserted instead of position exactly similar code will be used instead of position just the value will come nothing else will change
+
 */
 Node * insert(Node * head, int n, int pos, int val) {
     if(head == NULL){
