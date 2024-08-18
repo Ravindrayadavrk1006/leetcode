@@ -1,5 +1,6 @@
 /*
   simply how to use previous node pointer for deleting a node 
+  also remember if given the value of node to be deleted instead of position exactly similar code will be used instead of position just the value will come nothing else will change
 
 
 */
