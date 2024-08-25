@@ -7,6 +7,10 @@ instead of calling the recursion again to find the already existing value.
 2. we need to always draw the recursion graph , since then we will see the overlapping part and DP help us not computing the already computed overlapping part
 3. we can see in the below fibbonaci code we just have to add two extra line of code in all recursion and we have the DP solution for it line 1 and line 2, 
 4. in below code t.c complexity reduced from 2^n to O(n) , just extra space will be required O(n). here we have to use O(n) recursion stack space
+
+[****important****]
+5. in DP it is very important to find for bigger values using smaller values i mean to say we must find for n using smaller values , writing funtion to find for n , 
+so that smaller are done first and we can use those values when they repeat since we already will have those values stored
 */
 
 //this below is recursion approach in which we start from n and goes to base case and then again come back to the answer.
