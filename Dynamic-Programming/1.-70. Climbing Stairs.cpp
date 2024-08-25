@@ -3,7 +3,6 @@ INTUITION
 Idea is using DP and the solution is same as fibonacci series.
 Idea is climbing the staircases is coming down
 hence used the same approach
-
 APPROACH
 stored memo[0]=1 since coming to zero from previous step either by taking one step or two step has just one way.
 Starting from n and taking one and two step in each cases coming down.
