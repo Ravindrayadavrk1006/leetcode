@@ -20,15 +20,15 @@ public:
         if(pos >= nums.size()-1)return 0;
         if(nums[pos] == 0)return  nums.size();
         if(dp[pos] != -1)return dp[pos];
-        vector<long> temp(nums[pos]+1);
+        int curr_min = INT_MAX;
         //from current position going in all the possible direction of jumps
         for(int i=1;i<=nums[pos];i++)
         {
             //one step for every jump made 
-            temp[i]=1+help(pos+i, nums, dp);
+            int temp=1+help(pos+i, nums, dp);
+            curr_min = min(temp,curr_min);
         }
-        //returning the minimum value of all the directions from the current position
-        return dp[pos] = *min_element(temp.begin()+1, temp.end());
+        return dp[pos] = curr_min;
     }
     int jump(vector<int>& nums) {
         vector<int> dp(nums.size()+1, -1);
