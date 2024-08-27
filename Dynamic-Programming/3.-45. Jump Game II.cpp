@@ -8,6 +8,8 @@ O(n)
 
 Space complexity:
 O(n*max(value of nums array))
+
+instead of finding the minimum of a for loop we can take a variable initized with max_value and then we can keep comparing and storing min(curr_value, this_run_value)
   
 */  
   
