@@ -1,6 +1,22 @@
 Intuition
 house robber problem with modifications
+***BETTER AND SIMPLE EXPLANATION:
+        HERE constraint is that we don't have to take the adjacent values,
+    approach:
+        we know how to form all possible combinations, by using the approach of pick and non-pick so if we we use that concept,
+        pick = arr[i] + f(i+1)
+        non_pick = f(i+1)
+        return max(pick,non_pick)
 
+    but here one more condition is there:
+        that we don't have to take adjancent element when we have picked current element it means in pick case in above code we have to move to f(i+2) once we have picked the current element
+        and hence it would look like pick = arr[i] + f(i+2) 
+        non_pick = f(i+1)
+        retur max(pick,non_pick)
+
+
+********normal explanation use the above approach explanation
+    
 Approach
 calculating the sum of same elements of nums and storing in a vector sums since if we take a element we have to take all it's occurances and we reject a element all it's element occurances must be rejected.
 
