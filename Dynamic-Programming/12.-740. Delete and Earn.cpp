@@ -1,5 +1,9 @@
+
+/*
+using the concept of 11 question in the DP playlist
+
 Intuition
-house robber problem with modifications
+
 ***BETTER AND SIMPLE EXPLANATION:
         HERE constraint is that we don't have to take the adjacent values,
     approach:
@@ -45,6 +49,7 @@ Space complexity:
 O(max_element of nums)
 
 Code
+*/
 class Solution {
 public:
     /*
