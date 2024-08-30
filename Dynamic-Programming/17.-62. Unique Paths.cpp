@@ -1,3 +1,4 @@
+
 Approach
 using the DP recursive approach thinking in the way if we are standing at the last i.e m-1,n-1 position what are ways we can reach to 0,0 we will take movement in left and up direction . Left means x,y-1 and up means x-1,y and computing all the possible directions to reach.
 To reduce the time from recursive 2^mn to mn used DP since maximum places we can go in the matrix are m*n and hence used DP array to deal with overlapping sub problems.
