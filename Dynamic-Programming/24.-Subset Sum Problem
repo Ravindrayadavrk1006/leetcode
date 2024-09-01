@@ -1,0 +1,58 @@
+/*
+  type-> CONCEPT OF DP ON SUBSEQUENCES 
+    simple approach of take and not take
+
+
+  QUESTION LINK: https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1
+
+*/
+
+class Solution{   
+private:
+    bool recursive_dp(int ind,int sum, vector<int>& arr, vector<vector<int>>& dp){
+        //at any index if we get sum 0 we return true
+        if(sum == 0)return true;
+        //if we are at index 0 if the arr[0] == sum then we return true else return false
+        if(ind  == 0 ) return sum == arr[0];
+        if(dp[ind][sum] != -1)return dp[ind][sum];
+        //normal cases
+        bool not_take = recursive_dp(ind-1, sum, arr, dp ) ;
+        bool take = false;
+        if(arr[ind] <= sum){
+            take = recursive_dp(ind-1, sum-arr[ind], arr,  dp);
+            
+        }
+        return dp[ind][sum] = (not_take || take);
+        // return dp[ind] = false;
+    }
+    bool tabulation_dp(int sum , vector<int>& arr){
+        int n = arr.size();
+        vector<vector<int>> dp(arr.size(),vector<int>(1e4+1, 0));
+        for(int i = 0 ; i< arr.size(); i++){
+            dp[i][0] = true ;
+        }
+        dp[0][arr[0]] = true;
+        for(int ind = 1; ind<n; ind++){
+            for(int curr_sum = 0 ; curr_sum<= sum; curr_sum++){
+                bool not_take = dp[ind-1][curr_sum];
+                bool take = false;
+                if(arr[ind]<= curr_sum){
+                    take = dp[ind-1][curr_sum-arr[ind]];
+                }
+                dp[ind][curr_sum] = not_take || take;
+            }
+        }
+        return dp[n-1][sum];
+    }
+public:
+    bool isSubsetSum(vector<int>arr, int sum){
+        //since if we in recusrive dp function there are two parameters that are changing so we need 2d dp
+        // vector<vector<int>> dp(arr.size(),vector<int>(1e4+1, -1));
+        // return recursive_dp(arr.size()-1, sum, arr, dp);
+        
+        
+        
+        //calling tabulation dp
+        return tabulation_dp(sum, arr);
+    }
+};
