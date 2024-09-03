@@ -26,6 +26,8 @@ class Solution {
 public:
     int help(int target, vector<int>& nums, vector<int>& dp)
     {
+
+        #taget can become equal to zero at any point in the traversal and hence we have to return at that point
         if(target<0)return 0;
         if(target ==0)return 1;
         if(dp[target] != -1)return dp[target];
