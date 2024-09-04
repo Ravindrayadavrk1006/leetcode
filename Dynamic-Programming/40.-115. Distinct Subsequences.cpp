@@ -28,9 +28,9 @@ public:
         if(s[i] == t[j])
         {
             //getting all the sums
-            int left = help(i-1,j-1,s,t, dp );
-            int right = help(i-1,j,s,t, dp );
-            return dp[i][j] =  left + right;
+            int take = help(i-1,j-1,s,t, dp );
+            int not_take = help(i-1,j,s,t, dp );
+            return dp[i][j] =  take + not_take;
         }
         //if the current char doesn't match then just one possibility of trying in the remaining portion to find the char
         return dp[i][j] = help(i-1,j,s,t, dp);
