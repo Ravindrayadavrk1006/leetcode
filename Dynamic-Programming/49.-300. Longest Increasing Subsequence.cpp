@@ -3,6 +3,7 @@
   see where the range of values is from -ve to +ve is managed in index, eg. -1e4 to 1e4 for it we have created index from 0 to 2*1e4
 
 */
+
 class Solution {
 private:
     //APPROACH 1
