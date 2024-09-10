@@ -121,6 +121,65 @@ private:
         }
         return max_final_lis;
     }
+
+    //APPROACH 4 BINARY SOLUTION APPROACH 
+    /*
+     eg. [1,7,8,4,5,6,-1,9]
+     we can ask each element and try to form the possible sets in which they can go starting from index 0
+     1 can go in first set 
+     ask 7 since greater than 1 can go in set 1 only 
+     ask 8 since greater than 7 can go in set 1 only
+     ask 4 since can't go in set 1 since not greater than 8 hence have to form a new set with values 1 and 4  since 1 is the only element less than 4 till now
+     ask 5 it cannot go in set 1 but can go in set 2 hence add it to set 2
+     ask 6 if it can go in set 1 no , if can go in set 2 yes
+     ask -1 cannot go in set 1 or set 2 since less than 8 and 6 in respective sets
+     hence form a new set with all the previous traverserd values 
+     ask 9 if it can go in set 1 or set 2 or set 3 can go in all 
+     since all the elements are traversed and we found set2 is largest hence return size of set 2 
+     but one problem since a number of sets will be formed using this method hence and also the sets being formed are sorted and hence get's the intituition to apply binary search.
+     binary search will be used to remove this problem of space
+     set 1 {1,7, 8,9}
+     set 2 {1,4, 5,6,9}
+     set 3 {-1,9}
+
+
+     //applying binary search
+     eg. [1,7,8,4,5,6,-1,9]
+     eg set 1 = {1}
+     intialize the set with index 0 element
+     and now since 7 is greater than 1 we directly insert it 
+     set_1 ={1,7}
+     8 we ask since greater than 7 directly insert it 
+     set_1 ={1,7,8}
+     go to 4 since not greater than 8 hence we will apply binary search to find the current position if element not found we replace the just greater element with it
+     so out set will become
+     set_1 ={1,4,8}
+     ask 5 since not greater than 8 we will ask binary search similary and it will be replace 8 
+        set_1 ={1,4,5 }
+    we will ask 6 since greater than 5 hence inserted at last
+    set_1 ={1,4,5,6}
+    ask -1 since not greater than 6 hence ask binary search and 1 will be replaced with -1
+    set_1 ={-1,4,5,6}
+    ask 9 since greater will be inserted at last and we get the return as 4 the set is not correct but we get the correct output length
+    */
+    int binary_approach(vector<int> & nums)
+    {
+        vector<int> my_set;
+        my_set.push_back(nums[0]);
+        int n = nums.size();
+        for(int i =1 ; i<nums.size(); i++)
+        {
+            if(nums[i]>my_set[my_set.size()-1])my_set.push_back(nums[i]);
+            else
+            {
+                //lower_bound returns an iterator to that position
+                auto  itr = lower_bound(my_set.begin(),my_set.end(), nums[i]);
+                my_set[itr-my_set.begin()] = nums[i];
+            }
+        }
+        return my_set.size();
+    }
+    
     
 public:
     int lengthOfLIS(vector<int>& nums) {
@@ -145,6 +204,10 @@ public:
         //APPROACH 2 space_optimized
         // return space_optimized(nums);
 
-        return most_optimized(nums);
+        //APPROACH 3 most optimized t.c n*2
+        // return most_optimized(nums);
+
+        //APPROACH 4 
+        return binary_approach(nums);
     }
 };
