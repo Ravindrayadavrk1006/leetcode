@@ -1,6 +1,5 @@
 class Solution {
 public:
-
     //using the concept of matrix chain multiplication here directly mcm is being used no change
 
     //MATRIX CHAIN MULTIPLICATION
