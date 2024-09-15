@@ -1,4 +1,5 @@
 /*
+PROBLEM LINK -> https://www.geeksforgeeks.org/problems/children-sum-parent/1?utm_source=youtube&utm_medium=collab_striver_ytdescription&utm_campaign=hildren-sum-parent
 explanation -> easy case of returning from the point when we find the answer .
     caviat -> since we don't have to check for leaf node hence just check if the current is leaf node or not if it is then just 
     return true
@@ -9,7 +10,6 @@ explanation -> easy case of returning from the point when we find the answer .
   sum of value of it's right and left child 
 
 */
-
 
 
 /*
