@@ -1,6 +1,11 @@
 /*
     algorithm used:
-        we reach to the node which is to be deleted if right exist we find curr->node->right leftmost node and to it attach the left of curr node and then attach curr->rigt to parent node of curr , if curr is in right of parent we make par->right = curr->right , if curr is in left of parent we make par->left = curr->right 
+            simple approach -> we reach to the node that is to be deleted and reach to the leftmost node of curr->right node and to this leftmost node attach the curr->left 
+        detailed approaoch -->>>
+        curr -> node to be deleted
+        we reach to the node which is to be deleted if 
+right exist we find curr->right leftmost node and to it attach the left of curr node and then attach curr->rigt
+to parent node of curr , if curr is in right of parent we make par->right = curr->right , if curr is in left of parent we make par->left = curr->right 
 */
 class Solution {
 private:
@@ -23,6 +28,7 @@ private:
                 leftmost->left = curr->left;
                 curr->left = NULL;
                 curr = curr->right;
+                //here we are breaking the links so the node become independent and can be picked by the garbage collector
                 root->right = NULL;
                 return curr;
             }
@@ -36,6 +42,7 @@ private:
         char pos;
         while(curr){
             cout<<"curr-node"<<curr->val<<endl;
+            //IF THE NODE TO BE DELETED IS FOUND , FOR CLEARITY SEE THE PART WHERE DELETED NODE IS NOT FOUND YET
             if(curr->val == key){
                 if(!curr->right){
                     if(pos == 'l')par->left = curr->left;
