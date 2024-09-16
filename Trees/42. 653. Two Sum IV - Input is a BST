@@ -10,19 +10,34 @@
     SOL 3:
         we can use the concept of 41. 173. Binary Search Tree Iterator i.e iterator which does notthing out of box but inorder travesal using stack .which gives sorted element.
         it has a function next which gives the next element.
-        we can use the same class to do right root left , this will mean we will have the element in sorted order using a variable reverse = true or false . so when true we are doing descending travesal and when false normal inorder.
-        we will use the same class and same functions just will use the condition of reverse 
+           APPROACH -> 
+            find the ascending sorted inorder by using the exact same code of i.e create the object of that class
+            //we also need descending sorted values , for it what we can do do in 41. where we were keep pusing left  leftwe will now push right right . and instead of next we will have a before function
+            this funciton will give the current top for this object stack and then set pointer to current->left and keep pushing the right right element exactly opposite of next in the original 41.
+            now will call next() from first and before() from second.
+            i = next()
+            j = before()
+            if i +j  > k we will call use the same i and will call before to update the j since we need to decrease the value
 
-        .
-        when calling above class we create two bstiterator object one with reverse true and other with false.
 
-        now we will normally do the two pointer approach since we have both the end of array no of two pointer and as i+j  i.e bstiterator value with reverse true + bstiterator value with reverse false   greater than k we update j with next of reverse true and if equal we return true if lesee we update i with next of bstierator class where reverse false
+        //code
+            i = next()
+            j = before()
+            while(i && j){
+
+                if(i->val()+j->val()> == true)return true;
+                if(i->val()+j->val()> k) j = before();
+                else
+                // we will have i->val()+j->val() < k  since we will try to increase the i
+                i = next()
+            }
+            return false;
 
  */
 class Solution {
 private:
     // SOL 1 ------------->
-    void helper_inorder_traversal(TreeNode* root, vector<int>& inorder){
+    void helper_inorder_traversal(TreeNode* root, vector<int>& inorder){ 
         if(root == NULL)return;
         helper_inorder_traversal(root->left,inorder);
         inorder.push_back(root->val);
