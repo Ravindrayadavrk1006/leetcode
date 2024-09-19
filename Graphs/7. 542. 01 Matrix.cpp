@@ -18,8 +18,6 @@ private:
         vector<vector<int>>dist_mat(n, vector<int>(m,0));
         vector<vector<int>>visited(n, vector<int>(m,0));
         queue<pair<int,int>> q;
-        //this for loop which is being used to process the elements at a distance k at a time , to avoid this for loop we can keep the distance in the same queue for each node along with it's position
-        //eg. like for initial elements we can keep like  {x,y, pos = 0} => {1,2,0} and when pushing it's neighbours we can keep like {3,8,1} i.e the position is 3,8 and this node is at distance 1
         
         for(int i = 0;i<n; i++){
             for(int j = 0;j<m; j++){
@@ -37,6 +35,8 @@ private:
             int q_size = q.size();
             //all the elements coming will be a
             dist++;
+        //this for loop which is being used to process the elements at a distance k at a time , to avoid this for loop we can keep the distance in the same queue for each node along with it's position
+        //eg. like for initial elements we can keep like  {x,y, pos = 0} => {1,2,0} and when pushing it's neighbours we can keep like {3,8,1} i.e the position is 3,8 and this node is at distance 1
             for(int i = 0 ; i < q_size; i++){
                 int row= q.front().first;
                 int col = q.front().second;
