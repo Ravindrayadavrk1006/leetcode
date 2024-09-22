@@ -8,7 +8,7 @@
     kahn's algorithm:
         here giving normal explanation of kahn's algorithm , the original one not the reverse one asked in the question, 
 
-        it is dfs traversal and we will start with the element having indegree 0,
+        it is BFS traversal and we will start with the element having indegree 0,
         indegree 0 means it may be depended on other but no one depend on it, so this will be first to be inserted in original topo sort,
         
         starting by inserting all the elemnts in the queue which have indgree 0 ,
