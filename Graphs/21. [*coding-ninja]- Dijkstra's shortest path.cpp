@@ -87,12 +87,43 @@ vector<int> sol_dijkstra_algo_using_set(vector<vector<int>> &vec, int vertices, 
     return dist;
 }
 
+//================ SOLUTION 3 NORMAL BFS TRAVERSAL WITHOUT EVEN A SINGLE LINE EXTRA
+
+vector<int> dfs_normal(vector<vector<int>> &vec, int vertices, int edges, int source){
+    vector<vector<pair<int,int>>> adj_list(vertices);
+    for(auto it: vec){
+        adj_list[it[0]].push_back({it[1],it[2]});
+        adj_list[it[1]].push_back({it[0],it[2]});
+    }
+    //we have the adjaceny list
+    queue<pair<int,int>> q;
+    vector<int> dist(vertices,INT_MAX);
+    q.push({0,source});
+    dist[source] = 0;
+    while(!q.empty()){
+        auto front = q.front();
+        int node = front.second;
+        int distance = front.first;
+        q.pop();
+        for(auto it: adj_list[node]){
+            int neighbour_dist = distance + it.second;
+            if(neighbour_dist< dist[it.first]){
+                dist[it.first] = neighbour_dist;
+                q.push({neighbour_dist, it.first});
+            }
+        }
+    }
+    return dist;
+}
 
 vector<int> dijkstra(vector<vector<int>> &vec, int vertices, int edges, int source) {
    //calling sol 1
    //return sol_dijkstra_algo_using_priority(vec,vertices, edges,source);
 
    //calling sol 2
-   return sol_dijkstra_algo_using_set(vec,vertices, edges,source);
+  // return sol_dijkstra_algo_using_set(vec,vertices, edges,source);
 
+
+    //CALLING  solution 3
+    return dfs_normal(vec, vertices, edges, source);
 }
