@@ -30,7 +30,7 @@ class Solution {
                     dfs(it,node, vis,tin, tlow,mark_articulation, adj);
                     tlow[node] = min(tlow[node],tlow[it]);
                     //it means if the adj_node is only reachable to current node or higher node it means i can't reach to the node which were visited before node and henc if we remove the node it the two part will become separate component
-                    if(tlow[it]>=tin[node] && parent != -1){
+                    if(tin[node]<=tlow[it] && parent != -1){
                         mark_articulation[node] = 1;
                     }
                     first_node_child_counter++;
@@ -39,6 +39,8 @@ class Solution {
                     tlow[node] = min(tlow[node],tin[it]);
                 }
             }
+
+        //this is for the root node checking if the root has more than one child then it is for sure articulation point
         if(first_node_child_counter > 1 && parent == -1)mark_articulation[node] = 1;
         }
   public:
