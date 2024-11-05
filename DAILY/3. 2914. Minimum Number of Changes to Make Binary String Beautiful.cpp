@@ -2,7 +2,6 @@
     explanation->
         since it is given it is a even length string, no need to think much about boundary condition,
         here we are using a for loop to traverse the entire string, and if s[pos] != s[pos+1] then it means that either s[pos]and s[pos+1] is 01, 10 but we need 00, 11 hence one change is required , we increment our change count , if s[pos] == s[pos+1] is same then we don't have to change anything since according to question have to have even number of 1 or 0 in even length substring.
-        
 
         1 question in mind would be coming why not try to partition at all even length string using recursion, eg parition at length 2 and call recursive, partion at 4 and call recursive remaining,
         if we think deep the answer would be same for this approach and uselessly increasing complexity for no gains
