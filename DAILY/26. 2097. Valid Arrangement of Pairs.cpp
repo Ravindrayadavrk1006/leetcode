@@ -233,6 +233,8 @@ private:
         helperDfs(startingNode, adjList, st, outInDegree);
         vector<vector<int>> ans;
         int stSize = st.size();
+
+        //since the start is at last we are forming the edges and storing in the ans
         for(int i = stSize-1; i>0; i--){
             ans.push_back({st[i], st[i-1]});
         }
