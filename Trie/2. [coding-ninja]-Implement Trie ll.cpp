@@ -1,4 +1,5 @@
 /*
+    PROBLEM LINK -> https://www.naukri.com/code360/problems/implement-trie_1387095
     improvement on the first function, here instead of just having flag = true false for denoting if it's a word or not
     we are using , two int variables wordCount to count the word and prefixCount to count the prefix.
 
