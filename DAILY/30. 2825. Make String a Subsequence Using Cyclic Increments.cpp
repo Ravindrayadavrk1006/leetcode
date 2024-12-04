@@ -1,6 +1,5 @@
 /*
-
-    APPLICATION OF CONCEPT OF LOWEST COMMON SUBSEQUENCE(LCS)
+    APPLICATION OF CONCEPT OF LARGEST COMMON SUBSEQUENCE(LCS)
         we are starting from the end of the both the given string, let's suppose we use pointers i, j  i.e i for str1 and j for str2 ,  we start from i = str1.size()-1 , j = str2.size()-1 
         
         if current char matches or if by incrementing the char of i i.e if str[i] = a ,we make it b and so on. if both the str[i] == str[j] we try to check in the remaining left part (i-1, j-1) , if it doesn't match then we check in (i-1 , j) i.e we try to find the current charcater of str2 in the remaining string of str2
