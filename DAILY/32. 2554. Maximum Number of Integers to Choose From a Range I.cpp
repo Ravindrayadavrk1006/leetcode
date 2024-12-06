@@ -12,7 +12,7 @@
 
     approach of our solution->
         we inserted all the elements of banned in the map so that to check if a element is banned we have to spend just log time,
-        we could reduce this insertion time by just doing a binary search check since the banned should be sorted but not given explicitivly that's why not using that approach
+        we could reduce this insertion time by just doing a binary search check since the banned should be sorted but not given explicitivly that's why will have to sort it first
 
         then we have take two variable -> count and curr_sum whhich is current sum
 
@@ -53,8 +53,43 @@ private:
         //i.e the curr_sum after checkeing all the elemtns will be less than maxSum therefore we return the count  
         return count;
     }
+
+
+    // sol 2
+
+    //using binary search for finding the element if it is banned or not unlike in the first solution where we insert the element in the map and then search in logn time
+    bool helper_binarySearch(int el, vector<int>& banned){
+        int start = 0;
+        int end = banned.size()-1;
+        while(start <= end){
+            int mid = (start + end )/2;
+
+            //false states that element is present and banned
+            if(el == banned[mid])return false;
+            else if(banned[mid]> el)end = mid-1;
+            else start = mid+1;
+        }
+        return true;
+    }
+    int sol2(vector<int>& banned, int n , int maxSum){
+        sort(banned.begin(), banned.end());
+        int count = 0, current_sum =0;
+        for(int i = 1; i<=n; i++ ){
+            if(helper_binarySearch(i, banned)){
+                current_sum+= i;
+                count++;
+                if(current_sum > maxSum)return count-1;
+            }
+        }
+        return count;
+    }
 public:
     int maxCount(vector<int>& banned, int n, int maxSum) {
-        return solMaxCount(banned, n, maxSum);
+        //sol 1
+        // return solMaxCount(banned, n, maxSum);
+
+
+        //sol 2
+        return sol2(banned, n, maxSum);
     }
 };
