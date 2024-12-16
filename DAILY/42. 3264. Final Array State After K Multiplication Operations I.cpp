@@ -1,3 +1,12 @@
+/*
+    1.form offline queries to remember the index of the element,
+    2.after forming offline queries insert all the elements in the min-heap since we need smallest element element which we can get in logn time here 
+    3.pick top k elements one by one, for each element picked insert  the element*mutliplier and it's index
+    4. form a answer array of nums array size , now run a while loop to fetch all the elements of the min-heap and keep inserting in the answer array at index of el.second for each element picked from min-heap
+
+*/
+
+
 class Solution {
 private:
     vector<int> solGetFinalState(vector<int>& nums, int k, int multiplier){
