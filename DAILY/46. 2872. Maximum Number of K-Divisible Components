@@ -1,0 +1,64 @@
+class Solution {
+private:
+
+    //here we are doing postorder traversal using dfs because it's a directed graph hence normal postorder tree traversal is not possible, it's a graph hence proceeding in that way
+
+    /*
+        at each node we are caculating the sum of lower values , if the sum is divisible by k then the lower is a compoenent and we add in the answer, if it's not then we return the sum and try to do in the upper nodes or parents 
+
+
+        important thing->
+                1. it's a graph instead of a tree hence doing the normal dfs and for checking only the lower elmenets we are going with parent as well so at a node we don't come to parent back from the current node while trying to go to it's adjecent nodes.
+                2. we are doing mod at each point so that the value remains in the range of k for better efficent calculations
+                
+
+    
+    */
+    int usingDFS(int n , vector<vector<int>>& edges, vector<int>& values, int k){
+        int totalComponents = 0;
+        //creating adjaceny list
+        vector<vector<int>> adjList(n);
+        for(auto el: edges){
+            //since it is given the graph is undirected
+            adjList[el[0]].push_back(el[1]);
+            adjList[el[1]].push_back(el[0]);
+        }
+        helper_dfs(0, -1,adjList,values, totalComponents, k);
+        return totalComponents;
+    }
+
+    //the totalComponents is being sent by reference
+    int helper_dfs(int root, int par, vector<vector<int>>& adjList, vector<int>& values, int& totalComponents, int k){
+        //sum at current node
+        int curr_sum = 0;
+        //trying to go to it's ajcent apart from it's parent
+        //check to avoid parent is done adj != par
+        for(auto adj: adjList[root]){
+            //since we want to calculate the sum of the lower once only
+            if(adj != par){
+                //adding to the current sum , the remainder from lower nodes
+                curr_sum+=helper_dfs(adj, root, adjList, values, totalComponents, k); 
+
+                //brining the curr_sum in range
+                curr_sum%=k;
+            }
+        }
+        //adding the current root value to the node
+        curr_sum+=values[root];
+        //doing the mod of it
+        curr_sum%=k;
+        //if it's divisible by k then it's a component
+        if(curr_sum == 0)totalComponents++;
+        //returing the remainder so that we can check in parents as well
+        return curr_sum;
+    }
+public:
+    int maxKDivisibleComponents(int n, vector<vector<int>>& edges, vector<int>& values, int k) {
+        return usingDFS(n, edges, values, k);
+
+
+
+        //the other appraoch is kahn's algorithm of topological sort
+        //look into the editorial last section
+    }
+};
