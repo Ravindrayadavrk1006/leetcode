@@ -36,16 +36,20 @@ private:
 */
     int sol2Easier(vector<int>& nums){
         int n = nums.size();
-        long total_arr_sum = 0;
-        vector<long> sum_start(n);
-        //intitalizing the array with the nums since the addition to be done hence sum_start is taken as long type  and hence type casting required below
-         for(int i =0; i<n; i++){
-            sum_start[i] = (long)nums[i];
+        vector<long> sum_start(n,0);
+
+        //0th index prehand calculation
+        sum_start[0] = nums[0];
+        long total_arr_sum = nums[0];
+        for(int i=1; i<n; i++){
+            //in below two steps adding the previous sum and the current element i.e nums[i]
+            sum_start[i]+=sum_start[i-1];
+            sum_start[i]+=nums[i];
             total_arr_sum+=nums[i];
         }
-        for(int i=1; i<n; i++){
-            sum_start[i]+= sum_start[i-1];
-        }
+        // for(auto el: sum_start)cout<<el<<" ";
+        // cout<<endl;
+        // cout<<total_arr_sum<<endl;
         int ans=0;
         for(int i =0; i<n-1; i++){
             //this below formula is from    sum_start[i] >= total_arrr_sum - sum_start[i] and then side changing of sum_start[i] 
