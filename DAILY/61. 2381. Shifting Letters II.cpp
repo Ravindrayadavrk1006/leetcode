@@ -1,6 +1,6 @@
 class Solution {
 private:
-    //giving TLE
+    // giving TLE
     /*
         direct approach 
     */
