@@ -1,5 +1,6 @@
 class Solution {
 private:
+
     //wrong approach was trying kahns algorithm and finding a topological sort 
     vector<bool> sol_check(int numCourses, vector<vector<int>>& prerequisites, vector<vector<int>>& queries){
 
