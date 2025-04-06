@@ -72,6 +72,8 @@ class Solution {
                 for(int el: nums){
                     or_of_array|=el;
                 }
+                //here below <<len-1 means    multiplying with 2^(n-1)   i.e contirubtion in half of the element
+                //also we are doing | for finding or_of_array because, we want to find the final numberand if all the numbers have 0 in that bit position then or result will also have 0 in that position else it will contribute in the answer
                 return or_of_array<<len-1;
             }
     public:
