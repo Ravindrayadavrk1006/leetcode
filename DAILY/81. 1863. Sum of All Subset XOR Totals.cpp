@@ -60,6 +60,11 @@ class Solution {
             suppose length of nums = n 
              we take or of all the elements of the nums array and then add n-1 0 at tha last
              explanation given in the editorial
+
+
+             for better and great explanation ->
+                 refer to the below video
+                 https://www.youtube.com/watch?v=_YdRjA5EvK4&t=297s
              */
             int sol3(vector<int>& nums){
                 int len = nums.size();
