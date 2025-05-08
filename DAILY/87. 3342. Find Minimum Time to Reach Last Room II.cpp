@@ -23,6 +23,12 @@ private:
         }
         if(j&1)return 2;
         return 1;
+
+         /*
+            FYI: from  discussion can directly use (i+j)%2 + 1
+            i.e if i+j is odd then 2 else 1
+        
+        */
     }
 
     //this is very simle dijkstra element and same as done in DAILY -> DAILY/86. 3341. Find Minimum Time to Reach Last Room I.cpp , just for adjacent jump where earlier it used to take just 1, now it takes alternatively, we use above helper function to move whether it takes 1 unit to move or 2 unit to move 
