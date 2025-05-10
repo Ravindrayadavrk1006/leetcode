@@ -1,1 +1,9 @@
-
+#PARAMETRIZED function, returning the value in the function itself and passing stuff as parameter
+#sum of n natural numbers
+func(n){
+  if(n<1)return 0;
+  return n+func(n-1);
+}
+main(){
+ cout<<func(5);
+}
