@@ -5,7 +5,6 @@ public:
         if(i == n){
             if(sum == target){
                  ans.push_back(current_vec);
-                return;
             }
             return;
         }
