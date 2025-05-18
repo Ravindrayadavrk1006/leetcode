@@ -14,7 +14,6 @@ private:
         }
         return true;
     }
-
     //SOL 1 -> recursion is correct but the DP is giving wrong answer
     int recursive_sol(int pos, int prev_indx, vector<string>& curr_vec, vector<string>& words, vector<int>& groups, vector<vector<int>>& dp ){
         if(pos == n){
