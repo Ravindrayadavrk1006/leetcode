@@ -1,7 +1,9 @@
+// problem -statement : print all the subsequences of a given set
+
 class Solution {
 public:
     vector<vector<int>> final_ans;
-    //SOLUTION TWO
+    //SOLUTION TWO->>>> this is the only approach to learn from here
     /*
     IDEA-> the concept is to start from beginning and taking in account once including the element and once not including the element 
     T.C -> O(2^n)
@@ -27,6 +29,9 @@ public:
         }
             
     }
+
+
+//DO NOT PREFER THIS SOLUTION
     //SOLUTION 1
     
     /*
