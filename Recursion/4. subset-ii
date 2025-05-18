@@ -1,0 +1,27 @@
+class Solution {
+private:
+    void non_duplicate_power_set_generation(int pos, vector<int>& curr_vec, vector<int>& nums, vector<vector<int>>& ans, int n ){
+        //since the subset will be generated at all level
+        ans.push_back(curr_vec);
+        // if(pos >=n)return;
+        //from the current position, try and take all the different element and move forward
+        for(int i = pos; i<n; i++){
+            //we will always take the first element since it will always be different in the current context from i = pos to i<n, and if the current elment is same as previous elemnet we won't take it
+            if(i > pos && nums[i] == nums[i-1])continue;
+            //take the current element
+            curr_vec.push_back(nums[i]);
+            non_duplicate_power_set_generation(i+1,curr_vec, nums, ans, n);
+            curr_vec.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        //sort it so that same element comes together
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        vector<int> curr_vec;
+        int n = nums.size();
+        non_duplicate_power_set_generation(0, curr_vec, nums, ans, n);
+        return ans;
+    }
+};
