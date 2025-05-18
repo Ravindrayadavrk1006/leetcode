@@ -17,16 +17,17 @@ public:
             final_ans.push_back(subset);
             return;
         }
-        else
-        {
-            //including the current ith element
-            subset.push_back(s[i]);
-            sol2(s,i+1,subset);
-            
-            //excluding the ith element
-            subset.pop_back();
-            sol2(s,i+1,subset);
-        }
+
+
+        //TAKE 
+        subset.push_back(s[i]);
+        sol2(s,i+1,subset);
+        //remove the disturbance
+        subset.pop_back();
+
+        //NOT-TAKE
+        //excluding the ith element
+        sol2(s,i+1,subset);
             
     }
 
