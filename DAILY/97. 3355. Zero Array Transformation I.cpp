@@ -101,12 +101,58 @@ private:
 
         return true;
     }
+
+    //SOL 3 -> working
+    //DIFFERENCE ARRAY TECHINQUE
+    //EXPLAINED IN THE CP NOTES as well
+    /*
+        
+        in the below steps STEPS marked are part of core concept of difference array techique
+    
+    */
+    bool difference_arr_technique(vector<int>& nums, vector<vector<int>>& queries){
+        int n = nums.size();
+        int q = queries.size();
+        //STEP 1. difference array step 1
+        //create a update array of size n and initialize by 0
+        vector<int> update(n, 0);
+
+        //STEP 2. process each query and for each query by whatever number we have to incrememnt let's say it's like
+        //(1,3, +3) -> i.e for element between 1 to 3 update with +3 so we will do update[1]+=(+3) and update[3 + 1]-=3
+        //i.e at start of query we add the number and at end+1 we substract the number
+        //in our question we have to deal with just 1 hence we will do -> +1 and -1
+
+        for(auto query: queries){
+            int start = query[0];
+            int end = query[1];
+            update[start] +=1;
+            //checking if end+1 is in our range 
+            if(end+1<n){
+                update[end+1]-=1;
+            }
+        }
+
+        //STEP 3 -> do the cumulative sum of the update array
+        for(int i =1; i<n; i++){
+            update[i] = update[i]+update[i-1]; 
+        }
+
+        //STEP 4. do the processing that's in the original array if addition or substraction to be done
+        //in our case we have to decrement
+        for(int i=0; i<n; i++){
+            if(nums[i]- update[i]>0)return false;
+        }
+        return true;
+    }
 public:
     bool isZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
         //SOL 1 brute force
         // return brute_force(nums, queries);
 
 
-        return using_line_sweep(nums, queries);
+        // return using_line_sweep(nums, queries);
+
+
+        return difference_arr_technique(nums, queries);
     }
 };
