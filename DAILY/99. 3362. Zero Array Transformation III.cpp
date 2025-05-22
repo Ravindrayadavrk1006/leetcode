@@ -1,7 +1,6 @@
 /*
     reference video -> 
     https://www.youtube.com/watch?v=7jNS2hoM8Yw
-
     intution ->
         for each index of nums we are checking which lines cover this index and, while doing that we take the longest lines to cover it.
         since each line contribute one, we require nums[i] lines to be passing from i^th index of nums
