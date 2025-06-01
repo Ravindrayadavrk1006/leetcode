@@ -12,24 +12,8 @@ APPROACH 1:
     similarly we do for 2 we get 1 and similary for 1 which is 0 
     we add all and return
     T.C --> O(n*2)
-
-APPROACH 2:
-    eg 3 2 1 
-    we start from right most element i.e last of array
-    logic is since the element which is next smaller and present
-    to the current element have already counted it's inversions and the inversion
-    of current element will be the first smaller element to right of it +1
-
-    explanation:
-        for 1 no_of_inversion = 0;
-        for 2-> 1 is the first smaller element to right of 2 we take it inversions
-        and add 1 to it hence inversion for 2 -> 0+1 = 1
-        for 3-> we find first smaller element to right of it and add one to it's inversion
-        inversion for 3 -> 1+1 = 2
-        total inversion = > 2+1 = 3
-    slightly better solution than the previous one
-
-APPROACH 3-->
+    
+APPROACH 2-->
   
     we will be using the MERGE SORT APPROACH 
     merge sort uses the technique of divide and conquer 
@@ -45,55 +29,61 @@ APPROACH 3-->
 
 
 */
-//APPROACH 3
-long long  merge_algo(long long *arr,long long &temp,int left,int mid ,int right)
-{
-    int  i,j, k;
-    long long inv_count = 0;
-    i =left;
-    j=mid;
-    k=left;
-    while((i<=mid-1) && (j<=right))
-    {
-        if(arr[i]<=arr[j])
-        {
-            temp[k++] = arr[i++];
-        }
-        else
-        {
-            temp[k++] = arr[j++];
-            inv_count +=inv_count + (mid-i);
-        }
-    }
-    //one of the array is finished
-    while(i<=mid-1)temp[k++]=arr[i++];
-    while(j<=right)temp[k++]=arr[j++];
-    //copying the temp values in the original array i.e arr since it is outplace 
-    //but for comparision arr is used
-    for(i=left;i<=right; i++)
-    {
-        arr[i]=temp[i];
-    }
-    return inv_count;
-}
-long long merge_sort(long long &arr,long long &temp, int left , int right )
-{
-    int  mid
-    long long inv_count = 0;
-    if(left < right)
-    {
-        //divide
-        mid = (left+right)/2;
-        inv_count += merge_sort(arr,temp,left,mid);
-        inv_count+= merge_sort(arr,temp,mid+1,right);
+//APPROACH 2
 
-        //conqueor
-        inv_count+=merge_algo(arr,temp,left,mid,right);
+
+
+//JUST ONE EXTRA LINE OF CODE IN THE MERGE SORT CODE 
+#include <bits/stdc++.h> 
+long long inversion_count = 0;
+void merge(long long arr[], int low, int mid, int high) {
+    vector<int> temp; // temporary array
+    int left = low;      // starting index of left half of arr
+    int right = mid + 1;   // starting index of right half of arr
+
+    //storing elements in the temporary array in a sorted manner//
+
+    while (left <= mid && right <= high) {
+        if (arr[left] <= arr[right]) {
+            temp.push_back(arr[left]);
+            left++;
+        }
+        else {
+            //---------------THIS IS THE ONLY EXTRA LINE ADDED
+            inversion_count+=(mid-left+1);
+            temp.push_back(arr[right]);
+            right++;
+        }
     }
-    return inv_count;
+
+    // if elements on the left half are still left //
+
+    while (left <= mid) {
+        temp.push_back(arr[left]);
+        left++;
+    }
+
+    //  if elements on the right half are still left //
+    while (right <= high) {
+        temp.push_back(arr[right]);
+        right++;
+    }
+
+    // transfering all elements from temporary to arr //
+    for (int i = low; i <= high; i++) {
+        arr[i] = temp[i - low];
+    }
 }
+
+void mergeSort(long long arr[], int low, int high) {
+    if (low >= high) return;
+    int mid = (low + high) / 2 ;
+    mergeSort(arr, low, mid);  // left half
+    mergeSort(arr, mid + 1, high); // right half
+    merge(arr, low, mid, high);  // merging sorted halves
+}
+
 long long getInversions(long long *arr, int n){
-    long long temp[n];
-    int ans(arr,temp,0,n-1);
-
+   mergeSort(arr, 0, n-1);
+   return inversion_count;
 }
