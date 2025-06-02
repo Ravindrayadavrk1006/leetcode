@@ -19,6 +19,12 @@ PROBLEM-> find the length of largest increasing subsequence
         int longest_increasing_subsequence_length = 0;
         for(int i =0; i<n; i++){
             for(int j =0; j<i; j++){
+
+                //THIS IS THE MAIN CONDITION 
+                //THIS WILL DECIDE WHAT KIND OF SUBSEQUENCE WE WANT
+                //IF WE NEEDED longest strictly increasing then  if(arr[i] > arr[i])
+                //if we needed decreasing then (arr[i]<arr[j] ) and so on
+                // this condition changes for longest subsequence
                 if(groups[j] != groups[i] && words[i].size() == words[j].size() && valid_hamming_distance(i, j, words)){            
 
                     //basic condition of LIS 
@@ -36,4 +42,29 @@ PROBLEM-> find the length of largest increasing subsequence
 
        
         return longest_increasing_subsequence_length;
+    }
+
+//VERY SIMPLE LIS
+//core longest increasing subsequence
+
+int lis(vector<int>& arr) {
+        int n = arr.size();
+        //create a lis vector which will store the longest subsequence for that element till now
+        //initially all element will be 1 subsequence hence 1
+        vector<int> lis_vec(n,1);
+        
+        //since a element is a subsequence
+        int longest_subsequence = 1;
+        for(int i =0 ; i<n; i++){
+            for(int j=0; j<i; j++){
+                //[**IMP] condition which decide what type of LONGEST SUBSEQUENCE 
+                if(arr[i]> arr[j]){
+                    if(lis_vec[j] +1 > lis_vec[i]){
+                        lis_vec[i] = lis_vec[j] + 1;
+                        longest_subsequence = max(longest_subsequence, lis_vec[i]);
+                    }
+                }
+            }
+        }
+        return longest_subsequence;
     }
