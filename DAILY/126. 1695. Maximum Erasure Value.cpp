@@ -55,8 +55,45 @@ private:
         } 
         return ans;  
     }
+
+
+    //above solution without using queues since instead using the concept of start and end and reading those index variable from the nums array instead of again storing it in some queue uselessly, here we are using the pure concept of sliding window protocol
+    int sol_variable_size_sliding_window(vector<int>& nums ){
+        int n = nums.size();
+        int start = 0;
+        //for checking if current element is already present in the queue or not
+        set<int> st;
+        // st.insert(nums[0]);
+        // q.push(nums[0])
+        int sum = 0;
+        int ans = 0;
+        int end = 0;
+        while(end < n){
+            //if current element is al#ready present in the queue, remove all elements upto the first occurance of that element
+            //if current element is already present
+            if(st.find(nums[end]) != st.end() ){
+                //remove all elements upto the  occurance of nums[i]
+                while(true){
+                    int front = nums[start++];
+                    st.erase(front);
+                    sum-=front;
+                    if(front == nums[end])break;
+                }
+            }
+            //insert the current element in set and queue
+            st.insert(nums[end]);
+            sum+=nums[end];
+            //maximize the ans
+            ans = max(ans, sum);
+            end++;
+        } 
+        return ans;  
+    }
 public:
     int maximumUniqueSubarray(vector<int>& nums) {
-        return sol(nums);
+        // return sol(nums);
+
+
+        return sol_variable_size_sliding_window(nums);
     }
 };
