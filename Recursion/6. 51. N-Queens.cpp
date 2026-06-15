@@ -1,6 +1,12 @@
 Approach
 approach explained inside the code
+/* 
 
+    it is a backtracking problem, 
+    same as recursion just in backtracking what we do when are returning
+
+
+*/
 Complexities
 TIME COMPLEXITY O(N!))
 SPACE COMPLEXITY N+N^2+ 3N= O(n^2)
