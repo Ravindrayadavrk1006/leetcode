@@ -26,7 +26,34 @@ private:
         return false;
     }
 
-    //SOL 1 NORMAL SOLUTION
+    //SOLUTION 3 a little better
+    /*
+        if we see clearly then the stacks are of no use since we are using a recursion it should handle the coming back, also second stack is of now use
+
+
+        if we directly remove the second stack statements directly then also the answer will work fine and correct.
+        It means the one stack the is also not required and we are just pushng and popping without any reason
+        so since here push and pop are not making any sense beacuse we are tyring to fill all the empty cell and if we filled any cell wrong then the recursion will trace back to fill it properly visualize -> isValid will return false and it will try other character at that position and if not able to fill any character then the call will go back to the last recursion and other character at last recursion will be tried and so on
+    */
+
+    //using even a single stack is giving TLE let's use a array since we are doing much in there too
+    bool usingArray(int idx, vector<pair<int,int>>& emptyStore, vector<vector<char>>& board){
+        if(idx == emptyStore.size())return true;
+        auto [i, j] = emptyStore[idx];
+        for(char ch='1'; ch<='9'; ch++){
+            if(isValid(ch, i,j, board)){
+                board[i][j] = ch;
+                if(usingArray(idx+1, emptyStore, board))return true;
+                board[i][j]= '.';
+            }
+        }
+        return false;
+    }
+
+
+
+
+    //SOL 1 NORMAL SOLUTION, this solution also passes without issues 
     /*
       logic : in each rucursion we traverse entire board and once we find a '.' we insert a valid character there and 
       try to fill the next '.' in board by recursively calling the function . If we are not able to fill a position by any valid character . It means we have
@@ -74,7 +101,7 @@ public:
         stack<pair<int,int>> second_stack;
         pair<int,int> temp_pair;
         //storing all empty cells in stack in normal order 
-        //starting from last cell so that the last element store at last in the stack 
+        //starting from last cell so that the last element store at last in the stack [** IMP otherwise different recursion tree forms and it gives TLE]
         for(int i = 8 ; i>=0 ; i--){
             for(int j = 8 ; j>=0 ;j--){
                 if(board[i][j]== '.'){
@@ -87,6 +114,19 @@ public:
         //now calling the solution
         usingStack(board, first_stack, second_stack);
 
+
+
+
+
+        //CALLING SOL 3 
+        //USING ARRAY
+        vector<pair<int,int>> emptyStore;
+        for(int i =0; i<9; i++){
+            for(int j=0; j<9; j++){
+                if(board[i][j] == '.')emptyStore.push_back({i,j});
+            }
+        }
+        usingArray(0,emptyStore, board);
         
     }
 };
