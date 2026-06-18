@@ -26,14 +26,13 @@ private:
         return false;
     }
 
-    //SOLUTION 3 because SOL 2 giving TLE
+    //SOLUTION 3 a little better
     /*
         if we see clearly then the stacks are of no use since we are using a recursion it should handle the coming back, also second stack is of now use
 
 
         if we directly remove the second stack statements directly then also the answer will work fine and correct.
         It means the one stack the is also not required and we are just pushng and popping without any reason
-    [***IMP] -> stack is slow compared to vector so we should use vector instead of a single stack 
         so since here push and pop are not making any sense beacuse we are tyring to fill all the empty cell and if we filled any cell wrong then the recursion will trace back to fill it properly visualize -> isValid will return false and it will try other character at that position and if not able to fill any character then the call will go back to the last recursion and other character at last recursion will be tried and so on
     */
 
@@ -54,7 +53,7 @@ private:
 
 
 
-    //SOL 1 NORMAL SOLUTION
+    //SOL 1 NORMAL SOLUTION, this solution also passes without issues 
     /*
       logic : in each rucursion we traverse entire board and once we find a '.' we insert a valid character there and 
       try to fill the next '.' in board by recursively calling the function . If we are not able to fill a position by any valid character . It means we have
@@ -102,7 +101,7 @@ public:
         stack<pair<int,int>> second_stack;
         pair<int,int> temp_pair;
         //storing all empty cells in stack in normal order 
-        //starting from last cell so that the last element store at last in the stack 
+        //starting from last cell so that the last element store at last in the stack [** IMP otherwise different recursion tree forms and it gives TLE]
         for(int i = 8 ; i>=0 ; i--){
             for(int j = 8 ; j>=0 ;j--){
                 if(board[i][j]== '.'){
@@ -116,7 +115,7 @@ public:
         usingStack(board, first_stack, second_stack);
 
 
-        
+
 
 
         //CALLING SOL 3 
