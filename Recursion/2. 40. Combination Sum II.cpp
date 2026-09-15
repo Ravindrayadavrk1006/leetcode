@@ -9,11 +9,7 @@ private:
     void solCombinationSum(int i, int curr_sum, vector<int>& curr_vec, vector<int>& candidates, vector<vector<int>>& ans, int n  ){
         if(curr_sum == 0 ){
             ans.push_back(curr_vec);
-            return ;
         }
-        //this line should be here not at the top because the condition of curr_sum becomes 0 or not need to checked at i == n also 
-      //this condition is also not required since it is handled by the for loop, it is running till the required position of i and also in betwee we are checking if any point the current element is greater than the required sum we don't add that element
-        if(i == n || curr_sum < 0 )return;
         //starting from not the same elemnet
         for(int j =i; j<n; j++){
             //if the present element is not the first element and it is equal to previous element then check for next element
