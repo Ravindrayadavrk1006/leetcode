@@ -59,6 +59,7 @@ public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<vector<int>> ans;
         vector<int> current_vec;
+        //[*IMP] sorting is not required since the elements are unique and we can choose an element n number of times!
         //sort(candidates.begin(),candidates.end());
         //using top down approach
         // help(0,0,target,candidates.size(),candidates,current_vec,ans);
