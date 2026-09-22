@@ -10,7 +10,9 @@ public:
             int mid = (left+right)/2;
             if(nums[mid]==target)return true;
             /*in repeated element case we can have condition like [1,0,1,1,1]
-                here we can't be sure in which range the element will lie and hence we can trim search space since the repeated element are not usefull at all
+               in the above example we can't be sure which part is sorted mid = 1 left =1 right is also 1, so when we check the condition of sorted arr[left]<= arr[mid] we get true but if we
+               see the left part is not sorted therefore. 
+                here we can't be sure in which range the element will lie and hence we can trim search space(so that we can remove the duplicates and be certain that one part will be sorted) since the repeated element are not usefull at all
              so we are making the left to move one ahead and right to move one left
             */
             if(nums[left] == nums[mid] && nums[right] == nums[mid]){
