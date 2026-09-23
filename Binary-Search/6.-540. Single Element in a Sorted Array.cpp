@@ -53,6 +53,7 @@ private:
             //mid is a even number
             if(mid%2==0)
             {
+                //we are looking to the right because index start from O(even) so pair is like even odd even odd and hence if current is even the odd should exist to right
                 if(mid !=n-1 && nums[mid] == nums[mid+1])left=mid+1;
                 else right = mid-1;
             }
